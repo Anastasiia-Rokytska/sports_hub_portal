@@ -1,0 +1,16 @@
+plugins {
+  id "com.github.node-gradle.node" version "3.2.1"
+}
+version '0.0.1'
+node {
+  version = '16.14.2'
+  npmVersion = '8.5.0'
+  download = true
+  workDir = file("${project.buildDir}/node")
+  nodeModulesDir = file("${project.projectDir}")
+}
+task build(type: NpmTask) {
+  args = ['run', 'build']
+}
+build.dependsOn('npm_install')
+//frontend:build will be run before the processResources
