@@ -12,6 +12,16 @@ repositories {
 	mavenCentral()
 }
 
+
+task deleteStaticFolder(type: Delete) {
+	def dirName = "src/main/resources/static"
+	file( dirName ).list().each{
+		f ->
+			delete "${dirName}/${f}"
+	}
+}
+processResources.dependsOn('sportHub-frontend:build')
+
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
