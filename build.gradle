@@ -2,6 +2,7 @@ plugins {
 	id 'org.springframework.boot' version '2.6.6'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
+	id 'checkstyle'
 }
 
 group = 'com.company'
@@ -12,6 +13,9 @@ repositories {
 	mavenCentral()
 }
 
+configurations {
+	checkstyleOverride
+}
 
 task deleteStaticFolder(type: Delete) {
 	def dirName = "src/main/resources/static"
@@ -29,8 +33,14 @@ dependencies {
 	runtimeOnly 'mysql:mysql-connector-java'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
+	checkstyleOverride('com.puppycrawl.tools:checkstyle:6.11.2')
+
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+tasks.withType(Checkstyle) {
+	checkstyleClasspath = project.configurations.checkstyleOverride
 }
