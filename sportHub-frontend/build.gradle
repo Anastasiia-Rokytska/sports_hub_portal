@@ -12,5 +12,6 @@ node {
 task build(type: NpmTask) {
   args = ['run', 'build']
 }
+
 build.dependsOn('npm_install')
 //frontend:build will be run before the processResources
