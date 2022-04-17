@@ -11,7 +11,7 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '17'
 
 checkstyle {
-	toolVersion = '6.11.1'
+	toolVersion = '10.1'
 	config = rootProject.resources.text.fromFile('config/checkstyle/checkstyle.xml')
 }
 repositories {
@@ -36,17 +36,12 @@ dependencies {
 	runtimeOnly 'mysql:mysql-connector-java'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
+
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
 }
 
-tasks.withType(Checkstyle) {
-	reports {
-		xml.required = true
-		html.required = true
-	}
-}
 
 
