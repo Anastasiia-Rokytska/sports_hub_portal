@@ -5,17 +5,19 @@ plugins {
 	id 'checkstyle'
 }
 
+
 group = 'com.company'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '17'
 
+checkstyle {
+	toolVersion = '6.11.1'
+	config = rootProject.resources.text.fromFile('config/checkstyle/checkstyle.xml')
+}
 repositories {
 	mavenCentral()
 }
 
-configurations {
-	checkstyleOverride
-}
 
 task deleteStaticFolder(type: Delete) {
 	def dirName = "src/main/resources/static"
@@ -29,12 +31,11 @@ processResources.dependsOn('sportHub-frontend:build')
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'checkstyle:checkstyle:5.0'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'mysql:mysql-connector-java'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
-	checkstyleOverride('com.puppycrawl.tools:checkstyle:6.11.2')
-
 }
 
 tasks.named('test') {
@@ -42,5 +43,10 @@ tasks.named('test') {
 }
 
 tasks.withType(Checkstyle) {
-	checkstyleClasspath = project.configurations.checkstyleOverride
+	reports {
+		xml.required = true
+		html.required = true
+	}
 }
+
+
