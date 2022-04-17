@@ -61,7 +61,7 @@ h4{
   gap: 12.8px;
   margin-bottom: 20px;
 }
-form{
+.form{
   display: flex;
   flex-direction: column;
 }
