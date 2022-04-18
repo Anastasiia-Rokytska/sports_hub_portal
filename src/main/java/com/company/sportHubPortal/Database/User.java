@@ -1,5 +1,6 @@
 package com.company.sportHubPortal.Database;
 
+import com.sun.istack.NotNull;
 import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
@@ -10,15 +11,54 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     Integer id;
-
+    @NotNull
+    String firstName;
+    @NotNull
+    String lastName;
+    @NotNull
     String email;
-
+    @NotNull
     String password;
 
-    public User(@NonNull String email, @NonNull String password) {
+
+    @Enumerated(EnumType.STRING)
+    UserRole role;
+
+    public User(@NotNull String firstName, @NotNull String lastName, @NotNull String email, @NotNull String password) {
         this.email = email;
         this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+
     }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public UserRole getRole() {
+        return role;
+    }
+
+    public void setRole(UserRole role) {
+        this.role = role;
+    }
+/*public User(@NonNull String email, @NonNull String password) {
+        this.email = email;
+        this.password = password;
+    }*/
 
     public Integer getId() {
         return id;

@@ -9,11 +9,13 @@ import { LoginComponent } from './login/login.component';
 import { WhiteSmallButtonComponent } from './components/buttons/white-small-button/white-small-button.component';
 import { InputComponent } from './components/input/input/input.component';
 import { LargeButtonComponent } from './components/buttons/large-button/large-button.component';
+import {SignupComponent} from "./signup/signup.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
+    SignupComponent,
     WhiteSmallButtonComponent,
     InputComponent,
     LargeButtonComponent,

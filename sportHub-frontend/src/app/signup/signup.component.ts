@@ -4,11 +4,12 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  selector: 'app-signup',
+  templateUrl: './signup.component.html',
+  styleUrls: ['./../login/login.component.css',
+              './signup.component.css']
 })
-export class LoginComponent implements OnInit {
+export class SignupComponent implements OnInit {
   constructor(private http: HttpClient) { }
 
   @ViewChildren(InputComponent) inputs: InputComponent[] = [];
@@ -24,7 +25,7 @@ export class LoginComponent implements OnInit {
     this.errorVisible = "display: none"
   }
 
-  login() {
+  signup() {
     let email = Array.from(this.inputs)[0].value
     let password = Array.from(this.inputs)[1].value
     let tokens = ''
