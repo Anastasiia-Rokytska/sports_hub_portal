@@ -8,7 +8,7 @@ plugins {
 
 group = 'com.company'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '17'
+//sourceCompatibility = '17'
 
 checkstyle {
 	toolVersion = '10.1'
@@ -31,6 +31,8 @@ processResources.dependsOn('sportHub-frontend:build')
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'com.h2database:h2:2.1.210'
 	implementation 'checkstyle:checkstyle:5.0'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'mysql:mysql-connector-java'
