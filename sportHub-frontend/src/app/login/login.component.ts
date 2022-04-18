@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChildren } from '@angular/core';
 import { InputComponent } from '../components/input/input/input.component';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-login',
@@ -15,8 +14,6 @@ export class LoginComponent implements OnInit {
   @ViewChildren(InputComponent) inputs: InputComponent[] = [];
 
   errorVisible = "display: none"
-
-  constructor() { }
 
   ngOnInit(): void {
   }
