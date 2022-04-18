@@ -20,6 +20,7 @@ export class SignupComponent implements OnInit {
 
   errorVisible = "display: none"
   errorEmail = "display: none"
+  errorPassword = "display: none"
 
   ngOnInit(): void {
   }
@@ -28,6 +29,7 @@ export class SignupComponent implements OnInit {
 
   hideMessages(){
     this.errorVisible = "display: none"
+    this.errorPassword = "display: none"
     this.errorEmail = "display: none"
   }
 
@@ -38,9 +40,14 @@ export class SignupComponent implements OnInit {
     let email = Array.from(this.inputs)[2].value
     let password = Array.from(this.inputs)[3].value
 
-    if(firstName === "" || lastName === "" || email === "" || password.length < 8){
+    if(firstName === "" || lastName === "" || email === "" || password === ""){
       this.hideMessages()
       this.errorVisible = "display: block"
+      return
+    }
+    if(password.length < 8){
+      this.hideMessages()
+      this.errorPassword = "display: block"
       return
     }
 
