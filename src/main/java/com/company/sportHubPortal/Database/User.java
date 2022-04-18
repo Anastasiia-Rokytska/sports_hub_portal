@@ -1,7 +1,8 @@
 package com.company.sportHubPortal.Database;
 
-import com.sun.istack.NotNull;
+//import com.sun.istack.NotNull;
 import org.springframework.lang.NonNull;
+
 
 import javax.persistence.*;
 
@@ -11,20 +12,14 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     Integer id;
-    @NotNull
     String firstName;
-    @NotNull
     String lastName;
-    @NotNull
     String email;
-    @NotNull
     String password;
-
-
     @Enumerated(EnumType.STRING)
     UserRole role;
 
-    public User(@NotNull String firstName, @NotNull String lastName, @NotNull String email, @NotNull String password) {
+    public User(@NonNull String firstName, @NonNull String lastName, @NonNull String email, @NonNull String password) {
         this.email = email;
         this.password = password;
         this.firstName = firstName;

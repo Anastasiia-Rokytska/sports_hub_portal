@@ -39,12 +39,13 @@ public class UserController {
         if(user.getFirstName() == null || user.getLastName() == null || user.getEmail() == null || user.getPassword() == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
-
         if(userService.getByEmail(user.getEmail()) != null) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
         }
-
         if(!validate(user.getEmail())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+        if(user.getPassword().length() < 8) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
 
