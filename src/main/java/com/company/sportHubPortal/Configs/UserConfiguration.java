@@ -1,6 +1,7 @@
 package com.company.sportHubPortal.Configs;
 
 import com.company.sportHubPortal.Database.User;
+import com.company.sportHubPortal.Database.UserRole;
 import com.company.sportHubPortal.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -18,6 +19,8 @@ public class UserConfiguration {
 
     @Bean
     public void userConfig(){
-        userService.save(new User("username", userService.encodePassword("password")));
+        User admin = new User("admin","admin","1@gmail.com", userService.encodePassword("admin"));
+        admin.setRole(UserRole.ADMIN);
+        userService.save(admin);
     }
 }

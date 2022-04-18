@@ -1,0 +1,38 @@
+#errorEmail{
+  color: red;
+}
+#leftimg{
+  position:absolute;
+  width:35%;
+  height:100%;
+  top: 0;
+  bottom: 0;
+}
+
+
+.flex-container {
+  display: flex;
+
+}
+
+.flex-child {
+  flex: 1;
+  height: 100%;
+
+}
+
+.flex-child:first-child {
+  margin-right: 20px;
+}
+
+#signup_block{
+  margin-top: 180px;
+  padding-right: 204px;
+}
+#successMessage{
+  color: green;
+}
+
+#errorPassword{
+  color: red;
+}
