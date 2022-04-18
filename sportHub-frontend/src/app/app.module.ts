@@ -17,6 +17,7 @@ import { LargeButtonComponent } from './components/buttons/large-button/large-bu
     WhiteSmallButtonComponent,
     InputComponent,
     LargeButtonComponent,
+    LargeButtonComponent
   ],
   imports: [
     BrowserModule,

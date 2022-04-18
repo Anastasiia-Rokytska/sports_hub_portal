@@ -26,5 +26,12 @@
       <app-input typeInput="password" nameField="password" placeholder="8 + characters (letters and numbers)" forgotPassword="display: block"></app-input>
       <app-large-button textButton="Log in" (click)="login()"></app-large-button>
     </div>
+    <form>
+      <span id="error">Incorrect user ID or password. Try again.</span>
+      <span id="success">Your password has been updated.</span>
+      <app-input typeInput="email" nameField="email address" placeholder="Email@gmail.com" nameInput="email_input"></app-input>
+      <app-input typeInput="password" nameField="password" placeholder="8 + characters (letters and numbers)" forgotPassword="display: block"></app-input>
+      <app-large-button textButton="Log in"></app-large-button>
+    </form>
   </div>
 </div>
