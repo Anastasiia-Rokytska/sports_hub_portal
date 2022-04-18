@@ -38,7 +38,9 @@ dependencies {
 	runtimeOnly 'mysql:mysql-connector-java'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
-
+	implementation 'org.springframework.boot:spring-boot-configuration-processor'
+	implementation 'com.auth0:java-jwt:3.19.1'
+	implementation 'com.google.code.gson:gson:2.9.0'
 }
 
 tasks.named('test') {

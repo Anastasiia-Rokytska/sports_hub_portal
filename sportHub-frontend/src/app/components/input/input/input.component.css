@@ -51,3 +51,9 @@ input:focus-visible{
   outline: none;
   border-color: #7F8899;
 }
+a:hover{
+  color:#69A9F4;
+}
+a:active{
+  color:#3C80CF;
+}

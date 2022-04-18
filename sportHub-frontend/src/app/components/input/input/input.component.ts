@@ -19,9 +19,10 @@ export class InputComponent implements OnInit {
   @Input()
   forgotPassword: string = 'display: none'
 
+  value: string = ''
+
   constructor() { }
 
   ngOnInit(): void {
   }
-
 }
