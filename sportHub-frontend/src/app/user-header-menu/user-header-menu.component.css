@@ -1,0 +1,47 @@
+img{
+  display: inline-block;
+  object-fit: cover;
+  height: 35px;
+  width: 35px;
+  border-radius: 50%;
+  margin: 10px;
+  padding: 0;
+}
+h1{
+  padding-top: 0;
+  padding-bottom: 0;
+  font-size: 15px;
+  text-align: left;
+  display: inline-block;
+  margin-bottom: 0;
+}
+
+p{
+  padding-bottom: 0;
+  padding-top: 0;
+  margin-top: 0;
+}
+
+.o{
+  display: inline-block;
+  padding: 0;
+}
+
+.btn-light{
+  background-color: white;
+  border: none;
+}
+.btn-light:focus {
+  box-shadow: none;
+}
+
+.show>.btn-light.dropdown-toggle{
+  background-color: white;
+  box-shadow: none;
+  border: none;
+}
+a{
+
+  -moz-text-size-adjust: auto;
+
+}

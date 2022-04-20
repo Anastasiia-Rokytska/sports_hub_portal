@@ -1,0 +1,14 @@
+.col-2, .col-4, .col{
+  padding: 0;
+
+}
+.row{
+
+
+}
+.br{
+  border-right: 1px solid lightgray;
+  min-height: 100%;
+}
+
+
