@@ -1,0 +1,22 @@
+button{
+  width: 130px;
+  height: 32px;
+
+  border: 1px solid #D72130;
+  box-sizing: border-box;
+
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 17px;
+  color: #D72130;
+  background-color: white;
+}
+button:hover{
+  background-color: #E02232;
+  color: white;
+}
+button:active{
+  background-color: #C80515;
+  color: white;
+}

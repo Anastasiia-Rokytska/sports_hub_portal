@@ -1,0 +1,88 @@
+#logo_container{
+  background-color: #D72130;
+  position: absolute;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+
+  width: 253px;
+  height: 83px;
+  top: 0;
+
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 28px;
+  color: #FFFBFB;
+}
+#small_text{
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 17px;
+  color: #434C5D;
+}
+#link_to_registration{
+  display: inline-flex;
+  text-align: center;
+  align-items: center;
+  width: auto;
+  margin-top: 24px;
+  margin-bottom: 0;
+  gap: 35px;
+}
+#left_side{
+  display: flex;
+}
+#right_side{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  width: auto;
+  /* margin: auto; */
+  margin-right: 56px;
+  /* justify-content: space-between; */
+}
+h4{
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 33px;
+  margin: 0;
+  padding-bottom: 20px;
+}
+#login_block{
+  margin-top: 264px;
+  padding-right: 204px;
+}
+#social_networks{
+  display: inline-flex;
+  gap: 12.8px;
+  margin-bottom: 20px;
+}
+form{
+  display: flex;
+  flex-direction: column;
+}
+app-input{
+  margin-bottom: 19px;
+}
+span{
+  display: none;
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 19px;
+  margin-bottom: 16px;
+}
+#error{
+  color: #D72130;
+}
+#success{
+  color: #57A902;
+}
+app-large-button{
+  margin-top: 15px;
+}

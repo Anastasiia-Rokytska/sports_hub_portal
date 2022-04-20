@@ -2,4 +2,20 @@
 .html, body{
   margin: 0;
   padding: 0;
+
+body{
+  padding: 0;
+  margin: 0;
+}
+
+app-login{
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin: auto;
+}
+
+app-input{
+  display: flex;
+  flex-direction: column;
 }

@@ -1,0 +1,41 @@
+<div class="flex-container">
+  <div class="flex-child left_side_image">
+
+    <img id="leftimg" src="assets/LoginPage.png">
+
+
+    <div id="logo_container">
+      SportsHub
+    </div>
+  </div>
+  <div class="flex-child" id='right_side'>
+    <div id='link_to_registration'>
+      <div id='small_text'>Already have an account?</div>
+      <app-white-small-button textButton="Log in"></app-white-small-button>
+    </div>
+    <div id="signup_block">
+      <h4>Create an account</h4>
+      <div id="social_networks">
+        <a href="">
+          <img class="social_network_icon" src="../../assets/FB.svg" href="google.com">
+        </a>
+        <a href="">
+          <img class="social_network_icon" src="../../assets/Gmail.svg" href="">
+        </a>
+      </div>
+      <div class="form">
+        <span id="error" [style]="errorVisible">All fields are required</span>
+        <span id="errorEmail" [style]="errorEmail">This email is already taken</span>
+        <span id="errorPassword" [style]="errorPassword">Password length must be 8+ symbols</span>
+        <!-- <span id="success" [style]="successVisible">Incorrect user ID or password. Try again.</span> -->
+        <app-input typeInput="firstname" nameField="First name" placeholder="John"
+                   nameInput="firstname_input"></app-input>
+        <app-input typeInput="lastname" nameField="Last name" placeholder="Doe" nameInput="lastname_input"></app-input>
+        <app-input typeInput="email" nameField="email address" placeholder="Email@gmail.com"
+                   nameInput="email_input"></app-input>
+        <app-input typeInput="password" nameField="password" placeholder="8 + characters (letters and numbers)"></app-input>
+        <app-large-button textButton="Register" (click)="signup()"></app-large-button>
+      </div>
+    </div>
+  </div>
+</div>
