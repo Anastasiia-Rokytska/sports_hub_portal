@@ -2,6 +2,7 @@ package com.company.sportHubPortal.Controllers;
 
 import com.company.sportHubPortal.Database.User;
 import com.company.sportHubPortal.Database.UserRole;
+import com.company.sportHubPortal.Services.EmailSenderService;
 import com.company.sportHubPortal.Services.JwtTokenService;
 import com.company.sportHubPortal.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +22,13 @@ public class UserController {
 
     final UserService userService;
     final JwtTokenService jwtTokenService;
+    final EmailSenderService emailSenderService;
 
     @Autowired
-    public UserController(UserService userService, JwtTokenService jwtTokenService) {
+    public UserController(UserService userService, JwtTokenService jwtTokenService, EmailSenderService emailSenderService) {
         this.userService = userService;
         this.jwtTokenService = jwtTokenService;
+        this.emailSenderService = emailSenderService;
     }
 
     public static boolean validate(String emailStr) {
