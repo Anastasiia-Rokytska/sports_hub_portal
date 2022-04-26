@@ -1,7 +1,5 @@
 package com.company.sportHubPortal.Services;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
 import com.company.sportHubPortal.Database.User;
 import com.company.sportHubPortal.Repositories.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;

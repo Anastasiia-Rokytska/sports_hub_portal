@@ -1,8 +1,6 @@
 package com.company.sportHubPortal.Database;
 
-//import com.sun.istack.NotNull;
 import org.springframework.lang.NonNull;
-
 
 import javax.persistence.*;
 
