@@ -2,6 +2,7 @@ package com.company.sportHubPortal.Controllers;
 
 import com.company.sportHubPortal.Database.User;
 import com.company.sportHubPortal.Database.UserRole;
+import com.company.sportHubPortal.Services.EmailSenderService;
 import com.company.sportHubPortal.Services.JwtTokenService;
 import com.company.sportHubPortal.Services.UserService;
 import org.slf4j.Logger;
@@ -23,12 +24,14 @@ public class UserController {
 
     final UserService userService;
     final JwtTokenService jwtTokenService;
+    final EmailSenderService emailSenderService;
     Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
-    public UserController(UserService userService, JwtTokenService jwtTokenService) {
+    public UserController(UserService userService, JwtTokenService jwtTokenService, EmailSenderService emailSenderService) {
         this.userService = userService;
         this.jwtTokenService = jwtTokenService;
+        this.emailSenderService = emailSenderService;
     }
 
     public static boolean validate(String emailStr) {

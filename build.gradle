@@ -41,6 +41,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-configuration-processor'
 	implementation 'com.auth0:java-jwt:3.19.1'
 	implementation 'com.google.code.gson:gson:2.9.0'
+	implementation 'org.springframework.boot:spring-boot-starter-mail:2.6.7'
 }
 
 tasks.named('test') {
