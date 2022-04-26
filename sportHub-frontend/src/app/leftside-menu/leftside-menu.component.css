@@ -1,0 +1,135 @@
+.sidenav {
+  position: fixed;
+  background-color: transparent;
+  overflow-x: hidden;
+  margin-left:0;
+  padding-top:1%;
+  z-index: 1;
+  width:8%;
+  height: 100%;
+}
+
+.sidenavSecondMenu {
+  position: fixed;
+  background-color: #ffffff;
+  overflow-x: hidden;
+  margin-left:8%;
+  padding-top:1%;
+  z-index: 1;
+  width:8%;
+  height: 100%;
+}
+
+.sidenavThirdMenu {
+  position: fixed;
+  background-color: #f8f8f8;
+  overflow-x: hidden;
+  margin-left:16%;
+  padding-top:1%;
+  z-index: 1;
+  width:8%;
+  height: 100%;
+}
+
+.sidenav a {
+  padding: 6px 8px 6px 20px;
+  text-decoration: none;
+  font-family: "Open Sans";
+  font-size: 14px;
+  color: #b2b2b2;
+  display: block;
+}
+
+.sidenav a:hover {
+  color: #E02232;
+}
+
+.button{
+  width: 100%;
+  background-color: transparent;
+  border: none;
+  color: #b2b2b2;
+}
+
+.button-active{
+  width: 100%;
+  background-color: transparent;
+  border: none;
+  color: #b2b2b2;
+  border-right: 5px solid #E02232;
+}
+
+.button:active{
+  color: #E02232;
+  border-right: 5px solid #E02232;
+}
+
+.button:focus{
+  color: #E02232;
+  border-right: 5px solid #E02232;
+}
+
+.button:visited{
+  color: #E02232;
+  border-right: 5px solid #E02232;
+}
+
+.menuItems {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.menuItems li {
+  float:left;
+  margin: 6px 8px 6px 8px;
+  width: 90%;
+  height: 30px;
+  position: relative;
+}
+
+.menuItems label,
+.menuItems input {
+  display: block;
+  position: absolute;
+  text-decoration: none;
+  font-family: "Open Sans";
+  font-size: 14px;
+  color: #b2b2b2;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.menuItems input[type="radio"] {
+  opacity: 0.01;
+  z-index: 100;
+}
+
+.firstMenu input[type="radio"]:checked+label,
+.Checked+label {
+  background: transparent;
+  color: #E02232;
+  border-right: 5px solid #E02232;
+}
+
+.menuItems label {
+  cursor: pointer;
+  padding-left:20px;
+}
+
+.secondMenu label {
+  color:black;
+}
+
+.menuItems label:hover {
+  background: transparent;
+  color: #E02232;
+}
+.secondMenu input[type="radio"]:checked+label,
+.Checked+label {
+  background-color: #F7D2D5;
+  color: #E02232;
+}
+

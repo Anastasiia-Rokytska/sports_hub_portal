@@ -1,8 +1,6 @@
 package com.company.sportHubPortal.Database;
 
-//import com.sun.istack.NotNull;
 import org.springframework.lang.NonNull;
-
 
 import javax.persistence.*;
 
@@ -34,6 +32,7 @@ public class User {
         this.password = password;
         this.role = role;
     }
+
 
     public User(String email, String password){
         this.email = email;
@@ -86,6 +85,18 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", role=" + role +
+                '}';
     }
 
     public User() {

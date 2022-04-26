@@ -1,0 +1,124 @@
+<div class="sidenav">
+  <ul class="menuItems firstMenu">
+    <li>
+      <input type="radio" id="home" name="amount" checked="checked" (click)="hideAll()"/>
+      <label for="home" class="button" (click)="hideAll()">HOME</label>
+    </li>
+    <li>
+      <input type="radio" id="nba" name="amount" (click)="menuVisibility('nba')"/>
+      <label for="nba" class="button" (click)="menuVisibility('nba')">NBA</label>
+    </li>
+    <li>
+      <input type="radio" id="nfl" name="amount" (click)="hideAll()"/>
+      <label for="nfl" class="button" (click)="hideAll()">NFL</label>
+    </li>
+    <li>
+      <input type="radio" id="mlb" name="amount" (click)="hideAll()"/>
+      <label for="mlb" class="button" (click)="hideAll()">MLB</label>
+    </li>
+    <li>
+      <input type="radio" id="nhl" name="amount" (click)="hideAll()"/>
+      <label for="nhl" class="button" (click)="hideAll()">NHL</label>
+    </li>
+    <li>
+      <input type="radio" id="cbb" name="amount" (click)="hideAll()"/>
+      <label for="cbb" class="button" (click)="hideAll()">CBB</label>
+    </li>
+    <li>
+      <input type="radio" id="cfb" name="amount" (click)="hideAll()"/>
+      <label for="cfb" class="button" (click)="hideAll()">CFB</label>
+    </li>
+    <li>
+      <input type="radio" id="nascar" name="amount" (click)="hideAll()"/>
+      <label for="nascar" class="button" (click)="hideAll()">NASCAR</label>
+    </li>
+    <li>
+      <input type="radio" id="golf" name="amount" (click)="hideAll()"/>
+      <label for="golf" class="button" (click)="hideAll()">GOLF</label>
+    </li>
+    <li>
+      <input type="radio" id="soccer" name="amount" (click)="hideAll()"/>
+      <label for="soccer" class="button" (click)="hideAll()">SOCCER</label>
+    </li>
+    <li>
+      <input type="radio" id="teamhub" name="amount" (click)="hideAll()"/>
+      <label for="teamhub" class="button" (click)="hideAll()">TEAM HUB</label>
+    </li>
+    <li>
+      <input type="radio" id="lifestyle" name="amount" (click)="hideAll()"/>
+      <label for="lifestyle" class="button" (click)="hideAll()">LIFESTYLE</label>
+    </li>
+    <li>
+      <input type="radio" id="dealbook" name="amount" (click)="hideAll()"/>
+      <label for="dealbook" class="button" (click)="hideAll()">DEALBOOK</label>
+    </li>
+    <li>
+      <input type="radio" id="video" name="amount" (click)="hideAll()"/>
+      <label for="video" class="button" (click)="hideAll()">VIDEO</label>
+    </li>
+  </ul>
+
+
+
+
+</div>
+
+<div class="sidenavSecondMenu" [style]="nbaMenu">
+  <ul class="menuItems secondMenu">
+    <li>
+      <input type="radio" id="nbaEast" name="secondMenuNba" (click)="hideThirdMenu()"/>
+      <label for="nbaEast" class="button" (click)="hideThirdMenu()">AFC East</label>
+    </li>
+    <li>
+      <input type="radio" id="nbaNorth" name="secondMenuNba" (click)="hideThirdMenu()"/>
+      <label for="nbaNorth" class="button" (click)="hideThirdMenu()">AFC North</label>
+    </li>
+    <li>
+      <input type="radio" id="nbaSouth" name="secondMenuNba" (click)="menuVisibility('nba-AFC-south')"/>
+      <label for="nbaSouth" class="button" (click)="menuVisibility('nba-AFC-south')">AFC South</label>
+    </li>
+    <li>
+      <input type="radio" id="nbaWest" name="secondMenuNba" (click)="hideThirdMenu()"/>
+      <label for="nbaWest" class="button" (click)="hideThirdMenu()">AFC West</label>
+    </li>
+    <li>
+      <input type="radio" id="nbaEast2" name="secondMenuNba" (click)="hideThirdMenu()"/>
+      <label for="nbaEast2" class="button" (click)="hideThirdMenu()">AFC East</label>
+    </li>
+    <li>
+      <input type="radio" id="nbaNorth2" name="secondMenuNba" (click)="hideThirdMenu()"/>
+      <label for="nbaNorth2" class="button" (click)="hideThirdMenu()">AFC North</label>
+    </li>
+    <li>
+      <input type="radio" id="nbaSouth2" name="secondMenuNba" (click)="menuVisibility('nba-AFC-south')"/>
+      <label for="nbaSouth2" class="button" (click)="menuVisibility('nba-AFC-south')">AFC South</label>
+    </li>
+    <li>
+      <input type="radio" id="nbaWest2" name="secondMenuNba" (click)="hideThirdMenu()"/>
+      <label for="nbaWest2" class="button" (click)="hideThirdMenu()">AFC West</label>
+    </li>
+
+  </ul>
+</div>
+
+<div class="sidenavThirdMenu" [style]="nbaAFCSouthMenu">
+  <ul class="menuItems secondMenu">
+    <li>
+      <input type="radio" id="houstonSouthNBA" name="nba-afc-south"/>
+      <label for="houstonSouthNBA" class="button">Houston</label>
+    </li>
+    <li>
+      <input type="radio" id="indianapolisSouthNBA" name="nba-afc-south"/>
+      <label for="indianapolisSouthNBA" class="button">Indianapolis</label>
+    </li>
+    <li>
+      <input type="radio" id="jacksonvilleSouthNBA" name="nba-afc-south"/>
+      <label for="jacksonvilleSouthNBA" class="button">Jacksonville</label>
+    </li>
+    <li>
+      <input type="radio" id="tennesseeSouthNBA" name="nba-afc-south"/>
+      <label for="tennesseeSouthNBA" class="button">Tennessee</label>
+    </li>
+  </ul>
+</div>
+
