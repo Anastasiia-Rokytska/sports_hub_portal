@@ -28,8 +28,7 @@ import {SignupComponent} from "./signup/signup.component";
     ShareNetworksComponent,
     UserHeaderMenuComponent,
     UserAndLanguageComponent,
-    LanguageMenuComponent
-
+    LanguageMenuComponent,
     LoginComponent,
     SignupComponent,
     WhiteSmallButtonComponent,
