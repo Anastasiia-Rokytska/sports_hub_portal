@@ -22,5 +22,6 @@ public class UserConfiguration {
         User admin = new User("admin","admin","1@gmail.com", userService.encodePassword("admin"));
         admin.setRole(UserRole.ADMIN);
         userService.save(admin);
+        userService.save(new User("firstname1", "lastname1", "email1@gmail.com", userService.encodePassword("qwerty"), UserRole.USER));
     }
 }
