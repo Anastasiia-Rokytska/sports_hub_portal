@@ -1,0 +1,54 @@
+
+.border-button {
+  width: 100%;
+  text-align: center;
+  background-color: #f63333;
+  text-decoration: none;
+  display: inline-block;
+  padding: 20px 30px;
+  margin: 0 0;
+  position: relative;
+  color: white;
+  border: 1px solid rgba(255, 255, 255, .4);
+  font-weight: 300;
+  font-family: 'Montserrat', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+.border-button:before, .border-button:after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  box-sizing: border-box;
+}
+.border-button:before {
+  bottom: 0;
+  left: 0;
+  border-left: 3px solid black;
+  border-top: 3px solid black;
+  transition: 0s ease opacity .8s, .2s ;
+}
+.border-button:after {
+  top: 0;
+  right: 0;
+  border-right: 3px solid black;
+  border-bottom: 3px solid black;
+  transition: 0s ease opacity .4s, .2s ;
+}
+.border-button:hover:before,
+.border-button:hover:after {
+  height: 100%;
+  width: 100%;
+  opacity: 1;
+}
+.border-button:hover:before {
+  transition: 0s ease opacity 0s, .2s ;
+}
+.border-button:hover:after {
+  transition: 0s ease opacity .4s, .2s ;
+}
+.border-button:hover {
+  background: red;
+}

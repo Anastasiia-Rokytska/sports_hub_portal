@@ -1,0 +1,34 @@
+.height {
+  height: auto;
+}
+
+input {
+  padding: 0;
+
+  border: none;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 10px;
+}
+
+
+.form-input {
+  outline: none;
+  height: auto;
+  text-indent: 33px;
+
+}
+
+.form-input:focus {
+  box-shadow: none;
+  border: none;
+  outline: none;
+}
+
+img {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 50px;
+  width: 25px;
+  height: 25px;
+}

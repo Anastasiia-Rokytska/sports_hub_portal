@@ -5,6 +5,8 @@ import com.company.sportHubPortal.Database.UserRole;
 import com.company.sportHubPortal.Services.EmailSenderService;
 import com.company.sportHubPortal.Services.JwtTokenService;
 import com.company.sportHubPortal.Services.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +25,7 @@ public class UserController {
     final UserService userService;
     final JwtTokenService jwtTokenService;
     final EmailSenderService emailSenderService;
+    Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
     public UserController(UserService userService, JwtTokenService jwtTokenService, EmailSenderService emailSenderService) {
@@ -40,15 +43,19 @@ public class UserController {
     public ResponseEntity<User> register(@RequestBody User user) {
 
         if(user.getFirstName() == null || user.getLastName() == null || user.getEmail() == null || user.getPassword() == null) {
+            logger.info(new Object(){}.getClass().getEnclosingMethod().getName() + "() " + " Empty fields");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
         if(userService.getByEmail(user.getEmail()) != null) {
+            logger.info(new Object(){}.getClass().getEnclosingMethod().getName() + "() " + " Email already exists");
             return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
         }
         if(!validate(user.getEmail())) {
+            logger.info(new Object(){}.getClass().getEnclosingMethod().getName() + "() " + " Invalid email");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
         if(user.getPassword().length() < 8) {
+            logger.info(new Object(){}.getClass().getEnclosingMethod().getName() + "() " + " Invalid password");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
 
@@ -56,6 +63,7 @@ public class UserController {
         user.setRole(UserRole.USER);
         userService.save(user);
 
+        logger.info(new Object(){}.getClass().getEnclosingMethod().getName() + "() " + " New user: " + user.toString());
         return ResponseEntity.ok(user);
     }
 
@@ -65,11 +73,14 @@ public class UserController {
     ){
         User foundUser = userService.getByEmail(user.getEmail());
         if (foundUser == null) {
+            logger.info(new Object(){}.getClass().getEnclosingMethod().getName() + "() " + " User not found");
            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
         if (!userService.decodePassword(user.getPassword(), foundUser.getPassword())){
+            logger.info(new Object(){}.getClass().getEnclosingMethod().getName() + "() " + " Incorrect password");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
+        logger.info("Correct user information");
         return ResponseEntity.ok(jwtTokenService.getRefreshAndAccessToken(foundUser.getId()));
     }
 }

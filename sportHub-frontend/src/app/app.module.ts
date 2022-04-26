@@ -5,6 +5,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http'
 
 import { AppComponent } from './app.component';
+import { HomeButtonComponent } from './home-button/home-button.component';
+import { HeaderComponent } from './header/header.component';
+import { SearchBlockComponent } from './search-block/search-block.component';
+import { ShareNetworksComponent } from './share-networks/share-networks.component';
+import { UserHeaderMenuComponent } from './user-header-menu/user-header-menu.component';
+import { UserAndLanguageComponent } from './user-and-language/user-and-language.component';
+import { LanguageMenuComponent } from './language-menu/language-menu.component';
+
 import { LoginComponent } from './login/login.component';
 import { WhiteSmallButtonComponent } from './components/buttons/white-small-button/white-small-button.component';
 import { InputComponent } from './components/input/input/input.component';
@@ -14,6 +22,13 @@ import {SignupComponent} from "./signup/signup.component";
 @NgModule({
   declarations: [
     AppComponent,
+    HomeButtonComponent,
+    HeaderComponent,
+    SearchBlockComponent,
+    ShareNetworksComponent,
+    UserHeaderMenuComponent,
+    UserAndLanguageComponent,
+    LanguageMenuComponent,
     LoginComponent,
     SignupComponent,
     WhiteSmallButtonComponent,

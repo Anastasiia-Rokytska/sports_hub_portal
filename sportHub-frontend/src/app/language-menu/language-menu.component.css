@@ -1,0 +1,21 @@
+a{
+  text-align: center;
+}
+
+.dropdown-menu{
+  min-width: fit-content !important;
+}
+
+.btn-light{
+  background-color: white;
+  border: none;
+}
+
+.btn-light:focus {
+  box-shadow: none;
+}
+
+.show>.btn-light.dropdown-toggle::after{
+  transform: rotate(180deg);
+}
+
