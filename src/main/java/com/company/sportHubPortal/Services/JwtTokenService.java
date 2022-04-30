@@ -38,11 +38,11 @@ public class JwtTokenService {
         LocalDateTime expirationTimeAccessToken = LocalDateTime.now().plusMinutes(15);
         String refreshToken = JWT.create()
                 .withExpiresAt(Date.from(expirationTimeRefreshToken.atStartOfDay(ZoneId.systemDefault()).toInstant()))
-                .withIssuer(idUser.toString())
+                .withSubject(idUser.toString())
                 .sign(algorithm);
         String accessToken = JWT.create()
                 .withExpiresAt(Date.from(expirationTimeAccessToken.atZone(ZoneId.systemDefault()).toInstant()))
-                .withIssuer(idUser.toString())
+                .withSubject(idUser.toString())
                 .sign(algorithm);
         Tokens tokens = new Tokens(accessToken, refreshToken);
         return new Gson().toJson(tokens);

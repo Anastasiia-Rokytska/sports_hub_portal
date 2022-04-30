@@ -83,4 +83,13 @@ public class UserController {
         logger.info("Correct user information");
         return ResponseEntity.ok(jwtTokenService.getRefreshAndAccessToken(foundUser.getId()));
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<User> userById(
+            @PathVariable Integer id
+    ){
+        User user = userService.getById(id);
+        if (user == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        return ResponseEntity.ok(user);
+    }
 }
