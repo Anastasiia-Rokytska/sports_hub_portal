@@ -5,6 +5,9 @@ import com.company.sportHubPortal.Database.UserRole;
 import com.company.sportHubPortal.Services.EmailSenderService;
 import com.company.sportHubPortal.Services.JwtTokenService;
 import com.company.sportHubPortal.Services.UserService;
+
+import net.bytebuddy.utility.RandomString;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +42,7 @@ public class UserController {
         return matcher.find();
     }
 
+
     @PostMapping("/sign-up")
     public ResponseEntity<User> register(@RequestBody User user) {
 
@@ -61,7 +65,19 @@ public class UserController {
 
         user.setPassword(userService.encodePassword(user.getPassword()));
         user.setRole(UserRole.USER);
+        user.setVerificationCode(RandomString.make(64));
+        user.setEnabled(false);
         userService.save(user);
+
+        String message = String.format(
+                "Hello, %s! \n" +
+                        "Welcome to Sporthub. Please, visit next link to verify your " +
+                        "account: http://localhost:8000/user/verify/%s",
+                user.getFirstName(),
+                user.getVerificationCode()
+        );
+
+        emailSenderService.sendTextMessage(user.getEmail(),"Verification code", message);
 
         logger.info(new Object(){}.getClass().getEnclosingMethod().getName() + "() " + " New user: " + user.toString());
         return ResponseEntity.ok(user);
@@ -80,7 +96,24 @@ public class UserController {
             logger.info(new Object(){}.getClass().getEnclosingMethod().getName() + "() " + " Incorrect password");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
+        if (!foundUser.isEnabled()){
+            logger.info(new Object(){}.getClass().getEnclosingMethod().getName() + "() " + "Account is not verified");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
         logger.info("Correct user information");
         return ResponseEntity.ok(jwtTokenService.getRefreshAndAccessToken(foundUser.getId()));
+    }
+
+    @GetMapping("/verify/{code}")
+    public String verify(@PathVariable String code) {
+
+        if (userService.verifyUser(code)) {
+            logger.info(new Object(){}.getClass().getEnclosingMethod().getName() + "() " + "Account is verified");
+            return "Account is verified!";
+        } else {
+            logger.info(new Object(){}.getClass().getEnclosingMethod().getName() + "() " + "Account is not verified");
+            return "Incorrect verification link";
+        }
+
     }
 }

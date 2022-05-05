@@ -14,6 +14,8 @@ public class User {
     String lastName;
     String email;
     String password;
+    String verificationCode;
+    boolean enabled;
     @Enumerated(EnumType.STRING)
     UserRole role;
 
@@ -62,10 +64,6 @@ public class User {
     public void setRole(UserRole role) {
         this.role = role;
     }
-/*public User(@NonNull String email, @NonNull String password) {
-        this.email = email;
-        this.password = password;
-    }*/
 
     public Integer getId() {
         return id;
@@ -86,6 +84,15 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public String getVerificationCode() {return verificationCode;}
+
+    public void setVerificationCode(String verificationCode) {this.verificationCode = verificationCode;}
+
+    public boolean isEnabled() {return enabled;}
+
+    public void setEnabled(boolean enabled) {this.enabled = enabled;}
+
 
     @Override
     public String toString() {
