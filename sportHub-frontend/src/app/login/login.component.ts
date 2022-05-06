@@ -9,7 +9,9 @@ import { Observable } from 'rxjs';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    ) { }
 
   @ViewChildren(InputComponent) inputs: InputComponent[] = [];
 

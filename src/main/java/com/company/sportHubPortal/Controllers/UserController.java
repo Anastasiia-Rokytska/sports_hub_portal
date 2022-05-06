@@ -2,16 +2,21 @@ package com.company.sportHubPortal.Controllers;
 
 import com.company.sportHubPortal.Database.User;
 import com.company.sportHubPortal.Database.UserRole;
+import com.company.sportHubPortal.Security.CustomUserDetails;
 import com.company.sportHubPortal.Services.EmailSenderService;
 import com.company.sportHubPortal.Services.JwtTokenService;
 import com.company.sportHubPortal.Services.UserService;
+import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -67,29 +72,12 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
-    @PostMapping("/login" )
-    public ResponseEntity<Object> login(
-            @RequestBody User user
-    ){
-        User foundUser = userService.getByEmail(user.getEmail());
-        if (foundUser == null) {
-            logger.info(new Object(){}.getClass().getEnclosingMethod().getName() + "() " + " User not found");
-           return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-        }
-        if (!userService.decodePassword(user.getPassword(), foundUser.getPassword())){
-            logger.info(new Object(){}.getClass().getEnclosingMethod().getName() + "() " + " Incorrect password");
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
-        }
-        logger.info("Correct user information");
-        return ResponseEntity.ok(jwtTokenService.getRefreshAndAccessToken(foundUser.getId()));
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<User> userById(
-            @PathVariable Integer id
-    ){
-        User user = userService.getById(id);
+    @GetMapping("/own_information")
+    public ResponseEntity<Object> userByHimself() {
+        UserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String email = userDetails.getUsername();
+        User user = userService.getByEmail(email);
         if (user == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        return ResponseEntity.ok(user);
+        return ResponseEntity.ok(new Gson().toJson(user));
     }
 }

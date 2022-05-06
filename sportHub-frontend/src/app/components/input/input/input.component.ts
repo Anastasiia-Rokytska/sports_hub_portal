@@ -1,4 +1,4 @@
-import { Component, Inject, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-input',
@@ -15,6 +15,9 @@ export class InputComponent implements OnInit {
 
   @Input()
   nameField: string = ''
+
+  @Input()
+  id: string = ''
 
   @Input()
   forgotPassword: string = 'display: none'

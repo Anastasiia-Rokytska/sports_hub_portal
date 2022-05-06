@@ -1,6 +1,5 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-personal-page',
@@ -11,7 +10,6 @@ export class PersonalPageComponent implements OnInit {
 
   constructor(
     private http: HttpClient,
-    private route: ActivatedRoute
   ) { }
 
   firstName: string = ''
@@ -20,19 +18,21 @@ export class PersonalPageComponent implements OnInit {
   image: Blob | null = null
 
   ngOnInit(): void {
-    let id = this.route.snapshot.params['id'];
-    console.log(id)
-    this.getUser(id).subscribe((response: any) => {
+    this.getUser().subscribe((response: any) => {
+      console.log("Response: ", response)
       this.firstName = response.firstName
       this.lastName = response.lastName
       this.email = response.email
     }, (error) => {
-      console.log(error.error)
+      console.log("Error: ", error.error)
     })
   }
 
-  getUser(id: number){
-    return this.http.get(`user/${id}`)
+  getUser(){
+    const httpOptions = {
+      headers: new HttpHeaders({'Content-Type': 'application/json', 'Accept': 'application/json'})
+    }
+    return this.http.get("user/own_information", httpOptions)
   }
 
   changePassword(){}

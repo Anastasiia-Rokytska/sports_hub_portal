@@ -62,10 +62,6 @@ public class User {
     public void setRole(UserRole role) {
         this.role = role;
     }
-/*public User(@NonNull String email, @NonNull String password) {
-        this.email = email;
-        this.password = password;
-    }*/
 
     public Integer getId() {
         return id;
