@@ -22,7 +22,9 @@ export class SignupComponent implements OnInit {
   errorEmail = "display: none"
   errorPassword = "display: none"
 
+
   ngOnInit(): void {
+
   }
 
   response: Observable<string> | undefined

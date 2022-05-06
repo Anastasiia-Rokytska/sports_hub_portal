@@ -4,8 +4,8 @@
   <title>Document</title>
 </head>
 <body>
-  <app-header></app-header>
-  <leftside-menu></leftside-menu>
+  <app-header *ngIf="header"></app-header>
+  <leftside-menu *ngIf="menu"></leftside-menu>
 
 
 </body>
