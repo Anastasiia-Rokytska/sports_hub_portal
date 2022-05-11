@@ -5,6 +5,8 @@ bin/
 .idea/
 .gradle/
 .classpath
+log/
+src/main/resources/static/
 
 # WebUI Builds
 tmp/
