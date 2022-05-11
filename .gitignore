@@ -6,10 +6,10 @@ bin/
 .gradle/
 .classpath
 log/
-src/main/resources/static/
 
 # WebUI Builds
 tmp/
+src/main/resources/static/
 
 # WebUI dependencies
 node_modules/
