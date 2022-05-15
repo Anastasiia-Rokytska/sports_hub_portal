@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit {
 
   @ViewChildren(InputComponent) inputs: InputComponent[] = [];
 
-  hasError = false
+  hasError: boolean = false
   errorVisible = "display: none"
 
   ngOnInit(): void {}
@@ -29,7 +29,6 @@ export class LoginComponent implements OnInit {
   login() {
     let email = Array.from(this.inputs)[0].value
     let password = Array.from(this.inputs)[1].value
-    let tokens = ''
 
     let body = JSON.stringify({email, password})
     const httpOptions = {
@@ -38,10 +37,11 @@ export class LoginComponent implements OnInit {
 
     this.response = this.http.post<string>('/user/login', body, httpOptions)
     console.log(this.response)
-    this.response.subscribe(res => {
+    this.response.subscribe(() => {
       this.hasError = false
       this.router.navigate(['/personal_page'], { relativeTo: this.route })
-    }, error => {
+    }, (error) => {
+      console.log(error.error)
       this.hasError = true
     })
   }
