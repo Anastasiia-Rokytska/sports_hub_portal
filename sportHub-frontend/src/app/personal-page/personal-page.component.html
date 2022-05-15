@@ -1,0 +1,22 @@
+<app-header></app-header>
+<div class="page">
+  <leftside-menu></leftside-menu>
+  <div class="main_part">
+    <div class="navigate_buttons">
+      <app-segment text="Personal" class="active_segment"></app-segment>
+      <app-segment text="Change password" (click)="changePassword()"></app-segment>
+      <app-segment text="My surveys" (click)="mySurveys()"></app-segment>
+      <app-segment text="Team hub" (click)="teamHub()"></app-segment>
+    </div>
+    <div class="user_photo">
+      <img src="/assets/icons/userExample.png" class="user_icon">
+      <img src="/assets/icons/photoIcon.png" class="load_photo">
+    </div>
+    <div class="update_profile">
+      <app-input nameField="First name: " [value]="firstName"></app-input>
+      <app-input nameField="Last name: " [value]="lastName"></app-input>
+      <app-input nameField="Email: " [value]="email"></app-input>
+    </div>
+    <app-large-button textButton="Update profile"></app-large-button>
+  </div>
+</div>
