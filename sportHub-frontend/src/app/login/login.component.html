@@ -13,15 +13,14 @@
     <h4>Log in to Sports Hub</h4>
     <div id="social_networks">
       <a href="">
-        <img class="social_network_icon" src="../../assets/FB.svg" href="google.com">
+        <img class="social_network_icon" src="assets/icons/FB.png" href="#">
       </a>
       <a href="">
-        <img class="social_network_icon" src="../../assets/Gmail.svg" href="">
+        <img class="social_network_icon" src="assets/icons/Gmail.png" href="#">
       </a>
     </div>
     <form class="form" (ngSubmit)="login()">
-      <span id="error" [style]="errorVisible">Incorrect user ID or password. Try again.</span>
-      <!-- <span id="success" [style]="successVisible">Incorrect user ID or password. Try again.</span> -->
+      <span id="error" *ngIf="hasError">Incorrect user ID or password. Try again.</span>
       <app-input typeInput="email" nameField="email" placeholder="Email@gmail.com" id="email"></app-input>
       <app-input typeInput="password" nameField="password" placeholder="8 + characters (letters and numbers)" forgotPassword="display: block" id="password"></app-input>
       <app-large-button textButton="Log in"></app-large-button>
