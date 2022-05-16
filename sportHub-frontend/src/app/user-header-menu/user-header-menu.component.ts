@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-user-header-menu',
@@ -8,8 +8,8 @@ import { Component, OnInit } from '@angular/core';
 export class UserHeaderMenuComponent implements OnInit {
 
   constructor() { }
-  userName = "Ivan Baloh"
-  userEmail = "ivanbaloh@gmail.com"
+  @Input() userName = "Ivan Baloh"
+  @Input() userEmail = "ivanbaloh@gmail.com"
   ngOnInit(): void {
   }
 

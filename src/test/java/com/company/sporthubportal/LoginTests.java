@@ -3,14 +3,20 @@ import com.company.sporthubportal.database.User;
 import com.google.gson.Gson;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+@AutoConfigureRestDocs(outputDir = "target/generated-snippets/login")
 @AutoConfigureMockMvc
 @SpringBootTest
 public class LoginTests {
@@ -24,8 +30,8 @@ public class LoginTests {
                         .content(new Gson().toJson(user))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
-
+                .andExpect(status().isOk())
+                .andDo(document("{methodName}"));
     }
     @Test
     public void unvalidData() throws Exception{
@@ -34,9 +40,10 @@ public class LoginTests {
                         .content(new Gson().toJson(user))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest());
-
+                .andExpect(status().isBadRequest())
+                .andDo(document("{methodName}"));
     }
+
     @Test
     public void wrongPassword() throws Exception{
         User user = new User("email1@gmail.com", "qwer123ty");
@@ -44,8 +51,8 @@ public class LoginTests {
                         .content(new Gson().toJson(user))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isUnauthorized());
-
+                .andExpect(status().isUnauthorized())
+                .andDo(document("{methodName}"));
     }
 
     @Test
@@ -55,7 +62,7 @@ public class LoginTests {
                         .content(new Gson().toJson(user))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest());
-
+                .andExpect(status().isBadRequest())
+                .andDo(document("{methodName}"));
     }
 }
