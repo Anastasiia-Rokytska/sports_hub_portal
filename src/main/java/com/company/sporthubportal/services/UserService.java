@@ -1,7 +1,7 @@
-package com.company.sportHubPortal.Services;
+package com.company.sporthubportal.services;
 
-import com.company.sportHubPortal.Database.User;
-import com.company.sportHubPortal.Repositories.UserRepository;
+import com.company.sporthubportal.database.User;
+import com.company.sporthubportal.repositories.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

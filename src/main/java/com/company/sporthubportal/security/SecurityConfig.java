@@ -1,4 +1,4 @@
-package com.company.sportHubPortal.Security;
+package com.company.sporthubportal.security;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

@@ -1,9 +1,9 @@
-package com.company.sportHubPortal;
+package com.company.sporthubportal;
 
-import com.company.sportHubPortal.Controllers.UserController;
-import com.company.sportHubPortal.Database.User;
-import com.company.sportHubPortal.Database.UserRole;
-import com.company.sportHubPortal.Services.UserService;
+import com.company.sporthubportal.controllers.UserController;
+import com.company.sporthubportal.database.User;
+import com.company.sporthubportal.database.UserRole;
+import com.company.sporthubportal.services.UserService;
 import com.google.gson.Gson;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

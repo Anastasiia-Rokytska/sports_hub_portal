@@ -1,10 +1,10 @@
-package com.company.sportHubPortal.Controllers;
+package com.company.sporthubportal.controllers;
 
-import com.company.sportHubPortal.Database.User;
-import com.company.sportHubPortal.Database.UserRole;
-import com.company.sportHubPortal.Services.EmailSenderService;
-import com.company.sportHubPortal.Services.JwtTokenService;
-import com.company.sportHubPortal.Services.UserService;
+import com.company.sporthubportal.database.User;
+import com.company.sporthubportal.database.UserRole;
+import com.company.sporthubportal.services.EmailSenderService;
+import com.company.sporthubportal.services.JwtTokenService;
+import com.company.sporthubportal.services.UserService;
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 import java.util.Date;
@@ -109,19 +109,34 @@ public class UserController {
     email = new Gson().fromJson(email, StringRequestParam.class).getParam();
     User user = userService.getByEmail(email);
 
+
     if (user == null) {
       logger.info(new Object() {
       }.getClass().getEnclosingMethod().getName() + "() " + " User not found");
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
     }
+
+    if (user.getRecoverPassHash() != null) {
+      logger.info(new Object() {
+      }.getClass().getEnclosingMethod().getName() + "() " + " User has already resetHash");
+      return ResponseEntity.status(HttpStatus.UNAVAILABLE_FOR_LEGAL_REASONS).body(null);
+    }
+
+    logger.info("User is found");
+
     String recoverPassHash =
         userService.encodePassword(String.valueOf(new Date().getTime())).replaceAll("[^\\w ]", "");
     user.setRecoverPassHash(recoverPassHash);
 
     userService.save(user);
 
+    logger.info("new PassHash was saved");
+
     String emailText = "http://localhost:8000/reset-password/" + user.getRecoverPassHash();
     emailSenderService.sendTextMessage(user.getEmail(), "Reset password", emailText);
+
+    logger.info("Email is sent");
+
     return ResponseEntity.ok(HttpStatus.OK);
   }
 
@@ -129,18 +144,26 @@ public class UserController {
   public ResponseEntity<Object> resetPassword(@PathVariable(value = "id") String userId,
                                               @RequestBody String password) {
 
+    String o = new Object() {
+    }.getClass().getEnclosingMethod().getName() + "() ";
+
     password = new Gson().fromJson(password, StringRequestParam.class).getParam();
 
     User user = userService.getByRecoverPassHash(userId);
 
     if (user == null) {
-      logger.info(new Object() {
-      }.getClass().getEnclosingMethod().getName() + "() " + " User not found");
+      logger.info(o + " User not found");
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
     }
 
+    logger.info("User is found");
+
     user.setPassword(userService.encodePassword(password));
+    user.setRecoverPassHash(null);
     userService.save(user);
+
+    logger.info("new pass is saved, hashPass==null");
+
     return ResponseEntity.ok(HttpStatus.OK);
   }
 

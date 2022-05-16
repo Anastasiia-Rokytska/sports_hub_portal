@@ -1,4 +1,4 @@
-package com.company.sportHubPortal.Services;
+package com.company.sporthubportal.services;
 
 import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;

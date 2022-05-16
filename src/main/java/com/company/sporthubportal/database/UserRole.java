@@ -1,4 +1,4 @@
-package com.company.sportHubPortal.Database;
+package com.company.sporthubportal.database;
 
 public enum UserRole {
     USER,

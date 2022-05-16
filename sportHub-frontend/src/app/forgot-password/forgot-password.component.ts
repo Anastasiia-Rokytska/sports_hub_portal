@@ -2,6 +2,7 @@ import {Component, OnInit, ViewChildren} from '@angular/core';
 import {InputComponent} from "../components/input/input/input.component";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-forgot-password',
@@ -33,6 +34,15 @@ export class ForgotPasswordComponent implements OnInit {
   request_link() {
 
     let param = Array.from(this.inputs)[0].value
+
+    if(param==''){
+      Swal.fire({
+        title: 'Input the text',
+        icon: 'error',
+        timer: 5000,
+      })
+    }
+
     let body = JSON.stringify({param})
     const httpOptions = {
       headers: new HttpHeaders({'Content-Type': 'application/json', 'Accept': 'application/json'})
@@ -40,14 +50,32 @@ export class ForgotPasswordComponent implements OnInit {
 
     this.response = this.http.post<string>('/user/forgot-password', body, httpOptions)
     console.log(this.response)
-    console.log("hello")
+
 
     this.response.subscribe(res => {
-        this.hideInput = false
-        this.showCheck = true
-        console.log(res)
+      this.hideInput = false
+      this.showCheck = true
     }, error => {
-      console.log(error)
+
+      if (error.status == 400) {
+
+        Swal.fire({
+          title: 'Error...',
+          text: 'No user with this email is registered\'',
+          icon: 'error',
+          timer: 5000,
+        })
+        console.log('User not found')
+      } else if (error.status == 451) {
+        Swal.fire({
+          title: 'Check your email!',
+          text: 'You have already requested for reset password!',
+          icon: 'warning',
+          timer: 3000
+        })
+        console.log('User has already requested for reset pass')
+      } else
+        console.log(error)
     })
 
   }

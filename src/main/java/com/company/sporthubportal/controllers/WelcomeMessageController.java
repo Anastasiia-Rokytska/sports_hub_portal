@@ -1,7 +1,7 @@
-package com.company.sportHubPortal.Controllers;
+package com.company.sporthubportal.controllers;
 
-import com.company.sportHubPortal.Services.EmailSenderService;
-import com.company.sportHubPortal.Services.UserService;
+import com.company.sporthubportal.services.EmailSenderService;
+import com.company.sporthubportal.services.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

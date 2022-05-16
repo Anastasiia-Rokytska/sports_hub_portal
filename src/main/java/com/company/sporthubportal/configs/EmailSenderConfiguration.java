@@ -1,4 +1,4 @@
-package com.company.sportHubPortal.Configs;
+package com.company.sporthubportal.configs;
 
 import java.util.Properties;
 import org.springframework.context.annotation.Bean;

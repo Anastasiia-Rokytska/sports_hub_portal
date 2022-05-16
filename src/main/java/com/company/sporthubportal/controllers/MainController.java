@@ -1,4 +1,4 @@
-package com.company.sportHubPortal.Controllers;
+package com.company.sporthubportal.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
