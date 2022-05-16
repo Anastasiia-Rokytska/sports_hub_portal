@@ -19,6 +19,8 @@ import {SignupComponent} from "./signup/signup.component";
 import {LeftsideMenuComponent} from "./leftside-menu/leftside-menu.component";
 import { PersonalPageComponent } from './personal-page/personal-page.component';
 import { SegmentComponent } from './components/segment/segment/segment.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +41,9 @@ import { SegmentComponent } from './components/segment/segment/segment.component
     LeftsideMenuComponent,
     PersonalPageComponent,
     SegmentComponent
+    LeftsideMenuComponent,
+    ForgotPasswordComponent,
+    ResetPasswordComponent
   ],
   imports: [
     BrowserModule,

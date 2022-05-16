@@ -1,5 +1,6 @@
 <div>
   <label [for]="nameField">{{nameField}}</label>
-  <a href="#" [style]="forgotPassword">Forgot password?</a>
+  <a routerLink="/forgot-password" [style]="forgotPassword">Forgot password?</a>
 </div>
-<input [(ngModel)]="value" [type]="typeInput" [name]="nameField" [placeholder]="placeholder" [id]="id">
+<input [(ngModel)]="value" [type]="typeInput" [name]="nameField" [placeholder]="placeholder">
+<router-outlet></router-outlet>
