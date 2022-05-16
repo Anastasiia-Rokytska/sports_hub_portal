@@ -7,15 +7,19 @@ import com.company.sportHubPortal.Services.UserService;
 import com.google.gson.Gson;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+@AutoConfigureRestDocs(outputDir = "target/generated-snippets/signUp")
 @AutoConfigureMockMvc
 @SpringBootTest
 public class SignInTest {
@@ -42,7 +46,8 @@ public class SignInTest {
                 .andExpect(jsonPath("firstName").value(user.getFirstName()))
                 .andExpect(jsonPath("lastName").value(user.getLastName()))
                 .andExpect(jsonPath("email").value(user.getEmail()))
-                .andExpect(jsonPath("role").value(user.getRole().toString()));
+                .andExpect(jsonPath("role").value(user.getRole().toString()))
+                .andDo(document("{methodName}"));
     }
 
     @Test
@@ -52,7 +57,8 @@ public class SignInTest {
                         .content(new Gson().toJson(user))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().is(400));
+                .andExpect(status().is(400))
+                .andDo(document("{methodName}"));
     }
 
     @Test
@@ -62,7 +68,8 @@ public class SignInTest {
                         .content(new Gson().toJson(user))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().is(400));
+                .andExpect(status().is(400))
+                .andDo(document("{methodName}"));
     }
 
     @Test
@@ -72,7 +79,8 @@ public class SignInTest {
                         .content(new Gson().toJson(user))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().is(400));
+                .andExpect(status().is(400))
+                .andDo(document("{methodName}"));
     }
 
     @Test
@@ -82,7 +90,8 @@ public class SignInTest {
                         .content(new Gson().toJson(user))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().is(409));
+                .andExpect(status().is(409))
+                .andDo(document("{methodName}"));
     }
 
     @Test
@@ -92,6 +101,7 @@ public class SignInTest {
                         .content(new Gson().toJson(user))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().is(400));
+                .andExpect(status().is(400))
+                .andDo(document("{methodName}"));
     }
 }
