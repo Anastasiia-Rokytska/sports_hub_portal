@@ -17,6 +17,8 @@ import { InputComponent } from './components/input/input/input.component';
 import { LargeButtonComponent } from './components/buttons/large-button/large-button.component';
 import {SignupComponent} from "./signup/signup.component";
 import {LeftsideMenuComponent} from "./leftside-menu/leftside-menu.component";
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,9 @@ import {LeftsideMenuComponent} from "./leftside-menu/leftside-menu.component";
     InputComponent,
     LargeButtonComponent,
     LargeButtonComponent,
-    LeftsideMenuComponent
+    LeftsideMenuComponent,
+    ForgotPasswordComponent,
+    ResetPasswordComponent
   ],
   imports: [
     BrowserModule,

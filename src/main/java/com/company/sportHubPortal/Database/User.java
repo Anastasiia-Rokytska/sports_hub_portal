@@ -14,6 +14,8 @@ public class User {
     String lastName;
     String email;
     String password;
+    String recoverPassURI;
+
     @Enumerated(EnumType.STRING)
     UserRole role;
 
@@ -100,6 +102,13 @@ public class User {
     }
 
     public User() {
+    }
 
+    public String getRecoverPassURI() {
+        return recoverPassURI;
+    }
+
+    public void setRecoverPassURI(String recoverPassURI) {
+        this.recoverPassURI = recoverPassURI;
     }
 }
