@@ -18,71 +18,73 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    final CustomUserDetailsService userDetailsService;
-    final PasswordEncoder passwordEncoder;
-    final JwtTokenService jwtTokenService;
+  final CustomUserDetailsService userDetailsService;
+  final PasswordEncoder passwordEncoder;
+  final JwtTokenService jwtTokenService;
 
-    @Autowired
-    public SecurityConfig(CustomUserDetailsService userDetailsService,
-                          PasswordEncoder passwordEncoder,
-                          JwtTokenService jwtTokenService) {
-        this.userDetailsService = userDetailsService;
-        this.passwordEncoder = passwordEncoder;
-        this.jwtTokenService = jwtTokenService;
-    }
+  @Autowired
+  public SecurityConfig(CustomUserDetailsService userDetailsService,
+                        PasswordEncoder passwordEncoder,
+                        JwtTokenService jwtTokenService) {
+    this.userDetailsService = userDetailsService;
+    this.passwordEncoder = passwordEncoder;
+    this.jwtTokenService = jwtTokenService;
+  }
 
 
-    @Override
-    protected void configure(HttpSecurity httpSecurity) throws Exception {
-        CustomAuthenticationFilter authenticationFilter = new CustomAuthenticationFilter(
-                authenticationManagerBean(),
-                jwtTokenService,
-                userDetailsService);
-        authenticationFilter.setFilterProcessesUrl("/user/login");
+  @Override
+  protected void configure(HttpSecurity httpSecurity) throws Exception {
+    CustomAuthenticationFilter authenticationFilter = new CustomAuthenticationFilter(
+        authenticationManagerBean(),
+        jwtTokenService,
+        userDetailsService);
+    authenticationFilter.setFilterProcessesUrl("/user/login");
 
-        CustomAuthorizationFilter authorizationFilter = new CustomAuthorizationFilter(
-                jwtTokenService,
-                authenticationManagerBean(),
-                userDetailsService);
+    CustomAuthorizationFilter authorizationFilter = new CustomAuthorizationFilter(
+        jwtTokenService,
+        authenticationManagerBean(),
+        userDetailsService);
 
-        httpSecurity.cors().disable();
-        httpSecurity.csrf().disable();
+    httpSecurity.cors().disable();
+    httpSecurity.csrf().disable();
 
-        httpSecurity.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+    httpSecurity.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-        httpSecurity.authorizeRequests()
-                .antMatchers("/user/own_information", "/personal_page").authenticated()
-                .and()
-                .addFilterAfter(authorizationFilter, authenticationFilter.getClass());
+    httpSecurity.authorizeRequests()
+        .antMatchers("/user/own_information", "/personal_page").authenticated()
+        .and()
+        .addFilterAfter(authorizationFilter, authenticationFilter.getClass());
 
-        httpSecurity
-                .formLogin()
-                .loginPage("/login")
-                .usernameParameter("email")
-                .permitAll()
-                .and().addFilter(authenticationFilter);
+    httpSecurity
+        .formLogin()
+        .loginPage("/login")
+        .usernameParameter("email")
+        .permitAll()
+        .and().addFilter(authenticationFilter);
 
-        httpSecurity
-                .logout()
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/login")
-                .deleteCookies("access_token")
-                .deleteCookies("refresh_token");
-    }
+    httpSecurity
+        .logout()
+        .logoutUrl("/logout")
+        .logoutSuccessUrl("/login")
+        .deleteCookies("access_token")
+        .deleteCookies("refresh_token");
+  }
 
-    @Override
-    public void configure(WebSecurity web) {
-        web.ignoring().antMatchers("/assets/**", "/user/verify/**");
-    }
+  @Override
+  public void configure(WebSecurity web) {
+    web.ignoring().antMatchers("/assets/**", "/user/verify/**");
+  }
 
-    @Bean(name = BeanIds.AUTHENTICATION_MANAGER)
-    @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
-    }
+  @Override
+  protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
+  }
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
-    }
+  @Bean(name = BeanIds.AUTHENTICATION_MANAGER)
+  @Override
+  public AuthenticationManager authenticationManagerBean() throws Exception {
+    return super.authenticationManagerBean();
+  }
+
+
 }

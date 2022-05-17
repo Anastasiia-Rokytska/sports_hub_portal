@@ -12,15 +12,8 @@ import org.springframework.web.servlet.view.RedirectView;
 @RestController
 public class WelcomeMessageController {
 
-
-  private final EmailSenderService emailSenderService;
-  private final UserService userService;
-  private final Logger logger = LoggerFactory.getLogger(UserController.class);
-
   @Autowired
-  public WelcomeMessageController(EmailSenderService emailSenderService, UserService userService) {
-    this.emailSenderService = emailSenderService;
-    this.userService = userService;
+  public WelcomeMessageController() {
   }
 
   @GetMapping("/welcome")

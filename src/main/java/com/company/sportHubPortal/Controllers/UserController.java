@@ -116,7 +116,8 @@ public class UserController {
       return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
     }
     logger.info("Correct user information");
-    return ResponseEntity.ok(jwtTokenService.getRefreshAndAccessToken(foundUser.getId()));
+    return ResponseEntity.ok(jwtTokenService.getRefreshAndAccessToken(
+        String.valueOf(foundUser.getId())));
   }
 
   @GetMapping("/verify/{code}")
