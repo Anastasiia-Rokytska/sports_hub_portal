@@ -22,10 +22,10 @@ public class UserConfiguration {
         User admin = new User("admin","admin","1@gmail.com", userService.encodePassword("admin"));
         admin.setRole(UserRole.ADMIN);
         userService.save(admin);
-        userService.save(new User("firstname1", "lastname1", "email1@gmail.com", userService.encodePassword("qwerty"), UserRole.USER));
-        userService.save(new User("user1firstname", "user1lastname", "user1@gmail.com", userService.encodePassword("password"), UserRole.USER));
-        userService.save(new User("user2firstname", "user2lastname", "user2@gmail.com", userService.encodePassword("password"), UserRole.USER));
-        userService.save(new User("user3firstname", "user3lastname", "user3@gmail.com", userService.encodePassword("password"), UserRole.USER));
+        userService.save(new User("firstname1", "lastname1", "email1@gmail.com", userService.encodePassword("qwerty"), UserRole.USER, true));
+        userService.save(new User("user1firstname", "user1lastname", "user1@gmail.com", userService.encodePassword("password"), UserRole.USER, true));
+        userService.save(new User("user2firstname", "user2lastname", "user2@gmail.com", userService.encodePassword("password"), UserRole.USER, true));
+        userService.save(new User("user3firstname", "user3lastname", "user3@gmail.com", userService.encodePassword("password"), UserRole.USER, true));
 
     }
 }

@@ -31,6 +31,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         this.jwtTokenService = jwtTokenService;
     }
 
+
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         CustomAuthenticationFilter authenticationFilter = new CustomAuthenticationFilter(
@@ -71,7 +72,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) {
-        web.ignoring().antMatchers("/assets/**");
+        web.ignoring().antMatchers("/assets/**", "/user/verify/**");
     }
 
     @Bean(name = BeanIds.AUTHENTICATION_MANAGER)
