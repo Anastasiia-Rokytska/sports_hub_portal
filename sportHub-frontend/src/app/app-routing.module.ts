@@ -5,13 +5,17 @@ import { PersonalPageComponent } from './personal-page/personal-page.component';
 import {SignupComponent} from "./signup/signup.component";
 import {MainPageComponent} from "./main-page/main-page.component";
 import {AdminPanelComponent} from "./admin-panel/admin-panel.component";
+import {ForgotPasswordComponent} from "./forgot-password/forgot-password.component";
+import {ResetPasswordComponent} from "./reset-password/reset-password.component";
 
 const routes: Routes = [
   {path: '', component: MainPageComponent},
   {path: 'login', component: LoginComponent},
   {path: 'sign-up', component: SignupComponent},
   {path: 'personal_page', component: PersonalPageComponent},
-  {path: 'admin', component: AdminPanelComponent}
+  {path: 'admin', component: AdminPanelComponent},
+  {path: 'forgot-password', component: ForgotPasswordComponent},
+  {path: 'reset-password/:id', component: ResetPasswordComponent}
 ];
 
 @NgModule({

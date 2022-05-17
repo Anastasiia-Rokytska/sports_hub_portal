@@ -1,53 +1,51 @@
 package com.company.sportHubPortal.Configs;
 
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Properties;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.Properties;
 
 @Configuration
 public class EmailSenderConfiguration {
-    private final String EMAIL_CONFIG_PATH = "src/main/resources/configs/emailConfigs.json";
-    private final Logger logger = LoggerFactory.getLogger(EmailSenderConfiguration.class);
-    @Bean
-    public JavaMailSenderImpl configureJavaMailSender(){
+  private final String EMAIL_CONFIG_PATH = "src/main/resources/configs/emailConfigs.json";
+  private final Logger logger = LoggerFactory.getLogger(EmailSenderConfiguration.class);
 
-        JavaMailSenderImpl javaMailSender = new JavaMailSenderImpl();
+  @Bean
+  public JavaMailSenderImpl configureJavaMailSender() {
 
-        try {
-            JSONParser parser = new JSONParser();
-            Object obj = parser.parse(new FileReader(EMAIL_CONFIG_PATH));
-            JSONObject jsonObject = (JSONObject) obj;
-            String username = (String) jsonObject.get("username");
-            String password = (String) jsonObject.get("password");
-            String host = (String) jsonObject.get("host");
-            int port = ((Long)jsonObject.get("port")).intValue();
+    JavaMailSenderImpl javaMailSender = new JavaMailSenderImpl();
 
-            javaMailSender.setUsername(username);
-            javaMailSender.setPassword(password);
-            javaMailSender.setHost(host);
-            javaMailSender.setPort(port);
+    try {
+      JSONParser parser = new JSONParser();
+      Object obj = parser.parse(new FileReader(EMAIL_CONFIG_PATH));
+      JSONObject jsonObject = (JSONObject) obj;
+      String username = (String) jsonObject.get("username");
+      String password = (String) jsonObject.get("password");
+      String host = (String) jsonObject.get("host");
+      int port = ((Long) jsonObject.get("port")).intValue();
 
-            Properties props = javaMailSender.getJavaMailProperties();
-            props.put("mail.smtp.auth", "true");
-            props.put("mail.smtp.starttls.enable", "true");
-            logger.info("JavaMailSender is successfully configured");
-        } catch (IOException e) {
-            logger.info(e.getMessage());
-            e.printStackTrace();
-        } catch (ParseException e) {
-            logger.info(e.getMessage());
-            e.printStackTrace();
-        }
+      javaMailSender.setUsername(username);
+      javaMailSender.setPassword(password);
+      javaMailSender.setHost(host);
+      javaMailSender.setPort(port);
 
-
-        return javaMailSender;
+      Properties props = javaMailSender.getJavaMailProperties();
+      props.put("mail.smtp.auth", "true");
+      props.put("mail.smtp.starttls.enable", "true");
+      logger.info("JavaMailSender is successfully configured");
+    } catch (IOException | ParseException e) {
+      logger.info(e.getMessage());
+      e.printStackTrace();
     }
+
+
+    return javaMailSender;
+  }
 }
