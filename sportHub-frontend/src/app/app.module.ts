@@ -40,7 +40,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     LargeButtonComponent,
     LeftsideMenuComponent,
     PersonalPageComponent,
-    SegmentComponent
+    SegmentComponent,
     LeftsideMenuComponent,
     ForgotPasswordComponent,
     ResetPasswordComponent
