@@ -12,7 +12,5 @@ import {SignupComponent} from "./signup/signup.component";
 export class AppComponent {
 
   title = 'sportHub-frontend';
-  header : boolean = true;
-  menu: boolean = true;
 
 }

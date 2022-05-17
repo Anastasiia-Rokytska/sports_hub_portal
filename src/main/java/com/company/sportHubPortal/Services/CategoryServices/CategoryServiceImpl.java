@@ -41,4 +41,22 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryRepository.findAll().stream().
                 filter(category -> category.getParentId().equals(id)).collect(Collectors.toList());
     }
+
+    @Override
+    public Category updateCategory(Category category, Long id) {
+
+        Category existingCategory = categoryRepository.findById(id).orElse(null);
+        if (existingCategory != null) {
+            existingCategory.setName(category.getName());
+            existingCategory.setHidden(category.isHidden());
+            categoryRepository.save(existingCategory);
+            return existingCategory;
+        }
+        return null;
+    }
+
+    @Override
+    public void deleteCategory(Long id) {
+        categoryRepository.findById(id).ifPresent(categoryRepository::delete);
+    }
 }

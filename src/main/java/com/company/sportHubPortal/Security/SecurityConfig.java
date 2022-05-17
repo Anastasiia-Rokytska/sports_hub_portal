@@ -1,9 +1,11 @@
 package com.company.sportHubPortal.Security;
 
+import com.company.sportHubPortal.Database.UserRole;
 import com.company.sportHubPortal.Services.JwtTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -49,6 +51,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         httpSecurity.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
+
+
+
+
         httpSecurity.authorizeRequests()
                 .antMatchers("/user/own_information", "/personal_page").authenticated()
                 .and()
@@ -61,18 +67,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .and().addFilter(authenticationFilter);
 
+
+
         httpSecurity
                 .logout()
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/login")
                 .deleteCookies("access_token")
                 .deleteCookies("refresh_token");
+
+        httpSecurity.authorizeRequests()
+                .antMatchers("/sign-up").permitAll()
+                .antMatchers("/admin").hasRole("USER");
     }
 
     @Override
     public void configure(WebSecurity web) {
         web.ignoring().antMatchers("/assets/**");
     }
+
 
     @Bean(name = BeanIds.AUTHENTICATION_MANAGER)
     @Override

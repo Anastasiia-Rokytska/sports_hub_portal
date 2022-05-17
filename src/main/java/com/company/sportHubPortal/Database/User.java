@@ -1,8 +1,13 @@
 package com.company.sportHubPortal.Database;
 
 import org.springframework.lang.NonNull;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import javax.persistence.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @Entity
 @Table(name = "user")
@@ -33,6 +38,12 @@ public class User {
         this.role = role;
     }
 
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(getRole());
+        System.out.println(authority);
+        return Collections.singletonList(authority);
+    }
+
 
     public User(String email, String password){
         this.email = email;
@@ -55,8 +66,8 @@ public class User {
         this.lastName = lastName;
     }
 
-    public UserRole getRole() {
-        return role;
+    public String getRole() {
+        return role.getAuthority();
     }
 
     public void setRole(UserRole role) {

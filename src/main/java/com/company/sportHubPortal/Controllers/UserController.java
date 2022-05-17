@@ -16,7 +16,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -65,7 +64,7 @@ public class UserController {
         }
 
         user.setPassword(userService.encodePassword(user.getPassword()));
-        user.setRole(UserRole.USER);
+        user.setRole(UserRole.ROLE_USER);
         userService.save(user);
 
         logger.info(new Object(){}.getClass().getEnclosingMethod().getName() + "() " + " New user: " + user.toString());

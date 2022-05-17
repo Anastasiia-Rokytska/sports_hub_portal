@@ -2,6 +2,7 @@ package com.company.sportHubPortal.Services.CategoryServices;
 
 import com.company.sportHubPortal.Database.Category;
 import com.google.gson.JsonElement;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -12,4 +13,8 @@ public interface CategoryService {
     Category getCategoryById(Long id);
 
     List<Category> getCategoriesByParentId(Long id);
+
+    Category updateCategory(Category category, Long id);
+
+    void deleteCategory(Long id);
 }

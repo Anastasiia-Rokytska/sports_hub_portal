@@ -20,7 +20,6 @@ export class LeftsideMenuComponent implements OnInit {
 
   secondMenuVisible: boolean = false;
   thirdMenuVisible: boolean = false;
-  nbaAFCSouthMenu = "display: none";
   menuItems: MenuItem[] = [];
   secondMenuItems: MenuItem[] = [];
   thirdMenuItems: MenuItem[] = [];

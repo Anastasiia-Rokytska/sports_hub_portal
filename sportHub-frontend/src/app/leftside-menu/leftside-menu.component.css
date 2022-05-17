@@ -127,10 +127,16 @@
   background: transparent;
   color: #E02232;
 }
+
 .secondMenu input[type="radio"]:checked+label,
 .Checked+label {
   background-color: #F7D2D5;
   color: #E02232;
+}
+
+.btn{
+  color: #E02232;
+  background-color: blue;
 }
 
 
