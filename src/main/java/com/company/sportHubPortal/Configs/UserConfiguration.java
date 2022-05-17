@@ -20,12 +20,12 @@ public class UserConfiguration {
     @Bean
     public void userConfig(){
         User admin = new User("admin","admin","1@gmail.com", userService.encodePassword("admin"));
-        admin.setRole(UserRole.ROLE_ADMIN);
+        admin.setRole(UserRole.ADMIN);
         userService.save(admin);
-        userService.save(new User("firstname1", "lastname1", "email1@gmail.com", userService.encodePassword("qwerty"), UserRole.ROLE_USER));
-        userService.save(new User("user1firstname", "user1lastname", "user1@gmail.com", userService.encodePassword("password"), UserRole.ROLE_USER));
-        userService.save(new User("user2firstname", "user2lastname", "user2@gmail.com", userService.encodePassword("password"), UserRole.ROLE_USER));
-        userService.save(new User("user3firstname", "user3lastname", "user3@gmail.com", userService.encodePassword("password"), UserRole.ROLE_USER));
+        userService.save(new User("firstname1", "lastname1", "email1@gmail.com", userService.encodePassword("qwerty"), UserRole.USER, true));
+        userService.save(new User("user1firstname", "user1lastname", "user1@gmail.com", userService.encodePassword("password"), UserRole.USER, true));
+        userService.save(new User("user2firstname", "user2lastname", "user2@gmail.com", userService.encodePassword("password"), UserRole.USER, true));
+        userService.save(new User("user3firstname", "user3lastname", "user3@gmail.com", userService.encodePassword("password"), UserRole.USER, true));
 
     }
 }

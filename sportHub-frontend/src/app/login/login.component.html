@@ -7,7 +7,7 @@
 <div id='right_side'>
   <div id='link_to_registration'>
     <div id='small_text'>Don`t have an account?</div>
-    <app-white-small-button textButton="Get Started"></app-white-small-button>
+    <app-white-small-button textButton="Get Started" (click)="goToSignUp()"></app-white-small-button>
   </div>
   <div id="login_block">
     <h4>Log in to Sports Hub</h4>
@@ -20,7 +20,7 @@
       </a>
     </div>
     <form class="form" (ngSubmit)="login()">
-      <span id="error" *ngIf="hasError">Incorrect user ID or password. Try again.</span>
+      <span id="error" *ngIf="hasError">Incorrect user ID or password or user account is not verified. Try again.</span>
       <app-input typeInput="email" nameField="email" placeholder="Email@gmail.com" id="email"></app-input>
       <app-input typeInput="password" nameField="password" placeholder="8 + characters (letters and numbers)" forgotPassword="display: block" id="password"></app-input>
       <app-large-button textButton="Log in"></app-large-button>

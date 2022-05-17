@@ -33,6 +33,10 @@
   color: green;
 }
 
+#verifyAccount{
+  color: green;
+}
+
 #errorPassword{
   color: red;
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChildren } from '@angular/core';
 import { InputComponent } from '../components/input/input/input.component';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router'
 import { Observable } from 'rxjs';
 
 
@@ -21,10 +21,9 @@ export class SignupComponent implements OnInit {
   errorVisible = "display: none"
   errorEmail = "display: none"
   errorPassword = "display: none"
-
+  verifyAccount = "display: none"
 
   ngOnInit(): void {
-
   }
 
   response: Observable<string> | undefined
@@ -33,6 +32,7 @@ export class SignupComponent implements OnInit {
     this.errorVisible = "display: none"
     this.errorPassword = "display: none"
     this.errorEmail = "display: none"
+    this.verifyAccount = "display: none"
   }
 
 
@@ -61,7 +61,9 @@ export class SignupComponent implements OnInit {
     this.response = this.http.post<string>('/user/sign-up', body, httpOptions)
     console.log(this.response)
     this.response.subscribe(res => {
-      this.goToLogin();
+      this.hideMessages()
+      this.verifyAccount = "display:block"
+      console.log(res)
     }, error => {
       if(error.status == 400){
         this.hideMessages()
@@ -73,11 +75,11 @@ export class SignupComponent implements OnInit {
       }
       else{
         this.hideMessages()
+
       }
     })
 
   }
-
   goToLogin(){
     this.router.navigate(['/login'], { relativeTo: this.route });
   }
