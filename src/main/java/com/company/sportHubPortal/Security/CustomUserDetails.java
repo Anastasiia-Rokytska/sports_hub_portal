@@ -1,19 +1,23 @@
 package com.company.sportHubPortal.Security;
 
 import com.company.sportHubPortal.Database.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 
 public class CustomUserDetails implements UserDetails {
-
+    Logger logger = LoggerFactory.getLogger(CustomUserDetails.class);
     private User user;
 
     public CustomUserDetails(User user) {
         super();
         this.user = user;
     }
+
+    public User getUser() {return user;}
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -47,7 +51,12 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        if(user.isEnabled()){
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     @Override

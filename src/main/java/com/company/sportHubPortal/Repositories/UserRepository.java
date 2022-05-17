@@ -9,4 +9,5 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     User getUserByEmail(String email);
     User getUserById(Integer id);
+    User getUserByVerificationCode(String verificationCode);
 }

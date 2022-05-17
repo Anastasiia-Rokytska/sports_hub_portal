@@ -1,16 +1,21 @@
 package com.company.sportHubPortal.Services;
 
+import com.company.sportHubPortal.Controllers.UserController;
 import com.company.sportHubPortal.Database.User;
 import com.company.sportHubPortal.Repositories.UserRepository;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
 
 @Service
 public class UserService{
 
     final UserRepository userRepository;
     final PasswordEncoder passwordEncoder;
-
+    Logger logger = LoggerFactory.getLogger(UserController.class);
     public String encodePassword(String password){
         return passwordEncoder.encode(password);
     }
@@ -32,6 +37,18 @@ public class UserService{
         return userRepository.getUserByEmail(email);
     }
 
-    public User getById(Integer id) { return userRepository.getUserById(id); }
+    public boolean verifyUser(String code) {
+        User user = userRepository.getUserByVerificationCode(code);
 
+        if (user == null) return false;
+
+        user.setVerificationCode(null);
+        user.setEnabled(true);
+        userRepository.save(user);
+
+        logger.info(new Object(){}.getClass().getEnclosingMethod().getName() + "() " + "Account is verified");
+
+        return true;
+    }
+    public User getById(Integer id) { return userRepository.getUserById(id); }
 }
