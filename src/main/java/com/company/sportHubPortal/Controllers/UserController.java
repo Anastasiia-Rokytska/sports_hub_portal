@@ -88,27 +88,6 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
-//    @PostMapping("/login" )
-//    public ResponseEntity<Object> login(
-//            @RequestBody User user
-//    ){
-//        User foundUser = userService.getByEmail(user.getEmail());
-//        if (foundUser == null) {
-//            logger.info(new Object(){}.getClass().getEnclosingMethod().getName() + "() " + " User not found");
-//           return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-//        }
-//        if (!userService.decodePassword(user.getPassword(), foundUser.getPassword())){
-//            logger.info(new Object(){}.getClass().getEnclosingMethod().getName() + "() " + " Incorrect password");
-//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
-//        }
-//        if (!foundUser.isEnabled()){
-//            logger.info(new Object(){}.getClass().getEnclosingMethod().getName() + "() " + "Account is not verified");
-//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
-//        }
-//        logger.info("Correct user information");
-//        return ResponseEntity.ok(jwtTokenService.getRefreshAndAccessToken(foundUser.getId()));
-//    }
-
     @GetMapping("/verify/{code}")
     public String verify(@PathVariable String code) {
 
