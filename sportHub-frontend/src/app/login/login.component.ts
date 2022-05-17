@@ -25,6 +25,9 @@ export class LoginComponent implements OnInit {
 
   response: Observable<string> | undefined
 
+  goToSignUp(){
+    this.router.navigate(['/sign-up'], { relativeTo: this.route });
+  }
 
   login() {
     let email = Array.from(this.inputs)[0].value

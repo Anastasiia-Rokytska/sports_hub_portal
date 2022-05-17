@@ -1,5 +1,6 @@
 package com.company.sportHubPortal.Database;
 
+import jdk.jfr.Enabled;
 import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
@@ -35,6 +36,14 @@ public class User {
         this.role = role;
     }
 
+    public User(String firstName, String lastName, String email, String password, UserRole role, boolean enabled) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+        this.enabled = enabled;
+    }
 
     public User(String email, String password){
         this.email = email;
