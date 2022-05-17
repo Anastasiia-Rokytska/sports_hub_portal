@@ -20,7 +20,8 @@ public class User {
   String email;
   String password;
   String recoverPassHash;
-
+  String verificationCode;
+  boolean enabled;
   @Enumerated(EnumType.STRING)
   UserRole role;
 
@@ -41,6 +42,14 @@ public class User {
     this.role = role;
   }
 
+    public User(String firstName, String lastName, String email, String password, UserRole role, boolean enabled) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+        this.enabled = enabled;
+    }
 
   public User(String email, String password) {
     this.email = email;
@@ -71,10 +80,6 @@ public class User {
     this.role = role;
   }
 
-  /*public User(@NonNull String email, @NonNull String password) {
-    this.email = email;
-    this.password = password;
-  }*/
 
   public Integer getId() {
     return id;
@@ -107,6 +112,14 @@ public class User {
         + ", role=" + role
         + '}';
   }
+    public String getVerificationCode() {return verificationCode;}
+
+    public void setVerificationCode(String verificationCode) {this.verificationCode = verificationCode;}
+
+    public boolean isEnabled() {return enabled;}
+
+    public void setEnabled(boolean enabled) {this.enabled = enabled;}
+
 
   public User() {
   }

@@ -21,6 +21,7 @@ export class SignupComponent implements OnInit {
   errorVisible = "display: none"
   errorEmail = "display: none"
   errorPassword = "display: none"
+  verifyAccount = "display: none"
 
   ngOnInit(): void {
   }
@@ -31,6 +32,7 @@ export class SignupComponent implements OnInit {
     this.errorVisible = "display: none"
     this.errorPassword = "display: none"
     this.errorEmail = "display: none"
+    this.verifyAccount = "display: none"
   }
 
 
@@ -60,6 +62,7 @@ export class SignupComponent implements OnInit {
     console.log(this.response)
     this.response.subscribe(res => {
       this.hideMessages()
+      this.verifyAccount = "display:block"
       console.log(res)
     }, error => {
       if(error.status == 400){
@@ -72,7 +75,6 @@ export class SignupComponent implements OnInit {
       }
       else{
         this.hideMessages()
-
       }
     })
 

@@ -9,7 +9,9 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
   User getUserByEmail(String email);
 
-  User getUserById(int id);
+  User getUserById(Integer id);
+
+  User getUserByVerificationCode(String verificationCode);
 
   User getUserByRecoverPassHash(String uri);
 }

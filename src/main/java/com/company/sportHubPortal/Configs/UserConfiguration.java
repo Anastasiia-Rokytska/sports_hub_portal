@@ -23,13 +23,13 @@ public class UserConfiguration {
     admin.setRole(UserRole.ADMIN);
     userService.save(admin);
     userService.save(new User("firstname1", "lastname1", "email1@gmail.com",
-        userService.encodePassword("qwerty"), UserRole.USER));
+        userService.encodePassword("qwerty"), UserRole.USER, true));
     userService.save(new User("user1firstname", "user1lastname", "user1@gmail.com",
-        userService.encodePassword("password"), UserRole.USER));
+        userService.encodePassword("password"), UserRole.USER, true));
     userService.save(new User("user2firstname", "user2lastname", "user2@gmail.com",
-        userService.encodePassword("password"), UserRole.USER));
+        userService.encodePassword("password"), UserRole.USER, true));
     userService.save(new User("user3firstname", "user3lastname", "user3@gmail.com",
-        userService.encodePassword("password"), UserRole.USER));
+        userService.encodePassword("password"), UserRole.USER, true));
 
   }
 }
