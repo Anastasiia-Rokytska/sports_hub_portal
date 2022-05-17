@@ -32,4 +32,6 @@ public class UserService{
         return userRepository.getUserByEmail(email);
     }
 
+    public User getById(Integer id) { return userRepository.getUserById(id); }
+
 }

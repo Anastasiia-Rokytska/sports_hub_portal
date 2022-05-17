@@ -33,3 +33,5 @@ typings/
 **/.classpath
 **/.metadata
 **/Thumbs.db
+
+log/

@@ -1,0 +1,38 @@
+.page{
+  margin-top: 75px;
+  display: flex;
+  justify-content: space-between;
+}
+.main_part{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  width: 100%;
+  justify-content: center;
+}
+.user_photo{
+  display: flex;
+  position: relative;
+  align-items: flex-end;
+  justify-content: flex-end;
+  width: 120px;
+  height: 120px;
+  margin-top: 45px;
+}
+.user_icon{
+  position: absolute;
+  border-radius: 50%;
+}
+.load_photo{
+  position: absolute;
+}
+.update_profile{
+  margin-top: 11px;
+}
+app-input{
+  margin-top: 16px;
+}
+app-large-button{
+  padding-top: 35px;
+}

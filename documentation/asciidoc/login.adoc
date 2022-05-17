@@ -1,0 +1,33 @@
+= Login page
+
+== Correct request:
+
+.request
+include::{snippets}/login/validData/http-request.adoc[]
+
+.response
+include::{snippets}/login/validData/http-response.adoc[]
+
+== Wrong email
+
+.request
+include::{snippets}/login/wrongEmail/http-request.adoc[]
+
+.response
+include::{snippets}/login/wrongEmail/http-response.adoc[]
+
+== Wrong password
+
+.request
+include::{snippets}/login/wrongPassword/http-request.adoc[]
+
+.response
+include::{snippets}/login/wrongPassword/http-response.adoc[]
+
+== Invalid data
+
+.request
+include::{snippets}/login/unvalidData/http-request.adoc[]
+
+.response
+include::{snippets}/login/unvalidData/http-response.adoc[]
