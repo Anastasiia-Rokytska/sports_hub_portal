@@ -50,4 +50,5 @@ public class UserService{
 
         return true;
     }
+    public User getById(Integer id) { return userRepository.getUserById(id); }
 }
