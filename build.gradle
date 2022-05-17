@@ -9,7 +9,6 @@ plugins {
 
 group = 'com.company'
 version = '0.0.1-SNAPSHOT'
-//sourceCompatibility = '17'
 
 checkstyle {
 	toolVersion = '10.1'
