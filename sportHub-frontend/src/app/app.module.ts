@@ -17,6 +17,8 @@ import { InputComponent } from './components/input/input/input.component';
 import { LargeButtonComponent } from './components/buttons/large-button/large-button.component';
 import {SignupComponent} from "./signup/signup.component";
 import {LeftsideMenuComponent} from "./leftside-menu/leftside-menu.component";
+import { PersonalPageComponent } from './personal-page/personal-page.component';
+import { SegmentComponent } from './components/segment/segment/segment.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,9 @@ import {LeftsideMenuComponent} from "./leftside-menu/leftside-menu.component";
     InputComponent,
     LargeButtonComponent,
     LargeButtonComponent,
-    LeftsideMenuComponent
+    LeftsideMenuComponent,
+    PersonalPageComponent,
+    SegmentComponent
   ],
   imports: [
     BrowserModule,

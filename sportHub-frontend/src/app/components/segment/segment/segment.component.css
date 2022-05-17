@@ -1,0 +1,31 @@
+.nonactive_segment{
+  border: 1px solid #EDEDED;
+  box-sizing: border-box;
+  background-color: white;
+  height: 39px;
+  width: 169px;
+
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 19px;
+
+  color: #000000;
+}
+.active_segment{
+  border: none;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.09);
+  position: relative;
+  background-color: white;
+  height: 39px;
+  width: 169px;
+
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 19px;
+
+  color: #D72130;
+}
