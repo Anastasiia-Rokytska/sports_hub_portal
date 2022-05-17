@@ -8,11 +8,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 public class MainConfiguration {
-    @Bean
-    public PasswordEncoder encoder() {
-        return new BCryptPasswordEncoder();
-    }
+  @Bean
+  public PasswordEncoder encoder() {
+    return new BCryptPasswordEncoder();
+  }
 
-    @Bean
-    public Algorithm getAlgorithm() { return Algorithm.HMAC256("secret_key"); }
+  @Bean
+  public Algorithm getAlgorithm() {
+    return Algorithm.HMAC256("secret_key");
+  }
 }

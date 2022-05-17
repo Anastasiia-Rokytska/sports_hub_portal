@@ -3,10 +3,14 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from "./login/login.component";
 import { PersonalPageComponent } from './personal-page/personal-page.component';
 import {SignupComponent} from "./signup/signup.component";
+import {ForgotPasswordComponent} from "./forgot-password/forgot-password.component";
+import {ResetPasswordComponent} from "./reset-password/reset-password.component";
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'sign-up', component: SignupComponent},
+  {path: 'forgot-password', component: ForgotPasswordComponent},
+  {path: 'reset-password/:id', component: ResetPasswordComponent},
   {path: 'personal_page', component: PersonalPageComponent}
 ];
 
