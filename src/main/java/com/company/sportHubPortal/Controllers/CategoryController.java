@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("/api/category")
 public class CategoryController {
     private CategoryService categoryService;
     Logger logger = LoggerFactory.getLogger(UserController.class);
@@ -30,22 +30,27 @@ public class CategoryController {
         return ResponseEntity.ok(category);
     }
 
-    @GetMapping("/category")
+    @GetMapping()
     public List<Category> getAllCategories(){
         return categoryService.getAllCategories();
     }
 
-    @GetMapping("/category/{id}")
+    @GetMapping("/{id}")
     public Category getCategoryById(@PathVariable("id") Long id){
         return categoryService.getCategoryById(id);
     }
 
-    @GetMapping("/category/parent/{id}")
-    public List<Category> getCategoriesByParentId(@PathVariable("id") Long id){
-        return categoryService.getCategoriesByParentId(id);
+    @GetMapping("/parent/all/{id}")
+    public List<Category> getAllCategoriesByParentId(@PathVariable("id") Long id){
+        return categoryService.getAllCategoriesByParentId(id);
     }
 
-    @PutMapping("/category/{id}")
+    @GetMapping("/parent/visible/{id}")
+    public List<Category> getVisibleCategoriesByParentId(@PathVariable("id") Long id){
+        return categoryService.getVisibleCategoriesByParentId(id);
+    }
+
+    @PutMapping("/{id}")
     public ResponseEntity<Category> updateCategory(@PathVariable("id") Long id,@RequestBody Category category){
         if(categoryService.updateCategory(category, id) == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -54,7 +59,7 @@ public class CategoryController {
         return ResponseEntity.ok(category);
     }
 
-    @DeleteMapping("/category/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteCategory(@PathVariable("id") Long id){
         categoryService.deleteCategory(id);
         logger.info(new Object(){}.getClass().getEnclosingMethod().getName() + "() " + " Deleted category: " + id);

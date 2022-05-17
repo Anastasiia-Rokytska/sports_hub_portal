@@ -25,7 +25,7 @@ export class LeftsideMenuComponent implements OnInit {
   thirdMenuItems: MenuItem[] = [];
 
   ngOnInit(): void {
-    this.http.get<MenuItem[]>('/api/category/parent/0').subscribe(data => {
+    this.http.get<MenuItem[]>('/api/category/parent/visible/0').subscribe(data => {
       this.menuItems = data;
     });
   }
@@ -35,7 +35,7 @@ export class LeftsideMenuComponent implements OnInit {
     if(id == 0){
       this.secondMenuVisible = false;
     }else{
-      this.http.get<MenuItem[]>('/api/category/parent/' + id).subscribe(data => {
+      this.http.get<MenuItem[]>('/api/category/parent/visible/' + id).subscribe(data => {
         if(data.length > 0){
           this.secondMenuVisible = true;
           this.secondMenuItems = data;
@@ -47,7 +47,7 @@ export class LeftsideMenuComponent implements OnInit {
   }
 
   showThirdMenu(id: number){
-    this.http.get<MenuItem[]>('/api/category/parent/' + id).subscribe(data => {
+    this.http.get<MenuItem[]>('/api/category/parent/visible/' + id).subscribe(data => {
       if(data.length > 0){
         this.thirdMenuVisible = true;
         this.thirdMenuItems = data;

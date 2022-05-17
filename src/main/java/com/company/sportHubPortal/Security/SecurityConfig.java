@@ -76,9 +76,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .deleteCookies("access_token")
                 .deleteCookies("refresh_token");
 
-        httpSecurity.authorizeRequests()
-                .antMatchers("/sign-up").permitAll()
-                .antMatchers("/admin").hasRole("USER");
     }
 
     @Override

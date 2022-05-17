@@ -1,10 +1,8 @@
 <div class="sidenav">
   <ul class="menuItems firstMenu">
     <li *ngFor="let item of menuItems">
-      <div *ngIf="item.hidden == false">
         <input type="radio" id="{{item.id}}" name="firstMenu" (click)="showSecondMenu(item.id)"/>
         <label for="{{item.id}}" class="button" (click)="showSecondMenu(item.id)">{{item.name}}</label>
-      </div>
     </li>
   </ul>
 </div>
@@ -12,10 +10,8 @@
 <div class="sidenavSecondMenu" *ngIf="secondMenuVisible">
   <ul class="menuItems secondMenu">
     <li *ngFor="let secondItem of secondMenuItems">
-      <div *ngIf="secondItem.hidden == false">
         <input type="radio" id="{{secondItem.id}}" name="secondMenu" (click)="showThirdMenu(secondItem.id)"/>
         <label for="{{secondItem.id}}" class="button" (click)="showThirdMenu(secondItem.id)">{{secondItem.name}}</label>
-      </div>
     </li>
   </ul>
 </div>
@@ -23,10 +19,8 @@
 <div class="sidenavThirdMenu" *ngIf="thirdMenuVisible">
   <ul class="menuItems secondMenu">
     <li *ngFor="let thirdItem of thirdMenuItems">
-      <div *ngIf="thirdItem.hidden == false">
         <input type="radio" id="{{thirdItem.id}}" name="thirdMenu"/>
         <label for="{{thirdItem.id}}" class="button">{{thirdItem.name}}</label>
-      </div>
     </li>
   </ul>
 </div>

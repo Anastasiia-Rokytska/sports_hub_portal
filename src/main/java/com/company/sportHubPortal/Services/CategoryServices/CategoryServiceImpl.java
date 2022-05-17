@@ -37,9 +37,16 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public List<Category> getCategoriesByParentId(Long id) {
+    public List<Category> getAllCategoriesByParentId(Long id) {
         return categoryRepository.findAll().stream().
                 filter(category -> category.getParentId().equals(id)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Category> getVisibleCategoriesByParentId(Long id) {
+        return categoryRepository.findAll().stream()
+                .filter(category -> category.getParentId().equals(id) && !category.isHidden())
+                .collect(Collectors.toList());
     }
 
     @Override

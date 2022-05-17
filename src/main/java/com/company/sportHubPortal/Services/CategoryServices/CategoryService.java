@@ -12,7 +12,9 @@ public interface CategoryService {
 
     Category getCategoryById(Long id);
 
-    List<Category> getCategoriesByParentId(Long id);
+    List<Category> getAllCategoriesByParentId(Long id);
+
+    List<Category> getVisibleCategoriesByParentId(Long id);
 
     Category updateCategory(Category category, Long id);
 
