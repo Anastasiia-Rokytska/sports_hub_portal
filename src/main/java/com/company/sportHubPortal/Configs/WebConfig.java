@@ -1,4 +1,4 @@
-package com.company.sporthubportal.configs;
+package com.company.sportHubPortal.Configs;
 
 import java.io.IOException;
 import org.springframework.context.annotation.Configuration;

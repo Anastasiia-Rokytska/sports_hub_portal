@@ -1,4 +1,4 @@
-package com.company.sporthubportal.database;
+package com.company.sportHubPortal.Database;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;

@@ -1,4 +1,4 @@
-package com.company.sporthubportal.configs;
+package com.company.sportHubPortal.Configs;
 
 import com.auth0.jwt.algorithms.Algorithm;
 import org.springframework.context.annotation.Bean;

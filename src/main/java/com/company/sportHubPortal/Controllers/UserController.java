@@ -1,10 +1,10 @@
-package com.company.sporthubportal.controllers;
+package com.company.sportHubPortal.Controllers;
 
-import com.company.sporthubportal.database.User;
-import com.company.sporthubportal.database.UserRole;
-import com.company.sporthubportal.services.EmailSenderService;
-import com.company.sporthubportal.services.JwtTokenService;
-import com.company.sporthubportal.services.UserService;
+import com.company.sportHubPortal.Database.User;
+import com.company.sportHubPortal.Database.UserRole;
+import com.company.sportHubPortal.Services.EmailSenderService;
+import com.company.sportHubPortal.Services.JwtTokenService;
+import com.company.sportHubPortal.Services.UserService;
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 import java.util.Date;

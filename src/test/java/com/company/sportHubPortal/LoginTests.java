@@ -1,5 +1,5 @@
-package com.company.sporthubportal;
-import com.company.sporthubportal.database.User;
+package com.company.sportHubPortal;
+import com.company.sportHubPortal.Database.User;
 import com.google.gson.Gson;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

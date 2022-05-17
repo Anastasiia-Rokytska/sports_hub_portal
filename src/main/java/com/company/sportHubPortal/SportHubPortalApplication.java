@@ -1,4 +1,4 @@
-package com.company.sporthubportal;
+package com.company.sportHubPortal;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

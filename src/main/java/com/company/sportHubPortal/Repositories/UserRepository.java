@@ -1,6 +1,6 @@
-package com.company.sporthubportal.repositories;
+package com.company.sportHubPortal.Repositories;
 
-import com.company.sporthubportal.database.User;
+import com.company.sportHubPortal.Database.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

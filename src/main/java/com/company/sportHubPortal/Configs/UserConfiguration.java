@@ -1,8 +1,8 @@
-package com.company.sporthubportal.configs;
+package com.company.sportHubPortal.Configs;
 
-import com.company.sporthubportal.database.User;
-import com.company.sporthubportal.database.UserRole;
-import com.company.sporthubportal.services.UserService;
+import com.company.sportHubPortal.Database.User;
+import com.company.sportHubPortal.Database.UserRole;
+import com.company.sportHubPortal.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

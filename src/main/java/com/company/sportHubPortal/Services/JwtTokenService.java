@@ -1,4 +1,4 @@
-package com.company.sporthubportal.services;
+package com.company.sportHubPortal.Services;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
