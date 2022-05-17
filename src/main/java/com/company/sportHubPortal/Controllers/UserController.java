@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import net.bytebuddy.utility.RandomString;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -120,8 +121,8 @@ public class UserController {
         String.valueOf(foundUser.getId())));
   }
 
-  @GetMapping("/verify/{code}")
-  public String verify(@PathVariable String code) {
+    @GetMapping("/verify/{code}")
+    public String verify(@PathVariable String code) {
 
     if (userService.verifyUser(code)) {
       logger.info(new Object() {
