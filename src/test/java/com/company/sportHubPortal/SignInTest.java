@@ -37,7 +37,7 @@ public class SignInTest {
 
     @Test
     public void successful() throws Exception{
-        User user = new User("testFirstName", "textLastName", "testmain@gmail.com", "password", UserRole.ROLE_USER);
+        User user = new User("testFirstName", "textLastName", "testmain@gmail.com", "password", UserRole.USER);
         this.mockMvc.perform(post("/user/sign-up")
                 .content(new Gson().toJson(user))
                 .contentType(MediaType.APPLICATION_JSON)
@@ -52,7 +52,7 @@ public class SignInTest {
 
     @Test
     public void emptyFirstName() throws Exception{
-        User user = new User(null, "textLastName", "testmain@gmail.com", "password", UserRole.ROLE_USER);
+        User user = new User(null, "textLastName", "testmain@gmail.com", "password", UserRole.USER);
         this.mockMvc.perform(post("/user/sign-up")
                         .content(new Gson().toJson(user))
                         .contentType(MediaType.APPLICATION_JSON)
@@ -63,7 +63,7 @@ public class SignInTest {
 
     @Test
     public void emptyLastName() throws Exception{
-        User user = new User("testFirstName", null, "testmain@gmail.com", "password", UserRole.ROLE_USER);
+        User user = new User("testFirstName", null, "testmain@gmail.com", "password", UserRole.USER);
         this.mockMvc.perform(post("/user/sign-up")
                         .content(new Gson().toJson(user))
                         .contentType(MediaType.APPLICATION_JSON)
@@ -74,7 +74,7 @@ public class SignInTest {
 
     @Test
     public void wrongEmail() throws Exception{
-        User user = new User("testFirstName", "textLastName", "testemail", "password", UserRole.ROLE_USER);
+        User user = new User("testFirstName", "textLastName", "testemail", "password", UserRole.USER);
         this.mockMvc.perform(post("/user/sign-up")
                         .content(new Gson().toJson(user))
                         .contentType(MediaType.APPLICATION_JSON)
@@ -85,7 +85,7 @@ public class SignInTest {
 
     @Test
     public void emailAlreadyExists() throws Exception{
-        User user = new User("testFirstName", "textLastName", "testmain@gmail.com", "password", UserRole.ROLE_USER);
+        User user = new User("testFirstName", "textLastName", "testmain@gmail.com", "password", UserRole.USER);
         this.mockMvc.perform(post("/user/sign-up")
                         .content(new Gson().toJson(user))
                         .contentType(MediaType.APPLICATION_JSON)
@@ -96,7 +96,7 @@ public class SignInTest {
 
     @Test
     public void wrongPassword() throws Exception{
-        User user = new User("testFirstName", "textLastName", "newtestmail@gmail.com", "pswd", UserRole.ROLE_USER);
+        User user = new User("testFirstName", "textLastName", "newtestmail@gmail.com", "pswd", UserRole.USER);
         this.mockMvc.perform(post("/user/sign-up")
                         .content(new Gson().toJson(user))
                         .contentType(MediaType.APPLICATION_JSON)
