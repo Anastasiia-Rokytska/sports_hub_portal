@@ -66,7 +66,11 @@ export class ForgotPasswordComponent implements OnInit {
           timer: 5000,
         })
         console.log('User not found')
-      } else if (error.status == 451) {
+        return
+
+      }
+
+      if (error.status == 451) {
         Swal.fire({
           title: 'Check your email!',
           text: 'You have already requested for reset password!',
@@ -74,8 +78,10 @@ export class ForgotPasswordComponent implements OnInit {
           timer: 3000
         })
         console.log('User has already requested for reset pass')
-      } else
-        console.log(error)
+        return;
+
+      }
+              console.log(error)
     })
 
   }
