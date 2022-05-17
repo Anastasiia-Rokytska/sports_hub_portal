@@ -34,7 +34,7 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
         return request.getRequestURI().equals("/user/sign-up") ||
                 request.getRequestURI().equals("/sign-up") ||
                 request.getRequestURI().equals("/login") ||
-                request.getRequestURI().matches("/user/verify/*") ||
+                request.getRequestURI().matches("/user/verify/.*$") ||
                 request.getRequestURI().matches(".*(css|jpg|png|gif|js|html|svg|ico)");
     }
 

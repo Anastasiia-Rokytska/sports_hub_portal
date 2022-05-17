@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -37,7 +38,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-        System.out.println("Authentication: "+ request.getRequestURI());
+        logger.info("Authentication: "+ request.getRequestURI());
         byte[] body = new byte[0];
         Map<String, String> jsonRequest = null;
         try {
@@ -56,11 +57,6 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         CustomUserDetails userDetails = userDetailsService.loadUserByUsername(email);
         logger.info("Email is " + email);
         logger.info("Password is " + password);
-        if (!userDetails.getUser().isEnabled()){
-            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(null, null);
-            logger.info("Account is not verified");
-            return authenticationManager.authenticate(authenticationToken);
-        }
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(email, password);
         return authenticationManager.authenticate(authenticationToken);
     }
@@ -68,7 +64,6 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
         CustomUserDetails user = (CustomUserDetails) authResult.getPrincipal();
-        System.out.println(((CustomUserDetails) authResult.getPrincipal()).getUsername());
         jwtTokenService.createRefreshAndAccessToken(user.getUsername());
         String accessToken = jwtTokenService.getAccessToken();
         String refreshToken = jwtTokenService.getRefreshToken();
@@ -87,8 +82,11 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
         if (failed.getClass() == UsernameNotFoundException.class){
             response.sendError(HttpServletResponse.SC_BAD_REQUEST);
-        } else if (failed.getClass() == BadCredentialsException.class){
+        } else if (failed.getClass() == BadCredentialsException.class || failed.getClass() == DisabledException.class){
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+        } else {
+            logger.warn("Unexpected exception");
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST);
         }
         logger.info("Unsuccessful authentication");
     }

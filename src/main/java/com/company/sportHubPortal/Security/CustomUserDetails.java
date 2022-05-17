@@ -51,7 +51,6 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        logger.info("check is enable"+user.isEnabled());
         if(user.isEnabled()){
             return true;
         }
