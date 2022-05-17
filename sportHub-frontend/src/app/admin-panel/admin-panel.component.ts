@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChildren} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import { InputComponent } from '../components/input/input/input.component';
+import {InputComponent} from '../components/input/input/input.component';
 import {Observable} from "rxjs";
 
 interface MenuItem {
@@ -45,13 +45,14 @@ export class AdminPanelComponent implements OnInit {
   response: Observable<string> | undefined;
   tempItem: MenuItem = {} as MenuItem;
 
+
   constructor(private http: HttpClient) {}
 
   @ViewChildren(InputComponent) inputs: InputComponent[] = [];
 
   //function to show main categories
   async showMainCategories(){
-    await this.http.get<MenuItem[]>('/api/category/parent/' + 0).subscribe(data => {
+    await this.http.get<MenuItem[]>('/api/category/parent/all/' + 0).subscribe(data => {
       this.menuItems = [...data];
 
       if(this.newItems.has(0)){
@@ -86,7 +87,7 @@ export class AdminPanelComponent implements OnInit {
   async showSubcategoryItems(id : number){
     this.thirdMenuVisible = false;
     this.secondMenuVisible = true;
-    await this.http.get<MenuItem[]>('/api/category/parent/' + id).subscribe(data => {
+    await this.http.get<MenuItem[]>('/api/category/parent/all/' + id).subscribe(data => {
       this.subcategory = [...data];
 
       if(this.newItems.has(id)){
@@ -119,7 +120,7 @@ export class AdminPanelComponent implements OnInit {
 
   //function to show teams
   async showTeamItems(id : number){
-    await this.http.get<MenuItem[]>('/api/category/parent/' + id).subscribe(data => {
+    await this.http.get<MenuItem[]>('/api/category/parent/all/' + id).subscribe(data => {
       this.teams = [...data];
 
       if(this.newItems.has(id)){
@@ -203,8 +204,7 @@ export class AdminPanelComponent implements OnInit {
   }
 
   submitButtonEditItems(){
-    let newName = Array.from(this.inputs)[0].value;
-    this.tempItem.name = newName;
+    this.tempItem.name = Array.from(this.inputs)[0].value;
     this.editedItems.set(this.tempItem.id, this.tempItem);
     this.hideModalWindow();
     this.reloadItems(this.tempItem.parentId);
