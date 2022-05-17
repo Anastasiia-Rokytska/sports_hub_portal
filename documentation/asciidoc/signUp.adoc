@@ -1,0 +1,47 @@
+= Sign up
+
+== Correct request:
+
+.request
+include::{snippets}/signUp/successful/http-request.adoc[]
+
+.response
+include::{snippets}/signUp/successful/http-response.adoc[]
+
+== Email exists
+
+.request
+include::{snippets}/signUp/emailAlreadyExists/http-request.adoc[]
+
+.response
+include::{snippets}/signUp/emailAlreadyExists/http-response.adoc[]
+
+== Empty fields
+
+.request
+include::{snippets}/signUp/emptyFirstName/http-request.adoc[]
+
+.response
+include::{snippets}/signUp/emptyFirstName/http-response.adoc[]
+
+.request
+include::{snippets}/signUp/emptyLastName/http-request.adoc[]
+
+.response
+include::{snippets}/signUp/emptyLastName/http-response.adoc[]
+
+== Wrong email
+
+.request
+include::{snippets}/signUp/wrongEmail/http-request.adoc[]
+
+.response
+include::{snippets}/signUp/wrongEmail/http-response.adoc[]
+
+== Wrong password
+
+.request
+include::{snippets}/signUp/wrongPassword/http-request.adoc[]
+
+.response
+include::{snippets}/signUp/wrongPassword/http-response.adoc[]

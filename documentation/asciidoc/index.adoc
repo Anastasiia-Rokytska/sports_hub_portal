@@ -1,0 +1,4 @@
+= SportsHub documentation
+
+== link:login.html[Login]
+== link:login.html[SignUp]

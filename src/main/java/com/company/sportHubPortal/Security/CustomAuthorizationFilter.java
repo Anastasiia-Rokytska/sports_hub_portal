@@ -30,9 +30,16 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
     }
 
     @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+        return request.getRequestURI().equals("/sign-up") ||
+                request.getRequestURI().equals("/login") ||
+                request.getRequestURI().matches(".*(css|jpg|png|gif|js|html|svg)");
+    }
+
+    @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         logger.info(request.getRequestURI());
-        if (request.getRequestURI().equals("/login") || request.getRequestURI().matches(".*(css|jpg|png|gif|js)")) {
+        if (shouldNotFilter(request)) {
             filterChain.doFilter(request, response);
         } else {
             Cookie accessTokenCookie = WebUtils.getCookie(request, "access_token");

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-user-and-language',
@@ -8,6 +8,9 @@ import { Component, OnInit } from '@angular/core';
 export class UserAndLanguageComponent implements OnInit {
 
   constructor() { }
+
+  @Input() userName = "Ivan Baloh"
+  @Input() userEmail = "ivanbaloh@gmail.com"
 
   ngOnInit(): void {
   }
