@@ -40,10 +40,7 @@ public class EmailSenderConfiguration {
             props.put("mail.smtp.auth", "true");
             props.put("mail.smtp.starttls.enable", "true");
             logger.info("JavaMailSender is successfully configured");
-        } catch (IOException e) {
-            logger.info(e.getMessage());
-            e.printStackTrace();
-        } catch (ParseException e) {
+        } catch (IOException | ParseException e) {
             logger.info(e.getMessage());
             e.printStackTrace();
         }
