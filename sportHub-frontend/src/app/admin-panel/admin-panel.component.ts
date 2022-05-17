@@ -2,6 +2,8 @@ import {Component, OnInit, ViewChildren} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {InputComponent} from '../components/input/input/input.component';
 import {Observable} from "rxjs";
+import Swal from "sweetalert2";
+
 
 interface MenuItem {
   id: number;
@@ -36,14 +38,7 @@ export class AdminPanelComponent implements OnInit {
   lastChosenSubcategory: number = 0;
 
   //variables to show/hide modal
-  showModal: boolean = false;
-  ModalEdit: boolean = false;
-  ModalDelete: boolean = false;
-  title: string = '';
-  tempId: number = 0;
   tempIdNewItem: number =20000;
-  response: Observable<string> | undefined;
-  tempItem: MenuItem = {} as MenuItem;
 
 
   constructor(private http: HttpClient) {}
@@ -166,87 +161,113 @@ export class AdminPanelComponent implements OnInit {
 
   //function to show modal
   showModalWindowAddItems(id : number){
+    let title = 'title'
+    let tempId = 0
     if(id === 0){
-      this.showModal = true;
-      this.title = 'Add Category';
-      this.tempId = 0;
+      title = 'Add Category';
     }
     else if(id === 1){
-      this.showModal = true;
-      this.title = 'Add Subcategory';
-      this.tempId = this.lastChosenCategory;
+      title = 'Add Subcategory';
+      tempId = this.lastChosenCategory;
     }
     else if(id === 2){
-      this.showModal = true;
-      this.title = 'Add Team';
-      this.tempId = this.lastChosenSubcategory;
+      title = 'Add Team';
+      tempId = this.lastChosenSubcategory;
     }
+    Swal.fire({
+      title: title,
+      input:"text",
+      inputPlaceholder:'Name your menu item',
+      showCancelButton: true,
+      confirmButtonColor: '#E02232',
+      cancelButtonColor: '#E02232',
+      confirmButtonText: 'Add',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        console.log(result.value);
+        this.submitButtonAddItems(tempId, result.value.toString());
+      }
+    })
   }
 
   //function to add new item
-  submitButtonAddItems(){
-    let categoryName = Array.from(this.inputs)[0].value;
+  submitButtonAddItems(id: number, name : string){
     let tempNewItems: MenuItem[] = [];
-    if(this.newItems.has(this.tempId)){
-      tempNewItems = this.newItems.get(this.tempId)!;
+    if(this.newItems.has(id)){
+      tempNewItems = this.newItems.get(id)!;
     }
     let newItem: MenuItem = {
       id: this.tempIdNewItem++,
       hidden: false,
-      name: categoryName,
-      parentId: this.tempId
+      name: name,
+      parentId: id
     }
     tempNewItems.push(newItem);
-    this.newItems.set(this.tempId, tempNewItems);
-    this.hideModalWindow();
-    this.reloadItems(this.tempId);
-    console.log(this.newItems);
+    this.newItems.set(id, tempNewItems);
+    this.reloadItems(id);
+    console.log(this.newItems)
   }
 
-  submitButtonEditItems(){
-    this.tempItem.name = Array.from(this.inputs)[0].value;
-    this.editedItems.set(this.tempItem.id, this.tempItem);
-    this.hideModalWindow();
-    this.reloadItems(this.tempItem.parentId);
-    console.log(this.editedItems);
+  submitButtonEditItems(item: MenuItem, name : string){
+    item.name = name;
+    this.editedItems.set(item.id, item);
+    this.reloadItems(item.parentId);
   }
 
   deleteItemModal(item : MenuItem){
-    this.tempItem = item;
-    this.showModal = true;
-    this.ModalDelete = true;
-    this.title = this.tempItem.name;
+    Swal.fire({
+      title : 'Are you sure?',
+      text : 'You are going to delete ' + item.name,
+      icon : 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#E02232',
+      cancelButtonColor: '#E02232',
+      confirmButtonText: 'Delete'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.submitButtonDeleteItems(item);
+      }
+    })
   }
 
-  editItemModal(item : MenuItem){
-    this.tempItem = item;
-    this.showModal = true;
-    this.ModalEdit = true;
-    this.title = 'Edit Item';
+  async editItemModal(item: MenuItem) {
+    Swal.fire({
+      title: 'Edit item',
+      input:"text",
+      inputPlaceholder:'Name your menu item',
+      showCancelButton: true,
+      confirmButtonColor: '#E02232',
+      cancelButtonColor: '#E02232',
+      confirmButtonText: 'Edit',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        console.log(result.value);
+        this.submitButtonEditItems(item, result.value.toString());
+      }
+    })
   }
 
   //function to delete item
-  submitButtonDeleteItems(){
+  submitButtonDeleteItems(item : MenuItem){
     let tempDeletedItems: number[] = [];
-    if(this.deletedItems.has(this.tempItem.parentId)){
-      tempDeletedItems = this.deletedItems.get(this.tempItem.parentId)!;
+    if(this.deletedItems.has(item.parentId)){
+      tempDeletedItems = this.deletedItems.get(item.parentId)!;
     }
-    tempDeletedItems.push(this.tempItem.id);
-    this.deletedItems.set(this.tempItem.parentId, tempDeletedItems);
+    tempDeletedItems.push(item.id);
+    this.deletedItems.set(item.parentId, tempDeletedItems);
     let tempItems: MenuItem[] = [];
     tempDeletedItems = [];
-    this.http.get<MenuItem[]>('/api/category/parent/' + this.tempItem.id).subscribe(data => {
+    this.http.get<MenuItem[]>('/api/category/parent/' + item.id).subscribe(data => {
       tempItems = [...data];
-      if(this.deletedItems.has(this.tempItem.id)){
-        tempDeletedItems = this.deletedItems.get(this.tempItem.id)!;
+      if(this.deletedItems.has(item.id)){
+        tempDeletedItems = this.deletedItems.get(item.id)!;
       }
       for(let i = 0 ; i < tempItems.length ; i++){
         tempDeletedItems.push(tempItems[i].id);
       }
-      this.deletedItems.set(this.tempItem.id, tempDeletedItems);
+      this.deletedItems.set(item.id, tempDeletedItems);
     });
-    this.reloadItems(this.tempItem.parentId);
-    this.hideModalWindow();
+    this.reloadItems(item.parentId);
   }
 
   //function to reload items
@@ -262,16 +283,14 @@ export class AdminPanelComponent implements OnInit {
     }
   }
 
-  //function to hide modal
-  hideModalWindow(){
-    this.showModal = false;
-    this.ModalEdit = false;
-    this.ModalDelete = false;
-    Array.from(this.inputs)[0].value = '';
-  }
-
   ngOnInit(): void {
     this.showMainCategories();
+    let temp : MenuItem[] = []
+    this.http.get<MenuItem[]>('/api/category').subscribe(data => {
+      temp = [...data];
+      this.tempIdNewItem = temp.reverse()[0].id + 1;
+      console.log(this.tempIdNewItem)
+    });
   }
 
   saveChanges(){
@@ -280,14 +299,16 @@ export class AdminPanelComponent implements OnInit {
       for(let i = 0 ; i < temp.length ; i++){
         let name = temp[i].name;
         let parentId = key;
+        let id = temp[i].id;
+
         let hidden = temp[i].hidden;
-        let body = JSON.stringify({name : name,parentId : parentId, hidden : hidden});
+        let body = JSON.stringify({id : id, name : name,parentId : parentId, hidden : hidden});
         const httpOptions = {
           headers: new HttpHeaders({'Content-Type': 'application/json', 'Accept': 'application/json'})
         }
         this.http.post<MenuItem>("/api/category", body, httpOptions).subscribe(
           (data) => {
-            console.log(data);
+              console.log(data.id + "    " + data.name)
           },
           (error) => {
             console.log(error);
@@ -330,5 +351,14 @@ export class AdminPanelComponent implements OnInit {
     this.newItems.clear();
     this.editedItems.clear();
     this.deletedItems.clear();
+
+
+
+    Swal.fire({
+      icon: 'success',
+      title: 'Successfully saved',
+      showConfirmButton: false,
+      timer: 1500
+    })
   }
 }

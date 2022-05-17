@@ -22,8 +22,6 @@
 
 
 <div style="display:inline-flex;position: relative;">
-
-
   <div class="firstCategoryEditor">
     <button type="button" class="addButton" href="#addCategory" (click)="showModalWindowAddItems(0)">+ Add
       category
@@ -137,32 +135,6 @@
   </div>
 </div>
 
-<div class="modal" id="myModal" [style.display]="showModal ? 'block' : 'none'">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 class="modal-title" *ngIf="!ModalDelete">{{ title }}</h3>
-      </div>
-      <div class="modal-body" *ngIf="!ModalDelete">
-        <app-input typeInput="name" nameField="name" placeholder="Name your menu item" id="name"></app-input>
-      </div>
-      <div class="modal-body" *ngIf="ModalDelete">
-        <h4>You are about to delete "{{title}}"</h4>
-        <h5>Are you sure?</h5>
-      </div>
-      <div class="modal-footer">
-        <app-white-small-button class="close" data-dismiss="modal" (click)="hideModalWindow()"
-                                textButton="Cancel"></app-white-small-button>
-        <app-white-small-button textButton="Add" (click)="submitButtonAddItems()"
-                                *ngIf="!ModalDelete && !ModalEdit"></app-white-small-button>
-        <app-white-small-button textButton="Edit" (click)="submitButtonEditItems()"
-                                *ngIf="ModalEdit"></app-white-small-button>
-        <app-white-small-button textButton="Delete" (click)="submitButtonDeleteItems()"
-                                *ngIf="ModalDelete"></app-white-small-button>
-      </div>
-    </div>
-  </div>
-</div>
 
 
 

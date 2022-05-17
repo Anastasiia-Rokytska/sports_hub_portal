@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
-import {Router} from "@angular/router";
-import {LoginComponent} from "./login/login.component";
-import {SignupComponent} from "./signup/signup.component";
+
 
 @Component({
   selector: 'app-root',
@@ -10,7 +8,5 @@ import {SignupComponent} from "./signup/signup.component";
 })
 
 export class AppComponent {
-
   title = 'sportHub-frontend';
-
 }

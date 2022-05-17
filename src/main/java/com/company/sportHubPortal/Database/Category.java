@@ -8,13 +8,13 @@ import javax.persistence.*;
 @Table(name = "category")
 public class Category {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private Long parentId;
     private boolean hidden;
 
-    public Category(@NonNull String name,@NonNull Long parentId,@NonNull boolean hidden) {
+    public Category(@NonNull Long id,@NonNull String name,@NonNull Long parentId,@NonNull boolean hidden) {
+        this.id = id;
         this.name = name;
         this.parentId = parentId;
         this.hidden = hidden;

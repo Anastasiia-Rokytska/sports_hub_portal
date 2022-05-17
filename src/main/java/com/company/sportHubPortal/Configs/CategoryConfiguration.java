@@ -18,15 +18,15 @@ public class CategoryConfiguration {
 
     @Bean
     public void categoryConfig(){
-        categoryService.saveCategory(new Category("NBA", 0L,false));
-        categoryService.saveCategory(new Category("NHL", 0L,false));
-        categoryService.saveCategory(new Category("NFL",0L,false));
-        categoryService.saveCategory(new Category("UFC",0L,false));
-        categoryService.saveCategory(new Category("AFC1",0L,false));
-        categoryService.saveCategory(new Category("AFC2",0L,false));
-        categoryService.saveCategory(new Category("AFC3",0L,false));
-        categoryService.saveCategory(new Category("AFC4",0L,false));
-        categoryService.saveCategory(new Category("LA",0L,false));
+        categoryService.saveCategory(new Category(1L,"NBA", 0L,false));
+        categoryService.saveCategory(new Category(2L,"NHL", 0L,false));
+        categoryService.saveCategory(new Category(3L,"NFL",0L,false));
+        categoryService.saveCategory(new Category(4L,"UFC",0L,false));
+        categoryService.saveCategory(new Category(5L,"AFC1",1L,false));
+        categoryService.saveCategory(new Category(6L,"AFC2",1L,false));
+        categoryService.saveCategory(new Category(7L,"AFC3",1L,false));
+        categoryService.saveCategory(new Category(8L,"AFC4",1L,false));
+        categoryService.saveCategory(new Category(9L,"LA",2L,false));
     }
 
 }
