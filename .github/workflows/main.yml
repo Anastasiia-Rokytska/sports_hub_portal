@@ -1,32 +1,32 @@
-name: CI
-
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
-
-  workflow_dispatch:
-
-jobs:
-
-  build:
-
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Set up JDK 1.8
-      - uses: actions/setup-java@v3
-        with:
-          java-version: '17'
-
-      - name: Give github permission to use gradle
-        run: chmod +x ./gradlew
-
-      - name: Build
-        run: ./gradlew build
+#name: CI
+#
+#on:
+#  push:
+#    branches: [ main ]
+#  pull_request:
+#    branches: [ main ]
+#
+#  workflow_dispatch:
+#
+#jobs:
+#
+#  build:
+#
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - uses: actions/checkout@v3
+#
+#      - name: Set up JDK 1.8
+#      - uses: actions/setup-java@v3
+#        with:
+#          java-version: '17'
+#
+#      - name: Give github permission to use gradle
+#        run: chmod +x ./gradlew
+#
+#      - name: Build
+#        run: ./gradlew build
 
 #  test:
 #    runs-on: ubuntu-latest
@@ -53,6 +53,33 @@ jobs:
 #
 #      - name: Update documentstion
 #        run: ./gradlew asciidoctor
+name: CI
 
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
+  workflow_dispatch:
+
+jobs:
+
+     build:
+
+       runs-on: ubuntu-latest
+
+       steps:
+         - uses: actions/checkout@v3
+
+         - name: Set up JDK 1.8
+           uses: actions/setup-java@v1
+           with:
+             java-version: 1.8
+
+         - name: Give github permission to use gradle
+           run: chmod +x ./gradlew
+
+         - name: Build
+           run: ./gradlew build
             
