@@ -25,7 +25,7 @@ jobs:
         image: mysql:5.7
         env:
           MYSQL_DATABASE: sporthubportal
-          MYSQL_USER: root
+          MYSQL_USER: user
           MYSQL_PASSWORD: 1234
           MYSQL_ROOT_PASSWORD: 1234
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
@@ -41,7 +41,7 @@ jobs:
       - name: Set up MySQL
         run:
           sudo /etc/init.d/mysql start
-          mysql -e 'CREATE DATABASE sporthubportal;' -u root -p 1234
+          mysql -e 'CREATE DATABASE sporthubportal;' -u user -p 1234
 
       - name: Give github permission to use gradle
         run: chmod +x ./gradlew
