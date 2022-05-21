@@ -10,7 +10,6 @@ on:
   workflow_dispatch:
 
 jobs:
-
      build:
 
        runs-on: ubuntu-latest
@@ -24,15 +23,11 @@ jobs:
              distribution: 'temurin'
              java-version: '17'
 
-         connect:
-           stage: connect
-           image: mysql
-           before_script:
-             - mysql --version
-             - apt-get update -q && apt-get install -qqy --no-install-recommends mysql-client
-           script:
-             - echo "create database sporthubportal;" | mysql --user=root --password="1234" --host=mysql
-             - mysql --user=root --password="1234" --host=mysql -e "show databases; use $MYSQL_DATABASE_NAME; show tables;"
+         - name: Connect db
+           run: mysql --version
+           apt-get update -q && apt-get install -qqy --no-install-recommends mysql-client
+           echo "create database sporthubportal;" | mysql --user=root --password="1234" --host=mysql
+           mysql --user=root --password="1234" --host=mysql -e "show databases; use $MYSQL_DATABASE_NAME; show tables;"
 
          - name: Give github permission to use gradle
            run: chmod +x ./gradlew
