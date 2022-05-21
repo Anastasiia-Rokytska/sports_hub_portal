@@ -23,12 +23,6 @@ jobs:
              distribution: 'temurin'
              java-version: '17'
 
-         - name: Connect db
-           run: mysql --version
-           apt-get update -q && apt-get install -qqy --no-install-recommends mysql-client
-           echo "create database sporthubportal;" | mysql --user=root --password="1234" --host=mysql
-           mysql --user=root --password="1234" --host=mysql -e "show databases; use $MYSQL_DATABASE_NAME; show tables;"
-
          - name: Give github permission to use gradle
            run: chmod +x ./gradlew
 
