@@ -30,7 +30,7 @@ public class LoginTests {
                         .content(new Gson().toJson(user))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest())
+                .andExpect(status().isOk())
                 .andDo(document("{methodName}"));
     }
     @Test
