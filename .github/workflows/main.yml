@@ -24,13 +24,12 @@ jobs:
            options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
        steps:
-         - name: MySQL status
-           run: sudo service mysql status
 
          - name: Verify MySQL connection from host
-           run: |
-             sudo apt-get install mysql-server
-             mysql --port 3306 -u root -p 1234 -e "SHOW DATABASES"
+           run: sudo apt-get install mysql-server
+
+         - name: MySQL status
+           run: sudo systemctl status mysqld
 
 #         - uses: actions/checkout@v3
 #
