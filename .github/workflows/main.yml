@@ -24,9 +24,9 @@ jobs:
 
        steps:
          - name: SQL query
-           run:
+           run: |
              systemctl stop mysql
-             sudo usermod -d /var/lib/mysql/ sporthubportal
+#             sudo usermod -d /var/lib/mysql/ sporthubportal
              systemctl start mysql
              mysql --user=root --password="1234" "sporthubportal"
 
