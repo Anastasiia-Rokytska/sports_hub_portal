@@ -23,11 +23,16 @@ jobs:
              MYSQL_HOST: mysql
 
        steps:
-         - name: SQL query
-           run: |
+         - name: stop mysql
+           run:
              systemctl stop mysql
-#             sudo usermod -d /var/lib/mysql/ sporthubportal
+
+         - name: run mysql
+           run:
              systemctl start mysql
+
+         - name: use db
+           run:
              mysql --user=root --password="1234" "sporthubportal"
 
 
