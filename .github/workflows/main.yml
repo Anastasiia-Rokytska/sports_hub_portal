@@ -28,6 +28,9 @@ jobs:
          - name: Verify MySQL connection from host
            run: sudo apt-get install mysql-server
 
+         - name: Start mySql
+           run: systemctl start mysql
+
          - name: MySQL status
            run: systemctl status mysqld.service
 
