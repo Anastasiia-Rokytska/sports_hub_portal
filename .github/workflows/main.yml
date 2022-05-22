@@ -35,7 +35,8 @@ jobs:
            run: chmod +x ./gradlew
 
          - name: Build
-           run: ./gradlew test
+           run: ./gradlew :test --tests "com.company.sportHubPortal.LoginTests"
+
 
 
 
