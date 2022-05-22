@@ -31,7 +31,7 @@ jobs:
            run: sudo systemctl start mysql.service
 
          - name: Show databases
-           run: mysql -u root -p rootpassword -D some_test
+           run: mysql -u root -p -D some_test
 
 #         - uses: actions/checkout@v3
 #
