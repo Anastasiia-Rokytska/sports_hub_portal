@@ -23,7 +23,7 @@ jobs:
 
        steps:
          - name: SQL query
-         run: mysql --user=root --password="1234" --host=mysql "sporthubportal"
+           run: mysql --user=root --password="1234" --host=mysql "sporthubportal"
 
 
 
