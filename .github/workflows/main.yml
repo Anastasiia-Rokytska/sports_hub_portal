@@ -28,11 +28,9 @@ jobs:
              mysql user: 'developer' # Required if "mysql root password" is empty, default is empty. The superuser for the specified database. Can use secrets, too
              mysql password: password # Required if "mysql user" exists. The password for the "mysql user"
          - name: Show databases
-           run: |
-             mysql -u root -p rootpassword
-             show databases;
+           run: sudo systemctl start mysql.service
 
-             #         - uses: actions/checkout@v3
+#         - uses: actions/checkout@v3
 #
 #         - name: Set up JDK 1.8
 #           uses: actions/setup-java@v3
