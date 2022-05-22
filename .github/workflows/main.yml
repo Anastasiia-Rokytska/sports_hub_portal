@@ -25,7 +25,7 @@ jobs:
 
        steps:
          - name: MySQL status
-           run: sudo systemctl status mysqld.service
+           run: sudo service mysql status
 
          - name: Verify MySQL connection from host
            run: |
