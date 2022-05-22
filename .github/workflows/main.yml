@@ -20,6 +20,17 @@ jobs:
            with:
              java-version: '17'
              distribution: 'adopt'
+
+         - name: Shutdown Ubuntu MySQL (SUDO)
+           run: sudo service mysql stop
+
+         - uses: mirromutth/mysql-action@v1.1
+           with:
+             mysql version: '8.0' # Optional, default value is "latest". The version of the MySQL
+             mysql database: 'sporthubportal' # Optional, default value is "test". The specified database which will be create
+             mysql root password: '1234' # Required if "mysql user" is empty, default is empty. The root superuser password
+             mysql user: 'root' # Required if "mysql root password" is empty, default is empty. The superuser for the specified database. Can use secrets, too
+             mysql password: '1234' # Required if "mysql user" exists. The password for the "mysql user"
          - name: Give github permission to use gradle
            run: chmod +x ./gradlew
 
