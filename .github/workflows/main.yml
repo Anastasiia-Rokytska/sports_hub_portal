@@ -28,7 +28,7 @@ jobs:
              mysql user: 'developer' # Required if "mysql root password" is empty, default is empty. The superuser for the specified database. Can use secrets, too
              mysql password: password # Required if "mysql user" exists. The password for the "mysql user"
          - name: Show databases
-           run: mysql -u developer show databases;
+           run: mysql use some_test;
 
              #         - uses: actions/checkout@v3
 #
