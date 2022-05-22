@@ -20,6 +20,7 @@ jobs:
            env:
              MYSQL_ROOT_PASSWORD: 1234
              MYSQL_DATABASE: sporthubportal
+             MYSQL_HOST: mysql
 
        steps:
          - name: SQL query
