@@ -56,14 +56,15 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
     CustomUserDetails userDetails = userDetailsService.loadUserByUsername(email);
     logger.info("Email is " + email);
     logger.info("Password is " + password);
+    logger.info("Role is " + userDetails.getAuthorities());
     UsernamePasswordAuthenticationToken authenticationToken =
-        new UsernamePasswordAuthenticationToken(email, password);
+        new UsernamePasswordAuthenticationToken(email, password, userDetails.getAuthorities());
     return authenticationManager.authenticate(authenticationToken);
   }
 
   @Override
   protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response,
-                                          FilterChain chain, Authentication authResult) {
+                                          FilterChain chain, Authentication authResult){
     CustomUserDetails user = (CustomUserDetails) authResult.getPrincipal();
     jwtTokenService.createRefreshAndAccessToken(user.getUsername());
     String accessToken = jwtTokenService.getAccessToken();
