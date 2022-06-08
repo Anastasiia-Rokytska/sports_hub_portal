@@ -13,6 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.access.AccessDeniedHandler;
 
 @EnableWebSecurity
 @Configuration
@@ -68,6 +69,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .logoutSuccessUrl("/login")
         .deleteCookies("access_token")
         .deleteCookies("refresh_token");
+
+    httpSecurity.authorizeRequests()
+            .antMatchers("/admin/**").hasAuthority("ADMIN")
+            .and()
+            .exceptionHandling().accessDeniedHandler(accessDeniedHandler());
   }
 
   @Override
@@ -84,6 +90,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   @Override
   public AuthenticationManager authenticationManagerBean() throws Exception {
     return super.authenticationManagerBean();
+  }
+
+  @Bean
+  public AccessDeniedHandler accessDeniedHandler(){
+    return new CustomAccessDeniedHandler();
   }
 
 

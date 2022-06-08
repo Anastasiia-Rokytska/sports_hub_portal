@@ -3,9 +3,9 @@
   background-color: transparent;
   overflow-x: hidden;
   margin-left:0;
-  padding-top:1%;
+  padding-top:5%;
   z-index: 1;
-  width:8%;
+  width:10%;
   height: 100%;
 }
 
@@ -13,10 +13,10 @@
   position: fixed;
   background-color: #ffffff;
   overflow-x: hidden;
-  margin-left:8%;
-  padding-top:1%;
+  margin-left:10%;
+  padding-top:5%;
   z-index: 1;
-  width:8%;
+  width:10%;
   height: 100%;
 }
 
@@ -24,10 +24,10 @@
   position: fixed;
   background-color: #f8f8f8;
   overflow-x: hidden;
-  margin-left:16%;
-  padding-top:1%;
+  margin-left:20%;
+  padding-top:5%;
   z-index: 1;
-  width:8%;
+  width:10%;
   height: 100%;
 }
 
@@ -127,9 +127,17 @@
   background: transparent;
   color: #E02232;
 }
+
 .secondMenu input[type="radio"]:checked+label,
 .Checked+label {
   background-color: #F7D2D5;
   color: #E02232;
 }
+
+.btn{
+  color: #E02232;
+  background-color: blue;
+}
+
+
 

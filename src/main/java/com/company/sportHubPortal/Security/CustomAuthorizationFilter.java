@@ -46,7 +46,7 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
   @Override
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
                                   FilterChain filterChain) throws ServletException, IOException {
-    logger.info(request.getRequestURI());
+    logger.info("URL : " + request.getRequestURI());
     if (shouldNotFilter(request)) {
       filterChain.doFilter(request, response);
     } else {

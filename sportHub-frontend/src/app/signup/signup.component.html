@@ -1,9 +1,6 @@
 <div class="flex-container">
   <div class="flex-child left_side_image">
-
     <img id="leftimg" src="assets/LoginPage.png">
-
-
     <div id="logo_container">
       SportsHub
     </div>
@@ -11,7 +8,7 @@
   <div class="flex-child" id='right_side'>
     <div id='link_to_registration'>
       <div id='small_text'>Already have an account?</div>
-      <app-white-small-button textButton="Log in"></app-white-small-button>
+      <app-white-small-button textButton="Log in" (click)="goToLogin()"></app-white-small-button>
     </div>
     <div id="signup_block">
       <h4>Create an account</h4>
@@ -40,3 +37,4 @@
     </div>
   </div>
 </div>
+

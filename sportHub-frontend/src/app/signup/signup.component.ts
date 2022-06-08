@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChildren } from '@angular/core';
 import { InputComponent } from '../components/input/input/input.component';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Router } from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
 import { Observable } from 'rxjs';
 
 
@@ -14,7 +14,7 @@ import { Observable } from 'rxjs';
 
 
 export class SignupComponent implements OnInit {
-  constructor(private http: HttpClient, private router : Router) { }
+  constructor(private http: HttpClient, private router : Router, private route : ActivatedRoute) { }
 
   @ViewChildren(InputComponent) inputs: InputComponent[] = [];
 
@@ -75,8 +75,12 @@ export class SignupComponent implements OnInit {
       }
       else{
         this.hideMessages()
+
       }
     })
 
+  }
+  goToLogin(){
+    this.router.navigate(['/login'], { relativeTo: this.route });
   }
 }
