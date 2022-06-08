@@ -15,12 +15,17 @@ import { LoginComponent } from './login/login.component';
 import { WhiteSmallButtonComponent } from './components/buttons/white-small-button/white-small-button.component';
 import { InputComponent } from './components/input/input/input.component';
 import { LargeButtonComponent } from './components/buttons/large-button/large-button.component';
-import {SignupComponent} from "./signup/signup.component";
-import {LeftsideMenuComponent} from "./leftside-menu/leftside-menu.component";
+import { SignupComponent } from "./signup/signup.component";
+import { LeftsideMenuComponent } from "./leftside-menu/leftside-menu.component";
 import { PersonalPageComponent } from './personal-page/personal-page.component';
 import { SegmentComponent } from './components/segment/segment/segment.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { HeaderAdminComponent } from './admin/header-admin/header-admin.component';
+import { TeamsHeaderComponent } from './teams/teams-header/teams-header.component';
+import { TeamsComponent } from './teams/teams/teams.component';
+import { LeftSideMenuAdminComponent } from './admin/left-side-menu-admin/left-side-menu-admin.component';
+import { MapComponent } from './components/map/map.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +48,12 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     SegmentComponent,
     LeftsideMenuComponent,
     ForgotPasswordComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    HeaderAdminComponent,
+    TeamsHeaderComponent,
+    TeamsComponent,
+    LeftSideMenuAdminComponent,
+    MapComponent
   ],
   imports: [
     BrowserModule,

@@ -5,13 +5,15 @@ import { PersonalPageComponent } from './personal-page/personal-page.component';
 import {SignupComponent} from "./signup/signup.component";
 import {ForgotPasswordComponent} from "./forgot-password/forgot-password.component";
 import {ResetPasswordComponent} from "./reset-password/reset-password.component";
+import { TeamsComponent } from './teams/teams/teams.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'sign-up', component: SignupComponent},
   {path: 'forgot-password', component: ForgotPasswordComponent},
   {path: 'reset-password/:id', component: ResetPasswordComponent},
-  {path: 'personal_page', component: PersonalPageComponent}
+  {path: 'personal_page', component: PersonalPageComponent},
+  {path: 'teams', component: TeamsComponent}
 ];
 
 @NgModule({
