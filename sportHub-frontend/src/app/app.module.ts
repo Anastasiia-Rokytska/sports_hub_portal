@@ -19,6 +19,8 @@ import {SignupComponent} from "./signup/signup.component";
 import {LeftsideMenuComponent} from "./leftside-menu/leftside-menu.component";
 import { PersonalPageComponent } from './personal-page/personal-page.component';
 import { SegmentComponent } from './components/segment/segment/segment.component';
+import { MainPageComponent } from './main-page/main-page.component';
+import { AdminPanelComponent} from "./admin-panel/admin-panel.component";
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
@@ -41,6 +43,8 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     LeftsideMenuComponent,
     PersonalPageComponent,
     SegmentComponent,
+    MainPageComponent,
+    AdminPanelComponent,
     LeftsideMenuComponent,
     ForgotPasswordComponent,
     ResetPasswordComponent

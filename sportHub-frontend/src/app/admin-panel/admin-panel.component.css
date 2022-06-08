@@ -1,0 +1,73 @@
+.addButton{
+  border: 0.5px gray;
+  border-style: dashed;
+  color: gray;
+  background-color:transparent;
+  font-family: "Open Sans";
+  font-size: 14px;
+}
+.btn-group button {
+  background-color: white;
+  border: 0.5px solid black;
+  color: #b2b2b2;
+  cursor: pointer;
+  float: left;
+  display: inline-flex;
+  align-items:center;
+  margin-top: 5px;
+  font-family: "Open Sans";
+  font-size: 14px;
+}
+
+
+.btn-group button:hover {
+  color: #E02232;
+}
+
+.btn-group button a{
+  align-items: center;
+  color: white;
+}
+
+.btn-group button a:hover{
+  color: #E02232;
+}
+.btn-group button:hover > .btn-group button a{
+  color : #b2b2b2;
+}
+.firstCategoryEditor{
+  width: 220px;
+  margin-left:20px;
+}
+.SecondCategoryEditor{
+  width: 220px;
+  margin-left:20px;
+}
+.ThirdCategoryEditor{
+  width: 220px;
+  margin-left:20px;
+}
+
+.dropdown-menu{
+  position:absolute;
+  z-index: 2;
+}
+.dropdown-menu span{
+  z-index: 2;
+}
+
+
+.menuItems {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.dropdown-menu span:hover{
+  color: #E02232;
+  background-color: #F7D2D5;
+}
+
+
+
+

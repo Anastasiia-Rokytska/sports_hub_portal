@@ -1,40 +1,59 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {HttpClient} from "@angular/common/http";
+import {Observable} from "rxjs";
+
+interface MenuItem{
+  id: number;
+  hidden: boolean;
+  name: string;
+  parentId: number;
+}
 
 @Component({
   selector: 'leftside-menu',
   templateUrl: './leftside-menu.component.html',
   styleUrls: ['./leftside-menu.component.css']
 })
-export class LeftsideMenuComponent implements OnInit {
-  nbaMenu = "display: none";
-  nbaAFCSouthMenu = "display: none";
 
-  constructor() { }
+export class LeftsideMenuComponent implements OnInit {
+  constructor(private http: HttpClient) {}
+
+  secondMenuVisible: boolean = false;
+  thirdMenuVisible: boolean = false;
+  menuItems: MenuItem[] = [];
+  secondMenuItems: MenuItem[] = [];
+  thirdMenuItems: MenuItem[] = [];
 
   ngOnInit(): void {
+    this.http.get<MenuItem[]>('/api/category/parent/visible/0').subscribe(data => {
+      this.menuItems = data;
+    });
   }
 
-  hideAll(){
-    this.hideThirdMenu();
-    this.hideSecondMenu();
-  }
-  hideSecondMenu(){
-    this.nbaMenu = "display: none";
-  }
-  hideThirdMenu(){
-    this.nbaAFCSouthMenu = "display: none";
-  }
-
-  menuVisibility(menu: string) {
-    if(menu == "home"){
-      this.hideAll();
-    } else if (menu === "nba") {
-      this.hideAll();
-      this.nbaMenu = "display: block";
-    }else if(menu === "nba-AFC-south"){
-      this.nbaAFCSouthMenu = "display: block";
+  showSecondMenu(id: number){
+    this.thirdMenuVisible = false;
+    if(id == 0){
+      this.secondMenuVisible = false;
+    }else{
+      this.http.get<MenuItem[]>('/api/category/parent/visible/' + id).subscribe(data => {
+        if(data.length > 0){
+          this.secondMenuVisible = true;
+          this.secondMenuItems = data;
+        }else{
+          this.secondMenuVisible = false;
+        }
+      });
     }
   }
 
-
+  showThirdMenu(id: number){
+    this.http.get<MenuItem[]>('/api/category/parent/visible/' + id).subscribe(data => {
+      if(data.length > 0){
+        this.thirdMenuVisible = true;
+        this.thirdMenuItems = data;
+      }else{
+        this.thirdMenuVisible = false;
+      }
+    });
+  }
 }
