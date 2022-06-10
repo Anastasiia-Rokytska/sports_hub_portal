@@ -7,7 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class SegmentComponent implements OnInit {
 
-  @Input() class = 'nonactive_segment'
+  @Input() class : string = 'nonactive_segment'
   @Input() text: string | null = null
 
   constructor() { }

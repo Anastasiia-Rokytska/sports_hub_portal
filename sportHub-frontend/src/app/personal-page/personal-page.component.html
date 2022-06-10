@@ -3,20 +3,37 @@
   <leftside-menu></leftside-menu>
   <div class="main_part">
     <div class="navigate_buttons">
-      <app-segment text="Personal" class="active_segment"></app-segment>
-      <app-segment text="Change password" (click)="changePassword()"></app-segment>
-      <app-segment text="My surveys" (click)="mySurveys()"></app-segment>
-      <app-segment text="Team hub" (click)="teamHub()"></app-segment>
+      <app-segment id="personal_segment" text="Personal" [class]="class[0]" (click)="show_personal()"></app-segment>
+      <app-segment id="change_pass_segment" text="Change password" [class]="class[1]"
+                   (click)="show_pass()"></app-segment>
+      <app-segment id="surveys_segment" text="My surveys" [class]="class[2]" (click)="mySurveys()" ></app-segment>
+      <app-segment id="team_hub_segment" text="Team hub" [class]="class[3]" (click)="teamHub()"></app-segment>
     </div>
-    <div class="user_photo">
-      <img src="/assets/icons/userExample.png" class="user_icon">
-      <img src="/assets/icons/photoIcon.png" class="load_photo">
+    <div class="main_part" id="personal" [hidden]="!personal_show">
+      <div class="user_photo">
+        <img src="/assets/icons/userExample.png" class="user_icon">
+        <img src="/assets/icons/photoIcon.png" class="load_photo">
+      </div>
+      <div class="update_profile">
+        <app-input nameField="First name: " [value]="firstName"></app-input>
+        <app-input nameField="Last name: " [value]="lastName" ></app-input>
+        <app-input nameField="Email: " [value]="email"></app-input>
+      </div>
+      <app-large-button textButton="Update profile"></app-large-button>
     </div>
-    <div class="update_profile">
-      <app-input nameField="First name: " [value]="firstName"></app-input>
-      <app-input nameField="Last name: " [value]="lastName"></app-input>
-      <app-input nameField="Email: " [value]="email"></app-input>
+
+    <div class="main_part" id="changePassword" [hidden]="!pass_show">
+
+      <div class="update_profile">
+        <app-input typeInput="password" nameField="Old password"
+                   placeholder="8 + characters (letters and numbers)" [isPassword]="true"></app-input>
+        <app-input typeInput="password" nameField="New password"
+                   placeholder="8 + characters (letters and numbers)" [isPassword]="true"></app-input>
+        <app-input typeInput="password" nameField="Confirm password"
+                   placeholder="8 + characters (letters and numbers)" [isPassword]="true"></app-input>
+      </div>
+      <app-large-button textButton="Change password" (click)="changePassword()"></app-large-button>
     </div>
-    <app-large-button textButton="Update profile"></app-large-button>
+
   </div>
 </div>
