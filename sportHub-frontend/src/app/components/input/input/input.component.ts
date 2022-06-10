@@ -27,17 +27,16 @@ export class InputComponent implements OnInit {
 
   @Input() value: string = ''
 
-  @Input() isPassword: boolean = false
-
+  isPassword: boolean = false
 
   constructor() {
-
-
   }
 
 
-  ngOnInit():
-    void {
+  ngOnInit(): void {
+    console.log(this.typeInput)
+    if (this.typeInput == 'password') this.isPassword = true
+    console.log(this.isPassword)
   }
 
 
