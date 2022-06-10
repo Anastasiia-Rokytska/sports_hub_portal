@@ -30,7 +30,6 @@ public class UserService {
     return passwordEncoder.matches(password, encodedPassword);
   }
 
-
   public void save(User user) {
     userRepository.save(user);
   }

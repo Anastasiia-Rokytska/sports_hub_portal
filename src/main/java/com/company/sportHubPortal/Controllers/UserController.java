@@ -127,6 +127,57 @@ public class UserController {
     return ResponseEntity.ok(new Gson().toJson(user));
   }
 
+  @PostMapping("/check-old-pass")
+  public ResponseEntity<Object> checkOldPass(@RequestBody String password) {
+
+    String o = new Object() {
+    }.getClass().getEnclosingMethod().getName() + "() ";
+
+    UserDetails userDetails =
+        (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    User user = userService.getByEmail(userDetails.getUsername());
+    if (user == null) {
+      logger.info(o + "User is not found");
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+    }
+    password = new Gson().fromJson(password, StringRequestParam.class).getParam();
+
+    if (userService.decodePassword(password, user.getPassword())) {
+      return ResponseEntity.ok(new Gson().toJson(user));
+    } else {
+      logger.info(o + password);
+      logger.info(o + "Password is not decoded");
+
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+    }
+  }
+
+  @PatchMapping("/change-password")
+  public ResponseEntity<Object> changePassword(@RequestBody String password) {
+
+    String o = new Object() {
+    }.getClass().getEnclosingMethod().getName() + "() ";
+
+    password = new Gson().fromJson(password, StringRequestParam.class).getParam();
+
+    UserDetails userDetails =
+        (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    User user = userService.getByEmail(userDetails.getUsername());
+    if (user == null) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+    }
+
+    logger.info(o+"User is found");
+
+    user.setPassword(userService.encodePassword(password));
+    userService.save(user);
+
+    logger.info(o+"Password is changed");
+
+    return ResponseEntity.ok(HttpStatus.OK);
+  }
+
+
   @PostMapping("/forgot-password")
   public ResponseEntity<Object> requestResetLink(@RequestBody String email) {
 
@@ -200,4 +251,5 @@ public class UserController {
       return param;
     }
   }
+
 }
