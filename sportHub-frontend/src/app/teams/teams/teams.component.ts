@@ -7,8 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TeamsComponent implements OnInit {
 
-  latitude = 51.678418;
-  longitude = 7.809007;
+  showLogo = true
 
   constructor() { }
 

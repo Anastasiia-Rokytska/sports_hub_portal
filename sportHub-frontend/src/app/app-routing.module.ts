@@ -17,7 +17,6 @@ const routes: Routes = [
   {path: 'admin', component: AdminPanelComponent},
   {path: 'forgot-password', component: ForgotPasswordComponent},
   {path: 'reset-password/:id', component: ResetPasswordComponent},
-  {path: 'personal_page', component: PersonalPageComponent},
   {path: 'teams', component: TeamsComponent}
 ];
 

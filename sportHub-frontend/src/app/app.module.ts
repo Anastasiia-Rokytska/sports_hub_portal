@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule }   from '@angular/forms';
+import { FormsModule, ReactiveFormsModule }   from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
@@ -28,6 +28,14 @@ import { TeamsHeaderComponent } from './teams/teams-header/teams-header.componen
 import { TeamsComponent } from './teams/teams/teams.component';
 import { LeftSideMenuAdminComponent } from './admin/left-side-menu-admin/left-side-menu-admin.component';
 import { MapComponent } from './components/map/map.component';
+import { SelectComponent } from './components/select/select.component';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { AllTeamsComponent } from './teams/all-teams/all-teams.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -57,13 +65,22 @@ import { MapComponent } from './components/map/map.component';
     TeamsHeaderComponent,
     TeamsComponent,
     LeftSideMenuAdminComponent,
-    MapComponent
+    MapComponent,
+    SelectComponent,
+    AllTeamsComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    ReactiveFormsModule,
+    HttpClientModule,
+    MatAutocompleteModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

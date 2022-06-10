@@ -35,3 +35,6 @@ app-teams-header{
   align-items: center;
   border: 1px solid #D4D9E2;
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

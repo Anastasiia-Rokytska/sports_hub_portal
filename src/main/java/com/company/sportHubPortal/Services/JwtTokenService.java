@@ -86,7 +86,7 @@ public class JwtTokenService {
   public Authentication getAuthentication(String token) throws Exception {
     String email = verifyToken(token);
     UserDetails userDetails = this.userDetailsService.loadUserByUsername(email);
-    return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
+    return new UsernamePasswordAuthenticationToken(userDetails, "", null);
   }
 
   public String getRefreshAndAccessToken(String email) {

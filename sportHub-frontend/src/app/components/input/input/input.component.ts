@@ -24,8 +24,16 @@ export class InputComponent implements OnInit {
 
   @Input() value: string = ''
 
-  constructor() { }
+  @Input() width: string = '390'
+
+  @Input() height: string = '42'
+
+  style: string = ''
+
+  constructor() {
+  }
 
   ngOnInit(): void {
+    this.style = `width: ${this.width}px; height: ${this.height}px;`
   }
 }

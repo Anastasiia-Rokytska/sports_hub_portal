@@ -128,6 +128,13 @@ export class MapComponent{
         })
     }
 
+    chart.seriesContainer.events.on("hit", function(ev) {
+      var coords = chart.svgPointToGeo(ev.svgPoint);
+      var marker = imageSeries.mapImages.create();
+      marker.latitude = coords.latitude;
+      marker.longitude = coords.longitude;
+    });
+
     let colorSet = new am4core.ColorSet();
 
     imageSeries.data = [ {

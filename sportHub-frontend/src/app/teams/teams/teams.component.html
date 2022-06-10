@@ -3,9 +3,28 @@
 <div class="page">
   <app-left-side-menu-admin></app-left-side-menu-admin>
   <div class="main_content">
-    <app-map></app-map>
-    <div class="team_form">
-      
+    <div class="main_team_form">
+      <app-map></app-map>
+      <div class="add_team">
+        <div class="team_form">
+          <app-select></app-select>
+          <app-select></app-select>
+          <app-select></app-select>
+          <app-input nameField="Team" width="246" height="36" placeholder="Name of team"></app-input>
+        </div>
+        <div class="team_logo" *ngIf="showLogo">
+          <img src="/assets/icons/loadPhoto.svg">
+          <div class="logo_text_block">
+            <span class="logo_text" id="red_text">Add logo</span>
+            <span class="logo_text" id="black_text"> right here</span>
+          </div>
+        </div>
+        <div class="buttons">
+          <button class="apply">Apply</button>
+          <button class="cancel">Cancel</button>
+        </div>
+      </div>
     </div>
+    <app-all-teams></app-all-teams>
   </div>
 </div>

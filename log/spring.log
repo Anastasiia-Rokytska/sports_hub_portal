@@ -1,0 +1,53 @@
+2022-06-10 16:49:33.151  INFO 20924 --- [restartedMain] c.c.s.SportHubPortalApplication          : Starting SportHubPortalApplication using Java 17.0.2 on DESKTOP-POKCQI0 with PID 20924 (D:\sportHubPortal\sports_hub_portal\build\classes\java\main started by User in D:\sportHubPortal\sports_hub_portal)
+2022-06-10 16:49:33.156 DEBUG 20924 --- [restartedMain] c.c.s.SportHubPortalApplication          : Running with Spring Boot v2.6.6, Spring v5.3.18
+2022-06-10 16:49:33.157  INFO 20924 --- [restartedMain] c.c.s.SportHubPortalApplication          : No active profile set, falling back to 1 default profile: "default"
+2022-06-10 16:49:33.231  INFO 20924 --- [restartedMain] o.s.b.devtools.restart.ChangeableUrls    : The Class-Path manifest attribute in C:\Users\User\.gradle\caches\modules-2\files-2.1\commons-logging\commons-logging\1.0.3\760c711c71588bc273d3e56d196d720a7678cd93\commons-logging-1.0.3.jar referenced one or more files that do not exist: file:/C:/Users/User/.gradle/caches/modules-2/files-2.1/commons-logging/commons-logging/1.0.3/760c711c71588bc273d3e56d196d720a7678cd93/log4j.jar,file:/C:/Users/User/.gradle/caches/modules-2/files-2.1/commons-logging/commons-logging/1.0.3/760c711c71588bc273d3e56d196d720a7678cd93/log4j-core.jar
+2022-06-10 16:49:33.232  INFO 20924 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2022-06-10 16:49:33.232  INFO 20924 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2022-06-10 16:49:34.521  INFO 20924 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-06-10 16:49:34.581  INFO 20924 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 50 ms. Found 2 JPA repository interfaces.
+2022-06-10 16:49:35.333  INFO 20924 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8000 (http)
+2022-06-10 16:49:35.344  INFO 20924 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-06-10 16:49:35.344  INFO 20924 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.60]
+2022-06-10 16:49:35.441  INFO 20924 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-06-10 16:49:35.441  INFO 20924 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2208 ms
+2022-06-10 16:49:35.475  INFO 20924 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2022-06-10 16:49:35.931  INFO 20924 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2022-06-10 16:49:35.942  INFO 20924 --- [restartedMain] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:mysql://localhost:3306/sporthubportal'
+2022-06-10 16:49:36.185  INFO 20924 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-06-10 16:49:36.419  INFO 20924 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.7.Final
+2022-06-10 16:49:36.736  INFO 20924 --- [restartedMain] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2022-06-10 16:49:36.891  INFO 20924 --- [restartedMain] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2022-06-10 16:49:37.755  INFO 20924 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-06-10 16:49:37.763  INFO 20924 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-06-10 16:49:38.072  WARN 20924 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-06-10 16:49:38.196 DEBUG 20924 --- [restartedMain] c.c.s.S.CustomAuthorizationFilter        : Filter 'customAuthorizationFilter' configured for use
+2022-06-10 16:49:38.253  INFO 20924 --- [restartedMain] c.c.s.Configs.EmailSenderConfiguration   : JavaMailSender is successfully configured
+2022-06-10 16:49:39.136  WARN 20924 --- [restartedMain] o.s.s.c.a.web.builders.WebSecurity       : You are asking Spring Security to ignore Ant [pattern='/assets/**']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2022-06-10 16:49:39.136  INFO 20924 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure Ant [pattern='/assets/**'] with []
+2022-06-10 16:49:39.137  WARN 20924 --- [restartedMain] o.s.s.c.a.web.builders.WebSecurity       : You are asking Spring Security to ignore Ant [pattern='/user/verify/**']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2022-06-10 16:49:39.137  INFO 20924 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure Ant [pattern='/user/verify/**'] with []
+2022-06-10 16:49:39.160  INFO 20924 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will not secure any request
+2022-06-10 16:49:39.315  INFO 20924 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page: class path resource [static/index.html]
+2022-06-10 16:49:39.516  INFO 20924 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2022-06-10 16:49:39.559  INFO 20924 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8000 (http) with context path ''
+2022-06-10 16:49:39.569  INFO 20924 --- [restartedMain] c.c.s.SportHubPortalApplication          : Started SportHubPortalApplication in 6.887 seconds (JVM running for 10.84)
+2022-06-10 16:49:48.951  INFO 20924 --- [http-nio-8000-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-06-10 16:49:48.951  INFO 20924 --- [http-nio-8000-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2022-06-10 16:49:48.953  INFO 20924 --- [http-nio-8000-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2022-06-10 16:49:48.974  INFO 20924 --- [http-nio-8000-exec-1] c.c.s.S.CustomAuthorizationFilter        : URL : /personal_page
+2022-06-10 16:49:49.020 ERROR 20924 --- [http-nio-8000-exec-1] c.c.s.S.CustomAuthorizationFilter        : The Token has expired on Thu Jun 09 20:22:56 EEST 2022.
+2022-06-10 16:49:58.792  INFO 20924 --- [http-nio-8000-exec-8] c.c.s.S.CustomAuthenticationFilter       : Authentication: /user/login
+2022-06-10 16:49:59.011  INFO 20924 --- [http-nio-8000-exec-8] c.c.s.S.CustomAuthenticationFilter       : Unsuccessful authentication
+2022-06-10 16:50:03.784  INFO 20924 --- [http-nio-8000-exec-9] c.c.s.S.CustomAuthenticationFilter       : Authentication: /user/login
+2022-06-10 16:50:03.788  INFO 20924 --- [http-nio-8000-exec-9] c.c.s.S.CustomAuthenticationFilter       : Unsuccessful authentication
+2022-06-10 16:50:04.124  INFO 20924 --- [http-nio-8000-exec-10] c.c.s.S.CustomAuthenticationFilter       : Authentication: /user/login
+2022-06-10 16:50:04.128  INFO 20924 --- [http-nio-8000-exec-10] c.c.s.S.CustomAuthenticationFilter       : Unsuccessful authentication
+2022-06-10 16:50:04.767  INFO 20924 --- [http-nio-8000-exec-2] c.c.s.S.CustomAuthenticationFilter       : Authentication: /user/login
+2022-06-10 16:50:04.770  INFO 20924 --- [http-nio-8000-exec-2] c.c.s.S.CustomAuthenticationFilter       : Unsuccessful authentication
+2022-06-10 16:50:04.949  INFO 20924 --- [http-nio-8000-exec-3] c.c.s.S.CustomAuthenticationFilter       : Authentication: /user/login
+2022-06-10 16:50:04.965  INFO 20924 --- [http-nio-8000-exec-3] c.c.s.S.CustomAuthenticationFilter       : Unsuccessful authentication
+2022-06-10 16:50:06.129  INFO 20924 --- [http-nio-8000-exec-1] c.c.s.S.CustomAuthenticationFilter       : Authentication: /user/login
+2022-06-10 16:50:06.133  INFO 20924 --- [http-nio-8000-exec-1] c.c.s.S.CustomAuthenticationFilter       : Unsuccessful authentication
+2022-06-10 16:50:06.281  INFO 20924 --- [http-nio-8000-exec-6] c.c.s.S.CustomAuthenticationFilter       : Authentication: /user/login
+2022-06-10 16:50:06.284  INFO 20924 --- [http-nio-8000-exec-6] c.c.s.S.CustomAuthenticationFilter       : Unsuccessful authentication
