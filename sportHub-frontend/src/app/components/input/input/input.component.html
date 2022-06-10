@@ -4,6 +4,6 @@
 </div>
 <div>
   <input [(ngModel)]="value" [type]="typeInput" [name]="nameField" [placeholder]="placeholder">
-  <button id = "password_eye" class = "eye_button" *ngIf="isPassword" (click)="show_pass()"></button>
+  <button type="button" id = "password_eye" class = "eye_button" *ngIf="isPassword" (click)="show_pass()"></button>
 </div>
 <router-outlet></router-outlet>

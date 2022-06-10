@@ -2666,3 +2666,71 @@ javax.servlet.ServletException: Circular view path [error]: would dispatch back 
 2022-06-10 16:45:34.113  INFO 19544 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8000 (http) with context path ''
 2022-06-10 16:45:34.118  INFO 19544 --- [restartedMain] c.c.s.SportHubPortalApplication          : Started SportHubPortalApplication in 1.773 seconds (JVM running for 1193.76)
 2022-06-10 16:45:34.121  INFO 19544 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2022-06-10 19:31:28.090  INFO 19544 --- [Thread-23] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-06-10 19:31:28.139  INFO 19544 --- [Thread-23] .SchemaDropperImpl$DelayedDropActionImpl : HHH000477: Starting delayed evictData of schema as part of SessionFactory shut-down'
+2022-06-10 19:31:28.552  INFO 19544 --- [Thread-23] com.zaxxer.hikari.HikariDataSource       : HikariPool-6 - Shutdown initiated...
+2022-06-10 19:31:28.657  INFO 19544 --- [Thread-23] com.zaxxer.hikari.HikariDataSource       : HikariPool-6 - Shutdown completed.
+2022-06-10 19:31:31.101  INFO 19544 --- [restartedMain] c.c.s.SportHubPortalApplication          : Starting SportHubPortalApplication using Java 18 on DESKTOP-PJKNEPO with PID 19544 (C:\Users\HAPPY\Desktop\SS\sports_hub_portal\build\classes\java\main started by HAPPY in C:\Users\HAPPY\Desktop\SS\sports_hub_portal)
+2022-06-10 19:31:31.101 DEBUG 19544 --- [restartedMain] c.c.s.SportHubPortalApplication          : Running with Spring Boot v2.6.6, Spring v5.3.18
+2022-06-10 19:31:31.101  INFO 19544 --- [restartedMain] c.c.s.SportHubPortalApplication          : No active profile set, falling back to 1 default profile: "default"
+2022-06-10 19:31:31.688  INFO 19544 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-06-10 19:31:31.720  INFO 19544 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 31 ms. Found 2 JPA repository interfaces.
+2022-06-10 19:31:31.961  INFO 19544 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8000 (http)
+2022-06-10 19:31:31.963  INFO 19544 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-06-10 19:31:31.963  INFO 19544 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.60]
+2022-06-10 19:31:32.015  INFO 19544 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-06-10 19:31:32.015  INFO 19544 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 903 ms
+2022-06-10 19:31:32.060  INFO 19544 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-7 - Starting...
+2022-06-10 19:31:32.107  INFO 19544 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-7 - Start completed.
+2022-06-10 19:31:32.108  INFO 19544 --- [restartedMain] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:mysql://localhost:3306/sporthubportal'
+2022-06-10 19:31:32.204  INFO 19544 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-06-10 19:31:32.233  INFO 19544 --- [restartedMain] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2022-06-10 19:31:32.634  INFO 19544 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-06-10 19:31:32.637  INFO 19544 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-06-10 19:31:32.802  WARN 19544 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-06-10 19:31:32.825 DEBUG 19544 --- [restartedMain] c.c.s.S.CustomAuthorizationFilter        : Filter 'customAuthorizationFilter' configured for use
+2022-06-10 19:31:32.865  INFO 19544 --- [restartedMain] c.c.s.Configs.EmailSenderConfiguration   : JavaMailSender is successfully configured
+2022-06-10 19:31:33.694  WARN 19544 --- [restartedMain] o.s.s.c.a.web.builders.WebSecurity       : You are asking Spring Security to ignore Ant [pattern='/assets/**']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2022-06-10 19:31:33.694  INFO 19544 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure Ant [pattern='/assets/**'] with []
+2022-06-10 19:31:33.695  WARN 19544 --- [restartedMain] o.s.s.c.a.web.builders.WebSecurity       : You are asking Spring Security to ignore Ant [pattern='/user/verify/**']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2022-06-10 19:31:33.695  INFO 19544 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure Ant [pattern='/user/verify/**'] with []
+2022-06-10 19:31:33.705  INFO 19544 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will not secure any request
+2022-06-10 19:31:33.781  INFO 19544 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page: class path resource [static/index.html]
+2022-06-10 19:31:33.847  INFO 19544 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2022-06-10 19:31:33.862  INFO 19544 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8000 (http) with context path ''
+2022-06-10 19:31:33.867  INFO 19544 --- [restartedMain] c.c.s.SportHubPortalApplication          : Started SportHubPortalApplication in 2.84 seconds (JVM running for 11153.508)
+2022-06-10 19:31:33.869  INFO 19544 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2022-06-10 19:31:35.347  INFO 19544 --- [Thread-27] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-06-10 19:31:35.348  INFO 19544 --- [Thread-27] .SchemaDropperImpl$DelayedDropActionImpl : HHH000477: Starting delayed evictData of schema as part of SessionFactory shut-down'
+2022-06-10 19:31:35.464  INFO 19544 --- [Thread-27] com.zaxxer.hikari.HikariDataSource       : HikariPool-7 - Shutdown initiated...
+2022-06-10 19:31:35.469  INFO 19544 --- [Thread-27] com.zaxxer.hikari.HikariDataSource       : HikariPool-7 - Shutdown completed.
+2022-06-10 19:31:35.585  INFO 19544 --- [restartedMain] c.c.s.SportHubPortalApplication          : Starting SportHubPortalApplication using Java 18 on DESKTOP-PJKNEPO with PID 19544 (C:\Users\HAPPY\Desktop\SS\sports_hub_portal\build\classes\java\main started by HAPPY in C:\Users\HAPPY\Desktop\SS\sports_hub_portal)
+2022-06-10 19:31:35.585 DEBUG 19544 --- [restartedMain] c.c.s.SportHubPortalApplication          : Running with Spring Boot v2.6.6, Spring v5.3.18
+2022-06-10 19:31:35.585  INFO 19544 --- [restartedMain] c.c.s.SportHubPortalApplication          : No active profile set, falling back to 1 default profile: "default"
+2022-06-10 19:31:35.876  INFO 19544 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-06-10 19:31:35.903  INFO 19544 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 27 ms. Found 2 JPA repository interfaces.
+2022-06-10 19:31:36.028  INFO 19544 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8000 (http)
+2022-06-10 19:31:36.028  INFO 19544 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-06-10 19:31:36.028  INFO 19544 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.60]
+2022-06-10 19:31:36.053  INFO 19544 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-06-10 19:31:36.053  INFO 19544 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 466 ms
+2022-06-10 19:31:36.079  INFO 19544 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-8 - Starting...
+2022-06-10 19:31:36.106  INFO 19544 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-8 - Start completed.
+2022-06-10 19:31:36.106  INFO 19544 --- [restartedMain] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:mysql://localhost:3306/sporthubportal'
+2022-06-10 19:31:36.144  INFO 19544 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-06-10 19:31:36.153  INFO 19544 --- [restartedMain] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2022-06-10 19:31:36.386  INFO 19544 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-06-10 19:31:36.387  INFO 19544 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-06-10 19:31:36.487  WARN 19544 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-06-10 19:31:36.514 DEBUG 19544 --- [restartedMain] c.c.s.S.CustomAuthorizationFilter        : Filter 'customAuthorizationFilter' configured for use
+2022-06-10 19:31:36.553  INFO 19544 --- [restartedMain] c.c.s.Configs.EmailSenderConfiguration   : JavaMailSender is successfully configured
+2022-06-10 19:31:37.389  WARN 19544 --- [restartedMain] o.s.s.c.a.web.builders.WebSecurity       : You are asking Spring Security to ignore Ant [pattern='/assets/**']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2022-06-10 19:31:37.390  INFO 19544 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure Ant [pattern='/assets/**'] with []
+2022-06-10 19:31:37.390  WARN 19544 --- [restartedMain] o.s.s.c.a.web.builders.WebSecurity       : You are asking Spring Security to ignore Ant [pattern='/user/verify/**']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2022-06-10 19:31:37.390  INFO 19544 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure Ant [pattern='/user/verify/**'] with []
+2022-06-10 19:31:37.398  INFO 19544 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will not secure any request
+2022-06-10 19:31:37.454  INFO 19544 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page: class path resource [static/index.html]
+2022-06-10 19:31:37.510  INFO 19544 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2022-06-10 19:31:37.527  INFO 19544 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8000 (http) with context path ''
+2022-06-10 19:31:37.534  INFO 19544 --- [restartedMain] c.c.s.SportHubPortalApplication          : Started SportHubPortalApplication in 1.994 seconds (JVM running for 11157.175)
+2022-06-10 19:31:37.535  INFO 19544 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
