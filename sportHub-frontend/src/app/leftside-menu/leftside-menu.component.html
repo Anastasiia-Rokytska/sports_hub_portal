@@ -4,7 +4,32 @@
         <input type="radio" id="{{item.id}}" name="firstMenu" (click)="showSecondMenu(item.id)"/>
         <label for="{{item.id}}" class="button" (click)="showSecondMenu(item.id)">{{item.name}}</label>
     </li>
+
+    <li>
+      <div class="row justify-content-evenly" >
+        <h5 class="col-2">Follow</h5></div>
+      <div class="row justify-content-evenly" >
+
+        <div class="col-2 "><a href="https://www.facebook.com" target="_blank">
+          <img class="filter" src="assets/icons/facebook_logo.png"></a></div>
+        <div class="col-2 justify-content-center"><a href="https://www.twitter.com" target="_blank">
+          <img src=" assets/icons/twitter_logo.png"></a>
+        </div>
+      </div>
+      <div class="row justify-content-evenly" style="margin-top: 15px">
+        <div class="col-2"><a href="https://www.instagram.com" target="_blank">
+          <img src="assets/icons/instagram_logo.png">
+        </a></div>
+        <div class="col-2"><a href="https://www.youtube.com" target="_blank">
+          <img src="assets/icons/youtube_logo.png">
+        </a></div>
+      </div>
+    </li>
+
   </ul>
+
+
+
 </div>
 
 <div class="sidenavSecondMenu" *ngIf="secondMenuVisible">

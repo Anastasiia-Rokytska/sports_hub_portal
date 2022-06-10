@@ -29,7 +29,7 @@ public class UserConfiguration {
         userService.encodePassword("password"), UserRole.USER, true));
     userService.save(new User("user3firstname", "user3lastname", "user3@gmail.com",
         userService.encodePassword("password"), UserRole.USER, true));
-    userService.save(new User("yura", "gonsor", "gonsor.y2@gmail.com",
+    userService.save(new User("yuriy", "gonsor", "gonsor.y2@gmail.com",
         userService.encodePassword("12345678"), UserRole.USER, true));
   }
 }
