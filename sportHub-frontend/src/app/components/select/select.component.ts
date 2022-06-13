@@ -14,6 +14,7 @@ export class SelectComponent implements OnInit {
   streets: string[] = ['Champs-Élysées', 'Lombard Street', 'Abbey Road', 'Fifth Avenue'];
   placeholder: string = 'All'
   nameField: string = 'SELECT LOCATION'
+  value!: string
 
   filteredStreets: Observable<string[]> | undefined;
 

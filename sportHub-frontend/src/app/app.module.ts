@@ -36,6 +36,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DropDownComponent } from './components/drop-down/drop-down.component';
 
 @NgModule({
   declarations: [
@@ -68,6 +69,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MapComponent,
     SelectComponent,
     AllTeamsComponent,
+    DropDownComponent,
   ],
   imports: [
     BrowserModule,

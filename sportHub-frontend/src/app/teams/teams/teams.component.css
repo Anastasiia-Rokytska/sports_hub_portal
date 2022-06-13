@@ -102,4 +102,20 @@ app-map{
 app-all-teams{
   width: auto;
   margin-top: 74px;
+  margin-bottom: 52px;
 }
+
+.loaded_image img{
+  height: 126px;
+}
+
+.loaded_image{
+  width: 246px;
+  height: 155px;
+  background: rgba(196, 196, 196, 0.08);
+  border: 1px dashed #D1D1D1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+

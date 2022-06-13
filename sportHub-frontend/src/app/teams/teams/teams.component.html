@@ -4,20 +4,26 @@
   <app-left-side-menu-admin></app-left-side-menu-admin>
   <div class="main_content">
     <div class="main_team_form">
-      <app-map></app-map>
+      <app-map [teams]="teams" type="button" (click)="updateLocation()"></app-map>
       <div class="add_team">
         <div class="team_form">
           <app-select></app-select>
-          <app-select></app-select>
-          <app-select></app-select>
+          <app-drop-down [options]="categories" nameField="Category"></app-drop-down>
+          <app-drop-down [options]="subcategories" nameField="Subategory"></app-drop-down>
           <app-input nameField="Team" width="246" height="36" placeholder="Name of team"></app-input>
         </div>
-        <div class="team_logo" *ngIf="showLogo">
-          <img src="/assets/icons/loadPhoto.svg">
+        <div class="team_logo" *ngIf="url == undefined">
+          <label class="load_photo">
+            <input type="file" name="file_input" accept="image/*" hidden (change)="loadPhoto($event)">
+            <img src="/assets/icons/loadPhoto.svg">
+          </label>
           <div class="logo_text_block">
             <span class="logo_text" id="red_text">Add logo</span>
             <span class="logo_text" id="black_text"> right here</span>
           </div>
+        </div>
+        <div class="loaded_image" *ngIf="url != undefined">
+          <img [src]="url">
         </div>
         <div class="buttons">
           <button class="apply">Apply</button>
@@ -25,6 +31,6 @@
         </div>
       </div>
     </div>
-    <app-all-teams></app-all-teams>
+    <app-all-teams [teams]="teams"></app-all-teams>
   </div>
 </div>

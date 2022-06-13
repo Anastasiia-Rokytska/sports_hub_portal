@@ -2,7 +2,7 @@
 <input type="text"
        [placeholder]="placeholder"
        [formControl]="control"
-       [matAutocomplete]="auto">
+       [matAutocomplete]="auto" [ngModel]="value">
 <mat-autocomplete #auto="matAutocomplete">
   <mat-option *ngFor="let street of filteredStreets | async" [value]="street">
     {{street}}

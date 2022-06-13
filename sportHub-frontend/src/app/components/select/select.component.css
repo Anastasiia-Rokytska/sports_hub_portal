@@ -34,7 +34,7 @@ input{
   font-weight: 600;
   font-size: 12px;
   line-height: 16px;
-  color: black;
+  color: #2B2F43;
   padding-left: 16px;
 }
 input::placeholder{
@@ -42,7 +42,7 @@ input::placeholder{
   font-weight: 600;
   font-size: 12px;
   line-height: 16px;
-  color: #C6CCD7;
+  color:#2B2F43;
 }
 input:hover{
   border-color: #A6A9AF;

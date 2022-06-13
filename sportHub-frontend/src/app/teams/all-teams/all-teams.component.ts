@@ -1,5 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
+import { Team } from 'src/app/classes/team';
 
 const ELEMENT_DATA: any[] = [
   {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
@@ -18,44 +19,37 @@ const ELEMENT_DATA: any[] = [
   templateUrl: './all-teams.component.html',
   styleUrls: ['./all-teams.component.css']
 })
-export class AllTeamsComponent implements OnInit {
+export class AllTeamsComponent implements OnInit, AfterViewInit {
 
-  pages = [1, 2, 3, 4, 5]
-  count = 50
-  resultsPerPage = [5, 10, 15, 20, 25, 30, 35]
+  @Input() teams!: Array<Team>
+
+  pagesStructure = {
+    pages: new Array(),
+    resultsPerPage: [5],
+    selectedResultPerPage: 5,
+    firstRow: 1,
+    lastRow: 5
+  }
+
+  // pages: Array<number> = new Array()
+  // resultsPerPage = [5]
+  // selectedResultPerPage: number = this.resultsPerPage[0]
   classRow = 'activated_row'
   visible = false
+  currentPage = 1
 
   constructor() { }
 
-  teams = [
-    {
-      name: 'Team1',
-      location: 'Location1',
-      addedAt: '01-01-2001',
-      category: 'Category1',
-      subcategory: 'Subcategory1'
-    },
-    {
-      name: 'Team2',
-      location: 'Location2',
-      addedAt: '01-01-2002',
-      category: 'Category2',
-      subcategory: 'Subcategory2'
-    },
-    {
-      name: 'Team2',
-      location: 'Location2',
-      addedAt: '01-01-2002',
-      category: 'Category2',
-      subcategory: 'Subcategory2'
-    }
-  ]
-
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'subcategory'];
-  dataSource = ELEMENT_DATA;
+  displayedColumns: string[] = ['team', 'location', 'addedAt', 'category', 'subcategory'];
 
   ngOnInit(): void {
+  }
+
+  ngAfterViewInit(){
+    for (let i = 1; i <= this.teams.length / this.pagesStructure.selectedResultPerPage; i++) { this.pagesStructure.pages.push(i) }
+    if ( this.pagesStructure.pages.length == 0) this.pagesStructure.pages.push(1)
+    for (let i = 10; i <= this.teams.length; i += 5) { this.pagesStructure.resultsPerPage.push(i) }
+    if ( this.pagesStructure.lastRow > this.teams.length ) this.pagesStructure.lastRow = this.teams.length
   }
 
   changeClass(row: any){

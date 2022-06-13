@@ -1,18 +1,14 @@
-import { Component, Inject, NgZone, PLATFORM_ID } from '@angular/core';
+import { Component, Inject, Input, NgZone, Output, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-
-// amCharts imports
 import * as am4core from '@amcharts/amcharts4/core';
 import * as am4charts from '@amcharts/amcharts4/charts';
 import am4themes_animated from '@amcharts/amcharts4/themes/animated';
-
 import * as am4maps from "@amcharts/amcharts4/maps";
 import am4geodata_worldLow from "@amcharts/amcharts4-geodata/worldLow";
+import * as am4plugins_bullets from "@amcharts/amcharts4/plugins/bullets";
+import { Team } from 'src/app/classes/team';
 
-/* Chart code */
-// Themes begin
 am4core.useTheme(am4themes_animated);
-// Themes end
 
 @Component({
   selector: 'app-map',
@@ -21,11 +17,18 @@ am4core.useTheme(am4themes_animated);
 })
 export class MapComponent{
 
+  @Input() teams!: Array<Team>
+
+  locationData: any = {
+    location: undefined,
+    latitude: undefined,
+    longitude: undefined
+  }
+
   private chart: am4charts.XYChart | undefined = undefined;
 
   constructor(@Inject(PLATFORM_ID) private platformId: any, private zone: NgZone) {}
 
-  // Run the function only in the browser
   browserOnly(f: () => void) {
     if (isPlatformBrowser(this.platformId)) {
       this.zone.runOutsideAngular(() => {
@@ -34,72 +37,27 @@ export class MapComponent{
     }
   }
 
+
   ngAfterViewInit() {
-    // Chart code goes in here
-    // this.browserOnly(() => {
-    //   am4core.useTheme(am4themes_animated);
+    let teams = this.teams
+    let selectedTeamData: any
+    let activeMarker: any
 
-    //   let chart = am4core.create("chartdiv", am4charts.XYChart);
-
-    //   chart.paddingRight = 20;
-
-    //   let data = [];
-    //   let visits = 10;
-    //   for (let i = 1; i < 366; i++) {
-    //     visits += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 10);
-    //     data.push({ date: new Date(2018, 0, i), name: "name" + i, value: visits });
-    //   }
-
-    //   chart.data = data;
-
-    //   let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
-    //   dateAxis.renderer.grid.template.location = 0;
-
-    //   let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-    //   valueAxis.tooltip!.disabled = true;
-    //   valueAxis.renderer.minWidth = 35;
-
-    //   let series = chart.series.push(new am4charts.LineSeries());
-    //   series.dataFields.dateX = "date";
-    //   series.dataFields.valueY = "value";
-    //   series.tooltipText = "{valueY.value}";
-
-    //   chart.cursor = new am4charts.XYCursor();
-
-    //   let scrollbarX = new am4charts.XYChartScrollbar();
-    //   scrollbarX.series.push(series);
-    //   chart.scrollbarX = scrollbarX;
-
-    //   this.chart = chart;
-    // });
     let chart = am4core.create("chartdiv", am4maps.MapChart);
-
-    // Set map definition
     chart.geodata = am4geodata_worldLow;
-
-    // Set projection
     chart.projection = new am4maps.projections.Miller();
 
-    // Create map polygon series
     let polygonSeries = chart.series.push(new am4maps.MapPolygonSeries());
-
-    // Exclude Antartica
     polygonSeries.exclude = ["AQ"];
-
-    // Make map load polygon (like country names) data from GeoJSON
     polygonSeries.useGeodata = true;
 
-    // Configure series
     let polygonTemplate = polygonSeries.mapPolygons.template;
     polygonTemplate.tooltipText = "{name}";
     polygonTemplate.polygon.fillOpacity = 0.6;
 
-
-    // Create hover state and set alternative fill color
     let hs = polygonTemplate.states.create("hover");
-    hs.properties.fill = chart.colors.getIndex(0);
+    hs.properties.fill = am4core.color("#D72130");
 
-    // Add image series
     let imageSeries = chart.series.push(new am4maps.MapImageSeries());
     imageSeries.mapImages.template.propertyFields.longitude = "longitude";
     imageSeries.mapImages.template.propertyFields.latitude = "latitude";
@@ -115,11 +73,15 @@ export class MapComponent{
     circle2.radius = 3;
     circle2.propertyFields.fill = "color";
 
+    let imageTemplate = imageSeries.mapImages.template;
+    imageTemplate.propertyFields.longitude = "longitude";
+    imageTemplate.propertyFields.latitude = "latitude";
+    imageTemplate.nonScaling = true;
 
     circle2.events.on("inited", function(event){
-      animateBullet(event.target);
+      if (selectedTeamData == undefined) animateBullet(event.target);
+      else selectedTeamData = undefined
     })
-
 
     function animateBullet(circle: any) {
         let animation = circle.animate([{ property: "scale", from: 1 / chart.zoomLevel, to: 5 / chart.zoomLevel }, { property: "opacity", from: 1, to: 0 }], 1000, am4core.ease.circleOut);
@@ -128,113 +90,80 @@ export class MapComponent{
         })
     }
 
-    chart.seriesContainer.events.on("hit", function(ev) {
-      var coords = chart.svgPointToGeo(ev.svgPoint);
-      var marker = imageSeries.mapImages.create();
-      marker.latitude = coords.latitude;
-      marker.longitude = coords.longitude;
+    imageTemplate.events.on('hit', function(ev){
+      selectedTeamData = ev.target.dataItem.dataContext
+    })
+
+    chart.seriesContainer.events.on("hit", (ev) => {
+      console.log('chart event')
+      if (activeMarker != undefined) activeMarker.disabled = true
+      if (imageSeries.data.length - 1 == teams.length){
+        imageSeries.mapImages.pop()
+        imageSeries.data.pop()
+      }
+      let marker = imageSeries.mapImages.create();
+      marker.fill = am4core.color("#D72130")
+      createPin(marker)
+      activeMarker = marker
+      if (selectedTeamData == undefined){
+        let coords = chart.svgPointToGeo(ev.svgPoint);
+        marker.latitude = coords.latitude;
+        marker.longitude = coords.longitude;
+        imageSeries.data.push({
+          "title": "Paris",
+          "latitude": marker.latitude,
+          "longitude": marker.longitude,
+          "color": am4core.color("#D72130")
+        })
+      } else {
+        marker.latitude = selectedTeamData.latitude;
+        marker.longitude = selectedTeamData.longitude;
+        marker.fill = am4core.color("#D72130")
+        this.locationData.location = undefined
+        this.locationData.latitude = undefined
+        this.locationData.longitude = undefined
+      }
     });
 
-    let colorSet = new am4core.ColorSet();
+    polygonTemplate.events.on("hit", (ev) => {
+      const locationData: any = ev.target.dataItem.dataContext
+      const coord: any = chart.svgPointToGeo(ev.svgPoint)
+      this.locationData.location = locationData.name
+      this.locationData.latitude = coord.latitude
+      this.locationData.longitude = coord.longitude
+      console.log("Polygon template: ", ev.target.dataItem.dataContext, chart.svgPointToGeo(ev.svgPoint));
+    });
 
-    imageSeries.data = [ {
-      "title": "Brussels",
-      "latitude": 50.8371,
-      "longitude": 4.3676,
-      "color":colorSet.next()
-    }, {
-      "title": "Copenhagen",
-      "latitude": 55.6763,
-      "longitude": 12.5681,
-      "color":colorSet.next()
-    }, {
-      "title": "Paris",
-      "latitude": 48.8567,
-      "longitude": 2.3510,
-      "color":colorSet.next()
-    }, {
-      "title": "Reykjavik",
-      "latitude": 64.1353,
-      "longitude": -21.8952,
-      "color":colorSet.next()
-    }, {
-      "title": "Moscow",
-      "latitude": 55.7558,
-      "longitude": 37.6176,
-      "color":colorSet.next()
-    }, {
-      "title": "Madrid",
-      "latitude": 40.4167,
-      "longitude": -3.7033,
-      "color":colorSet.next()
-    }, {
-      "title": "London",
-      "latitude": 51.5002,
-      "longitude": -0.1262,
-      "url": "http://www.google.co.uk",
-      "color":colorSet.next()
-    }, {
-      "title": "Peking",
-      "latitude": 39.9056,
-      "longitude": 116.3958,
-      "color":colorSet.next()
-    }, {
-      "title": "New Delhi",
-      "latitude": 28.6353,
-      "longitude": 77.2250,
-      "color":colorSet.next()
-    }, {
-      "title": "Tokyo",
-      "latitude": 35.6785,
-      "longitude": 139.6823,
-      "url": "http://www.google.co.jp",
-      "color":colorSet.next()
-    }, {
-      "title": "Ankara",
-      "latitude": 39.9439,
-      "longitude": 32.8560,
-      "color":colorSet.next()
-    }, {
-      "title": "Buenos Aires",
-      "latitude": -34.6118,
-      "longitude": -58.4173,
-      "color":colorSet.next()
-    }, {
-      "title": "Brasilia",
-      "latitude": -15.7801,
-      "longitude": -47.9292,
-      "color":colorSet.next()
-    }, {
-      "title": "Ottawa",
-      "latitude": 45.4235,
-      "longitude": -75.6979,
-      "color":colorSet.next()
-    }, {
-      "title": "Washington",
-      "latitude": 38.8921,
-      "longitude": -77.0241,
-      "color":colorSet.next()
-    }, {
-      "title": "Kinshasa",
-      "latitude": -4.3369,
-      "longitude": 15.3271,
-      "color":colorSet.next()
-    }, {
-      "title": "Cairo",
-      "latitude": 30.0571,
-      "longitude": 31.2272,
-      "color":colorSet.next()
-    }, {
-      "title": "Pretoria",
-      "latitude": -25.7463,
-      "longitude": 28.1876,
-      "color":colorSet.next()
-    } ];
+    teams.forEach((team) => {
+      console.log(team.name, team.latitude, team.longitude)
+      imageSeries.data.push({
+        "title": team.name,
+        "latitude": team.latitude,
+        "longitude": team.longitude,
+        "color": am4core.color("#D72130")
+      })
+    })
 
+    function createPin(marker: any) {
+      console.log("create pin")
+      let pin = marker.createChild(am4plugins_bullets.PinBullet);
+      imageSeries.tooltip!.pointerOrientation = "right";
+      pin.background.fill = am4core.color("#D72130");
+      pin.background.pointerAngle = 90;
+      pin.background.pointerBaseWidth = 10;
+      pin.image = new am4core.Image();
+      pin.image.href = "/assets/icons/userExample.png";
+      imageSeries.heatRules.push({
+        "target": pin.background,
+        "property": "radius",
+        "min": 20,
+        "max": 40,
+        "dataField": "value"
+      });
+    }
   }
 
   ngOnDestroy() {
-    // Clean up chart when the component is removed
     this.browserOnly(() => {
       if (this.chart) {
         this.chart.dispose();
