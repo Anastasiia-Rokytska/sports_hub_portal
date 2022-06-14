@@ -1,53 +1,55 @@
 package com.company.sportHubPortal.Database;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import org.springframework.lang.NonNull;
-
-import javax.persistence.*;
 
 @Entity
 @Table(name = "category")
 public class Category {
-    @Id
-    private Long id;
-    private String name;
-    private Long parentId;
-    private boolean hidden;
+  @Id
+  private Long id;
+  private String name;
+  private Long parentId;
+  private boolean hidden;
 
-    public Category(@NonNull Long id,@NonNull String name,@NonNull Long parentId,@NonNull boolean hidden) {
-        this.id = id;
-        this.name = name;
-        this.parentId = parentId;
-        this.hidden = hidden;
-    }
+  public Category(@NonNull Long id, @NonNull String name, @NonNull Long parentId,
+                  @NonNull boolean hidden) {
+    this.id = id;
+    this.name = name;
+    this.parentId = parentId;
+    this.hidden = hidden;
+  }
 
-    public Category() {
-    }
+  public Category() {
+  }
 
-    public Long getId() {
-        return id;
-    }
+  public Long getId() {
+    return id;
+  }
 
-    public String getName() {
-        return name;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public Long getParentId() {
-        return parentId;
-    }
+  public Long getParentId() {
+    return parentId;
+  }
 
-    public void setParentId(Long parentId) {
-        this.parentId = parentId;
-    }
+  public void setParentId(Long parentId) {
+    this.parentId = parentId;
+  }
 
-    public boolean isHidden() {
-        return hidden;
-    }
+  public boolean isHidden() {
+    return hidden;
+  }
 
-    public void setHidden(boolean hidden) {
-        this.hidden = hidden;
-    }
+  public void setHidden(boolean hidden) {
+    this.hidden = hidden;
+  }
 }

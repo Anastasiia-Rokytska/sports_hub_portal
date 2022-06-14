@@ -19,6 +19,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.util.StreamUtils;
 
+
 public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
   private final AuthenticationManager authenticationManager;
@@ -62,7 +63,6 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         new UsernamePasswordAuthenticationToken(email, password, userDetails.getAuthorities());
     return authenticationManager.authenticate(authenticationToken);
   }
-
 
   @Override
   protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response,

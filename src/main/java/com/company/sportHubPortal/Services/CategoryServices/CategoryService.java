@@ -1,22 +1,20 @@
 package com.company.sportHubPortal.Services.CategoryServices;
 
 import com.company.sportHubPortal.Database.Category;
-import com.google.gson.JsonElement;
-import org.springframework.http.ResponseEntity;
-
 import java.util.List;
 
 public interface CategoryService {
-    Category saveCategory(Category category);
-    List<Category> getAllCategories();
+  Category saveCategory(Category category);
 
-    Category getCategoryById(Long id);
+  List<Category> getAllCategories();
 
-    List<Category> getAllCategoriesByParentId(Long id);
+  Category getCategoryById(Long id);
 
-    List<Category> getVisibleCategoriesByParentId(Long id);
+  List<Category> getAllCategoriesByParentId(Long id);
 
-    Category updateCategory(Category category, Long id);
+  List<Category> getVisibleCategoriesByParentId(Long id);
 
-    void deleteCategory(Long id);
+  Category updateCategory(Category category, Long id);
+
+  void deleteCategory(Long id);
 }

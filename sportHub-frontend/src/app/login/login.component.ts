@@ -49,5 +49,5 @@ export class LoginComponent implements OnInit {
       console.log(error.error)
       this.hasError = true
     })
-  }   
+  }
 }

@@ -2,6 +2,7 @@ package com.company.sportHubPortal.Controllers;
 
 import com.company.sportHubPortal.Database.User;
 import com.company.sportHubPortal.Database.UserRole;
+import com.company.sportHubPortal.Security.CustomAuthenticationFilter;
 import com.company.sportHubPortal.Security.CustomUserDetails;
 import com.company.sportHubPortal.Services.EmailSenderService;
 import com.company.sportHubPortal.Services.JwtTokenService;
@@ -60,8 +61,8 @@ public class UserController {
                         JwtTokenService jwtTokenService,
                         EmailSenderService emailSenderService,
                         OAuth2AuthorizedClientService authorizedClientService,
-                        Environment environment,
-                        AuthenticationManager authenticationManager) {
+                        Environment environment
+                        ) {
     this.userService = userService;
     this.jwtTokenService = jwtTokenService;
     this.emailSenderService = emailSenderService;
@@ -281,17 +282,19 @@ public class UserController {
       HttpHeaders headers = new HttpHeaders();
       headers.add(HttpHeaders.AUTHORIZATION, "Bearer " + client.getAccessToken()
           .getTokenValue());
+
       HttpEntity entity = new HttpEntity("", headers);
       ResponseEntity<Map> response = restTemplate
           .exchange(userInfoEndpointUri, HttpMethod.GET, entity, Map.class);
       Map<String, String> userAttributes = response.getBody();
 
-      userService.processOAuthPostLogin(userAttributes);
+      //userService.processOAuthPostLogin(userAttributes);
 
     }
 
     return ResponseEntity.ok(HttpStatus.OK);
   }
+
 
 
   static class StringRequestParam {

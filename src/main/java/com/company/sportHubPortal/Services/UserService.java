@@ -75,15 +75,15 @@ public class UserService {
     return userRepository.getUserByRecoverPassHash(uri);
   }
 
-  public void processOAuthPostLogin(Map<String, String> userAttributes) {
-    User user = userRepository.getUserByEmail(userAttributes.get("email"));
+  public void processOAuthPostLogin(Map<String, Object> userAttributes, String provider) {
+    User user = userRepository.getUserByEmail(userAttributes.get("email").toString());
 
     if (user == null) {
       user = new User();
-      user.setEmail(userAttributes.get("email"));
-      user.setFirstName(userAttributes.get("given_name"));
-      user.setLastName(userAttributes.get("family_name"));
-      user.setAuthProvider(AuthProvider.GOOGLE);
+      user.setEmail(userAttributes.get("email").toString());
+      user.setFirstName(userAttributes.get("given_name").toString());
+      user.setLastName(userAttributes.get("family_name").toString());
+      user.setAuthProvider(AuthProvider.valueOf(provider));
       user.setRole(UserRole.USER);
       user.setEnabled(true);
       userRepository.save(user);
