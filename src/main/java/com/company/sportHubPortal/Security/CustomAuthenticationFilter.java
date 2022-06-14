@@ -37,6 +37,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
   public Authentication attemptAuthentication(HttpServletRequest request,
                                               HttpServletResponse response)
       throws AuthenticationException {
+
     logger.info("Authentication: " + request.getRequestURI());
     byte[] body;
     Map<String, String> jsonRequest = null;
@@ -62,9 +63,10 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
     return authenticationManager.authenticate(authenticationToken);
   }
 
+
   @Override
   protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response,
-                                          FilterChain chain, Authentication authResult){
+                                          FilterChain chain, Authentication authResult) {
     CustomUserDetails user = (CustomUserDetails) authResult.getPrincipal();
     jwtTokenService.createRefreshAndAccessToken(user.getUsername());
     String accessToken = jwtTokenService.getAccessToken();
