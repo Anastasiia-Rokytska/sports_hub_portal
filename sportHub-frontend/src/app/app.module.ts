@@ -23,6 +23,10 @@ import { MainPageComponent } from './main-page/main-page.component';
 import { AdminPanelComponent} from "./admin-panel/admin-panel.component";
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import {AdminPanelArticlesComponent} from "./admin-panel-articles/admin-panel-articles.component";
+import {ClickOutsideModule} from "ng-click-outside";
+import {ArticleComponent} from "./article/article.component";
+import {EventEmitterService} from "./event-emitter.service";
 
 @NgModule({
   declarations: [
@@ -47,15 +51,18 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     AdminPanelComponent,
     LeftsideMenuComponent,
     ForgotPasswordComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    AdminPanelArticlesComponent,
+    ArticleComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ClickOutsideModule
   ],
-  providers: [],
+  providers: [EventEmitterService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

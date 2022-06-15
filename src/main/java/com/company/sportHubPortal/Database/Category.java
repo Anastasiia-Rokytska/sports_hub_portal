@@ -1,55 +1,75 @@
 package com.company.sportHubPortal.Database;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.fasterxml.jackson.annotation.*;
 import org.springframework.lang.NonNull;
+
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "category")
+
 public class Category {
-  @Id
-  private Long id;
-  private String name;
-  private Long parentId;
-  private boolean hidden;
+    @Id
+    private Long id;
+    private String name;
+    private Long parentId;
+    private boolean hidden;
 
-  public Category(@NonNull Long id, @NonNull String name, @NonNull Long parentId,
-                  @NonNull boolean hidden) {
-    this.id = id;
-    this.name = name;
-    this.parentId = parentId;
-    this.hidden = hidden;
-  }
+    @ManyToMany(mappedBy = "categories", fetch = FetchType.EAGER)
+    @JsonIgnore
+    private Set<Article> articles = new HashSet<>();
 
-  public Category() {
-  }
+    public Set<Article> getArticles() {
+        return articles;
+    }
 
-  public Long getId() {
-    return id;
-  }
+    public void setArticles(Set<Article> articles) {
+        this.articles = articles;
+    }
 
-  public String getName() {
-    return name;
-  }
+    public void addArticle(Article article) {
+        this.articles.add(article);
+    }
 
-  public void setName(String name) {
-    this.name = name;
-  }
+    public Category(@NonNull Long id, @NonNull String name, @NonNull Long parentId, @NonNull boolean hidden) {
+        this.id = id;
+        this.name = name;
+        this.parentId = parentId;
+        this.hidden = hidden;
+    }
 
-  public Long getParentId() {
-    return parentId;
-  }
+    public Category() {
+    }
 
-  public void setParentId(Long parentId) {
-    this.parentId = parentId;
-  }
+    public Long getId() {
+        return id;
+    }
 
-  public boolean isHidden() {
-    return hidden;
-  }
+    public String getName() {
+        return name;
+    }
 
-  public void setHidden(boolean hidden) {
-    this.hidden = hidden;
-  }
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Long getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(Long parentId) {
+        this.parentId = parentId;
+    }
+
+    public boolean isHidden() {
+        return hidden;
+    }
+
+    public void setHidden(boolean hidden) {
+        this.hidden = hidden;
+    }
 }
