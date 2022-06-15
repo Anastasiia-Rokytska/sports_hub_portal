@@ -53,7 +53,7 @@ export class ArticleComponent implements OnInit {
       headers: new HttpHeaders({'Content-Type': 'application/json', 'Accept': 'application/json'})
     }
     console.log(typeof this.id);
-    return this.http.get<Article>("http://localhost:8080/api/article/" + this.id, httpOptions)
+    return this.http.get<Article>("/api/article/" + this.id, httpOptions)
   }
 
 }
