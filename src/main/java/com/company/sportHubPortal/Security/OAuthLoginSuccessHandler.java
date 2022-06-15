@@ -50,7 +50,8 @@ public class OAuthLoginSuccessHandler extends SavedRequestAwareAuthenticationSuc
     response.addCookie(refreshTokenCookie);
     response.sendRedirect("/personal_page");
     super.onAuthenticationSuccess(request, response, authentication);
-
-
   }
+
+
+
 }

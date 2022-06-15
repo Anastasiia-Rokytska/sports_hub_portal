@@ -23,6 +23,8 @@ public class User {
   boolean enabled;
   String recoverPassHash;
 
+  String photoLink;
+
   @Enumerated(EnumType.STRING)
   UserRole role;
 
@@ -151,5 +153,13 @@ public class User {
 
   public void setRecoverPassHash(String recoverPassHash) {
     this.recoverPassHash = recoverPassHash;
+  }
+
+  public String getPhotoLink() {
+    return photoLink;
+  }
+
+  public void setPhotoLink(String photoLink) {
+    this.photoLink = photoLink;
   }
 }

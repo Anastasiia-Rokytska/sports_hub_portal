@@ -86,7 +86,9 @@ public class UserService {
       user.setAuthProvider(AuthProvider.valueOf(provider));
       user.setRole(UserRole.USER);
       user.setEnabled(true);
+      user.setPhotoLink(userAttributes.get("picture").toString());
       userRepository.save(user);
+
     }
 
 

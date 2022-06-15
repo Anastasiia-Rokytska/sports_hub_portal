@@ -10,6 +10,7 @@ export class UserHeaderMenuComponent implements OnInit {
   constructor() { }
   @Input() userName = "Ivan Baloh"
   @Input() userEmail = "ivanbaloh@gmail.com"
+  @Input() photoLink = "assets/images/userPhoto.jpg"
   ngOnInit(): void {
   }
 

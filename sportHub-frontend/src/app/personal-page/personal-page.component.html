@@ -11,8 +11,9 @@
     </div>
     <div class="main_part" id="personal" [hidden]="!personal_show">
       <div class="user_photo">
-        <img src="/assets/icons/userExample.png" class="user_icon">
+        <img src="{{image}}" class="user_icon">
         <img src="/assets/icons/photoIcon.png" class="load_photo">
+
       </div>
       <div class="update_profile">
         <app-input nameField="First name: " [value]="firstName"></app-input>

@@ -2,7 +2,6 @@ package com.company.sportHubPortal.Controllers;
 
 import com.company.sportHubPortal.Database.User;
 import com.company.sportHubPortal.Database.UserRole;
-import com.company.sportHubPortal.Security.CustomAuthenticationFilter;
 import com.company.sportHubPortal.Security.CustomUserDetails;
 import com.company.sportHubPortal.Services.EmailSenderService;
 import com.company.sportHubPortal.Services.JwtTokenService;
@@ -10,28 +9,18 @@ import com.company.sportHubPortal.Services.UserService;
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 import java.util.Date;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import net.bytebuddy.utility.RandomString;
-import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
-import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
-import org.springframework.security.oauth2.client.authentication.OAuth2LoginReactiveAuthenticationManager;
-import org.springframework.security.oauth2.core.OAuth2Token;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -39,7 +28,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
 
 @RestController
 @RequestMapping("/user")
@@ -62,7 +50,7 @@ public class UserController {
                         EmailSenderService emailSenderService,
                         OAuth2AuthorizedClientService authorizedClientService,
                         Environment environment
-                        ) {
+  ) {
     this.userService = userService;
     this.jwtTokenService = jwtTokenService;
     this.emailSenderService = emailSenderService;
@@ -264,37 +252,6 @@ public class UserController {
 
     return ResponseEntity.ok(HttpStatus.OK);
   }
-
-
-  @GetMapping("/oauthSuccess")
-  public ResponseEntity<Object> getLoginInfo(OAuth2AuthenticationToken authentication) {
-
-    OAuth2AuthorizedClient client = authorizedClientService
-        .loadAuthorizedClient(
-            authentication.getAuthorizedClientRegistrationId(),
-            authentication.getName());
-
-    String userInfoEndpointUri = client.getClientRegistration()
-        .getProviderDetails().getUserInfoEndpoint().getUri();
-
-    if (!StringUtils.isEmpty(userInfoEndpointUri)) {
-      RestTemplate restTemplate = new RestTemplate();
-      HttpHeaders headers = new HttpHeaders();
-      headers.add(HttpHeaders.AUTHORIZATION, "Bearer " + client.getAccessToken()
-          .getTokenValue());
-
-      HttpEntity entity = new HttpEntity("", headers);
-      ResponseEntity<Map> response = restTemplate
-          .exchange(userInfoEndpointUri, HttpMethod.GET, entity, Map.class);
-      Map<String, String> userAttributes = response.getBody();
-
-      //userService.processOAuthPostLogin(userAttributes);
-
-    }
-
-    return ResponseEntity.ok(HttpStatus.OK);
-  }
-
 
 
   static class StringRequestParam {
