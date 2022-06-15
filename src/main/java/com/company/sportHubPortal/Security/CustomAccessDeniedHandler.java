@@ -15,8 +15,9 @@ import java.io.IOException;
 
 public class CustomAccessDeniedHandler implements AccessDeniedHandler {
     private final Logger logger = LoggerFactory.getLogger(CustomAccessDeniedHandler.class);
+
     @Override
-    public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException{
+    public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null) {
             logger.info("User '" + auth.getName() + "' has no access to : " + request.getRequestURI());
