@@ -89,10 +89,10 @@ export class MainPageComponent implements OnInit {
       headers: new HttpHeaders({'Content-Type': 'application/json', 'Accept': 'application/json'})
     }
     if(id == 0){
-      return this.http.get<Article>("http://localhost:8080/api/article/", httpOptions)
+      return this.http.get<Article>("/api/article/", httpOptions)
     }
     else{
-      return this.http.get<Article>("http://localhost:8080/api/article/category/" + id, httpOptions)
+      return this.http.get<Article>("/api/article/category/" + id, httpOptions)
     }
   }
 
