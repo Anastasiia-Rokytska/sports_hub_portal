@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.util.WebUtils;
 
+
 @Component
 public class CustomAuthorizationFilter extends OncePerRequestFilter {
 
@@ -34,9 +35,13 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
   protected boolean shouldNotFilter(HttpServletRequest request) {
     return request.getRequestURI().equals("/user/sign-up")
         || request.getRequestURI().equals("/sign-up")
+        || request.getRequestURI().equals("/user/sign-up")
         || request.getRequestURI().equals("/login")
         || request.getRequestURI().equals("/forgot-password")
         || request.getRequestURI().equals("/user/forgot-password")
+        || request.getRequestURI().matches("/oauth2/.*$")
+        || request.getRequestURI().equals("/user/oauthSuccess")
+        || request.getRequestURI().equals("/welcome")
         || request.getRequestURI().matches("/reset-password/.*$")
         || request.getRequestURI().matches("/user/reset-password/.*$")
         || request.getRequestURI().matches("/user/verify/.*$")

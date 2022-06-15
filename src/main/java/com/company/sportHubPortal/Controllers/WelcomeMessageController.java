@@ -13,21 +13,24 @@ import org.springframework.web.servlet.view.RedirectView;
 public class WelcomeMessageController {
 
 
-    private final EmailSenderService emailSenderService;
-    private final UserService userService;
-    private final Logger logger = LoggerFactory.getLogger(UserController.class);
+  private final EmailSenderService emailSenderService;
+  private final UserService userService;
+  private final Logger logger = LoggerFactory.getLogger(UserController.class);
 
-    @Autowired
-    public WelcomeMessageController(EmailSenderService emailSenderService, UserService userService) {
-        this.emailSenderService = emailSenderService;
-        this.userService = userService;
-    }
+  @Autowired
+  public WelcomeMessageController(EmailSenderService emailSenderService, UserService userService) {
+    this.emailSenderService = emailSenderService;
+    this.userService = userService;
+  }
 
-    @GetMapping("/welcome")
-    public RedirectView welcomeMessage() {
-        RedirectView view = new RedirectView();
-        view.setUrl("https://www.youtube.com/feed/subscriptions");
-        return view;
-    }
+  @GetMapping("/welcome")
+  public RedirectView welcomeMessage() {
+
+
+
+    RedirectView view = new RedirectView();
+    view.setUrl("https://www.youtube.com/feed/subscriptions");
+    return view;
+  }
 
 }

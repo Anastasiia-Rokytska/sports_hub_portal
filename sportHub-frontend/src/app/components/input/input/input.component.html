@@ -1,6 +1,9 @@
-<div>
+<div class="justify-content-between">
   <label [for]="nameField">{{nameField}}</label>
   <a routerLink="/forgot-password" [style]="forgotPassword">Forgot password?</a>
 </div>
-<input [(ngModel)]="value" [type]="typeInput" [name]="nameField" [placeholder]="placeholder">
+<div>
+  <input [(ngModel)]="value" [type]="typeInput" [name]="nameField" [placeholder]="placeholder">
+  <button type="button" id = "password_eye" class = "eye_button" *ngIf="isPassword" (click)="show_pass()"></button>
+</div>
 <router-outlet></router-outlet>

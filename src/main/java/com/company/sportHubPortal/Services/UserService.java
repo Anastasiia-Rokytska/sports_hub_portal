@@ -1,10 +1,18 @@
 package com.company.sportHubPortal.Services;
 
 import com.company.sportHubPortal.Controllers.UserController;
+import com.company.sportHubPortal.Database.AuthProvider;
 import com.company.sportHubPortal.Database.User;
+import com.company.sportHubPortal.Database.UserRole;
 import com.company.sportHubPortal.Repositories.UserRepository;
+import com.company.sportHubPortal.Security.CustomUserDetails;
+import com.company.sportHubPortal.Security.CustomUserDetailsService;
+import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -16,9 +24,12 @@ public class UserService {
   private final PasswordEncoder passwordEncoder;
   Logger logger = LoggerFactory.getLogger(UserController.class);
 
-  public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+
+  public UserService(UserRepository userRepository,
+                     PasswordEncoder passwordEncoder) {
     this.userRepository = userRepository;
     this.passwordEncoder = passwordEncoder;
+
   }
 
 
@@ -29,7 +40,6 @@ public class UserService {
   public Boolean decodePassword(String password, String encodedPassword) {
     return passwordEncoder.matches(password, encodedPassword);
   }
-
 
   public void save(User user) {
     userRepository.save(user);
@@ -63,6 +73,24 @@ public class UserService {
 
   public User getByRecoverPassHash(String uri) {
     return userRepository.getUserByRecoverPassHash(uri);
+  }
+
+  public void processOAuthPostLogin(Map<String, Object> userAttributes, String provider) {
+    User user = userRepository.getUserByEmail(userAttributes.get("email").toString());
+
+    if (user == null) {
+      user = new User();
+      user.setEmail(userAttributes.get("email").toString());
+      user.setFirstName(userAttributes.get("given_name").toString());
+      user.setLastName(userAttributes.get("family_name").toString());
+      user.setAuthProvider(AuthProvider.valueOf(provider));
+      user.setRole(UserRole.USER);
+      user.setEnabled(true);
+      userRepository.save(user);
+    }
+
+
+
   }
 
 
