@@ -26,6 +26,9 @@ public class User {
   @Enumerated(EnumType.STRING)
   UserRole role;
 
+  @Enumerated(EnumType.STRING)
+  private AuthProvider authProvider;
+
   public User() {
   }
 
@@ -132,6 +135,14 @@ public class User {
         + ", password='" + password + '\''
         + ", role=" + role
         + '}';
+  }
+
+  public AuthProvider getAuthProvider() {
+    return authProvider;
+  }
+
+  public void setAuthProvider(AuthProvider authProvider) {
+    this.authProvider = authProvider;
   }
 
   public String getRecoverPassHash() {

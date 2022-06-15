@@ -25,6 +25,9 @@ public class WelcomeMessageController {
 
   @GetMapping("/welcome")
   public RedirectView welcomeMessage() {
+
+
+
     RedirectView view = new RedirectView();
     view.setUrl("https://www.youtube.com/feed/subscriptions");
     return view;

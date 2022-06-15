@@ -1,9 +1,12 @@
 package com.company.sportHubPortal.Security;
 
 import com.company.sportHubPortal.Services.JwtTokenService;
+import com.company.sportHubPortal.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -15,21 +18,33 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
 
-@EnableWebSecurity
+
 @Configuration
+@EnableWebSecurity
+@PropertySource("classpath:application.properties")
+
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-  final CustomUserDetailsService userDetailsService;
-  final PasswordEncoder passwordEncoder;
-  final JwtTokenService jwtTokenService;
+  private final CustomUserDetailsService userDetailsService;
+  private final PasswordEncoder passwordEncoder;
+  private final JwtTokenService jwtTokenService;
+  private final Environment env;
+  private final UserService userService;
+  private final OAuthLoginSuccessHandler oAuthLoginSuccessHandler;
 
   @Autowired
   public SecurityConfig(CustomUserDetailsService userDetailsService,
                         PasswordEncoder passwordEncoder,
-                        JwtTokenService jwtTokenService) {
+                        JwtTokenService jwtTokenService,
+                        Environment env,
+                        UserService userService,
+                        OAuthLoginSuccessHandler oAuthLoginSuccessHandler) {
     this.userDetailsService = userDetailsService;
     this.passwordEncoder = passwordEncoder;
     this.jwtTokenService = jwtTokenService;
+    this.env = env;
+    this.userService = userService;
+    this.oAuthLoginSuccessHandler = oAuthLoginSuccessHandler;
   }
 
 
@@ -56,11 +71,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .and()
         .addFilterAfter(authorizationFilter, authenticationFilter.getClass());
 
+
     httpSecurity
         .formLogin()
         .loginPage("/login")
         .usernameParameter("email")
         .permitAll()
+        .and()
+        .oauth2Login()
+        .loginPage("/login")
+        .successHandler(oAuthLoginSuccessHandler)
+
         .and().addFilter(authenticationFilter);
 
     httpSecurity
@@ -71,9 +92,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .deleteCookies("refresh_token");
 
     httpSecurity.authorizeRequests()
-            .antMatchers("/admin/**").hasAuthority("ADMIN")
-            .and()
-            .exceptionHandling().accessDeniedHandler(accessDeniedHandler());
+        .antMatchers("/admin/**").hasAuthority("ADMIN")
+        .and()
+        .exceptionHandling().accessDeniedHandler(accessDeniedHandler());
+
+
   }
 
   @Override
@@ -93,9 +116,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   }
 
   @Bean
-  public AccessDeniedHandler accessDeniedHandler(){
+  public AccessDeniedHandler accessDeniedHandler() {
     return new CustomAccessDeniedHandler();
   }
-
 
 }
