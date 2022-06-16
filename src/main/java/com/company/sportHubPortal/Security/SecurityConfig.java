@@ -1,7 +1,10 @@
 package com.company.sportHubPortal.Security;
 
+import com.company.sportHubPortal.Controllers.UserController;
 import com.company.sportHubPortal.Services.JwtTokenService;
 import com.company.sportHubPortal.Services.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,6 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   private final Environment env;
   private final UserService userService;
   private final OAuthLoginSuccessHandler oAuthLoginSuccessHandler;
+  Logger logger = LoggerFactory.getLogger(UserController.class);
 
   @Autowired
   public SecurityConfig(CustomUserDetailsService userDetailsService,
@@ -81,7 +85,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .oauth2Login()
         .loginPage("/login")
         .successHandler(oAuthLoginSuccessHandler)
-
+        .failureHandler((request, response, exception) ->
+            logger.info(exception.toString()))
         .and().addFilter(authenticationFilter);
 
     httpSecurity

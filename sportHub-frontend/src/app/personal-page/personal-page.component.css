@@ -23,6 +23,8 @@
 .user_icon{
   position: absolute;
   border-radius: 50%;
+  width: 120px;
+  height: 120px;
 }
 .load_photo{
   position: absolute;

@@ -20,7 +20,7 @@ export class PersonalPageComponent implements OnInit {
   firstName: string = ''
   lastName: string = ''
   email: string = ''
-  image: Blob | null = null
+  image: string = 'assets/images/userPhoto.jpg'
 
   public class: Array<string> = ["active_segment", "nonactive_segment", "nonactive_segment", "nonactive_segment"]
 
@@ -34,6 +34,11 @@ export class PersonalPageComponent implements OnInit {
       this.firstName = response.firstName
       this.lastName = response.lastName
       this.email = response.email
+
+      if (response.photoLink != null) {
+        this.image = response.photoLink
+      }
+
     }, (error) => {
       console.log("Error: ", error.error)
     })
@@ -116,7 +121,6 @@ export class PersonalPageComponent implements OnInit {
       console.log(new_response)
 
       new_response.subscribe(res => {
-
 
 
         Swal.fire({
