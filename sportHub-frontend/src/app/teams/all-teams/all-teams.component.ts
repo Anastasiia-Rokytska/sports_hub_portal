@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Team } from 'src/app/classes/team';
 import { DynamicService } from 'src/app/dynamic.service';
 
@@ -25,7 +25,8 @@ export class AllTeamsComponent implements OnInit {
   teamsCount: number = 0
   selectedResultPerPage: number = 5
   maxResultsPerPage: number = 5
-  currentPage: number = 1
+  currentPage!: number
+  pagesSubscription!: Subscription
 
   constructor(@Inject(Team) teams: Team[],
               private http: HttpClient,
@@ -36,6 +37,8 @@ export class AllTeamsComponent implements OnInit {
   displayedColumns: string[] = ['team', 'location', 'addedAt', 'category', 'subcategory'];
 
   ngOnInit(): void{
+    this.currentPage = this.dynamicService.data.page
+    this.selectedResultPerPage = this.dynamicService.data.count
     this.http.get('/team/count').subscribe((response: any) => {
       this.teamsCount = response
       this.pagesNumber = Math.ceil(this.teamsCount! / this.selectedResultPerPage)
@@ -43,16 +46,14 @@ export class AllTeamsComponent implements OnInit {
       this.maxResultsPerPage = Math.floor(this.teamsCount / 5 * 5)
       for (let i = 5; i <= this.maxResultsPerPage; i += 5) this.pagesStructure.resultsPerPage.push(i)
     }, (error) => {
-
     })
+    console.log('init', this.currentPage)
   }
 
   changeClass(row: any){
     console.log(row)
-    console.log('click')
     if (this.classRow == '') this.classRow = 'activated_row'
     else this.classRow = ''
-    console.log('class row = ', this.classRow)
   }
 
   showButtons(row: any){
@@ -66,11 +67,16 @@ export class AllTeamsComponent implements OnInit {
   }
 
   changePage(target: any){
-    this.currentPage = target.innerText
-    this.dynamicService.data.page.subscribe((subscriber: any) => {
-      subscriber.next(this.currentPage);
-    })
-    this.dynamicService.data.page.next(this.currentPage)
+    this.dynamicService.data.pageSubject.next(target.innerText)
+  }
+
+  changeCount(){
+    this.dynamicService.data.countSubject.next(this.selectedResultPerPage)
+  }
+
+  maxResult(): number{
+    if (this.currentPage * this.selectedResultPerPage > this.teamsCount) return this.teamsCount
+    return this.currentPage * this.selectedResultPerPage
   }
 
   getClass(page: any): string | null{

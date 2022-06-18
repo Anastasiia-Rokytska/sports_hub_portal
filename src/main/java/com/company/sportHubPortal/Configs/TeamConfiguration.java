@@ -54,5 +54,29 @@ public class TeamConfiguration {
         teamService.saveTeam(new Team("Utah Jazz1", "Salt Lake City, Utah",
                 -23.0, -55.0,
                 new SerialBlob(new FileInputStream(pathToConfigImages + "UtahJazz.png").readAllBytes())));
+        teamService.saveTeam(new Team("Los Angeles Lakers0", "Los Angeles, California",
+                34.435, -118.8983,
+                new SerialBlob(new FileInputStream(pathToConfigImages + "LosAngelesLakers.png").readAllBytes())));
+        teamService.saveTeam(new Team("Houston Rockets0", "Houston, Texas",
+                -29.35907, 95.8421,
+                new SerialBlob(new FileInputStream(pathToConfigImages + "HoustonRockets.png").readAllBytes())));
+        teamService.saveTeam(new Team("Memphis Grizzlies0", "Memphis, Tennessee",
+                -35.0, 89.7,
+                new SerialBlob(new FileInputStream(pathToConfigImages + "MemphisGrizzlies.png").readAllBytes())));
+        teamService.saveTeam(new Team("Utah Jazz0", "Salt Lake City, Utah",
+                30.701, 111.7883,
+                new SerialBlob(new FileInputStream(pathToConfigImages + "UtahJazz.png").readAllBytes())));
+        teamService.saveTeam(new Team("Los Angeles Lakers10", "Los Angeles, California",
+                33.0, 55.0,
+                new SerialBlob(new FileInputStream(pathToConfigImages + "LosAngelesLakers.png").readAllBytes())));
+        teamService.saveTeam(new Team("Houston Rockets10", "Houston, Texas",
+                12.0, 67.0,
+                new SerialBlob(new FileInputStream(pathToConfigImages + "HoustonRockets.png").readAllBytes())));
+        teamService.saveTeam(new Team("Memphis Grizzlies10", "Memphis, Tennessee",
+                74.0, 34.0,
+                new SerialBlob(new FileInputStream(pathToConfigImages + "MemphisGrizzlies.png").readAllBytes())));
+        teamService.saveTeam(new Team("Utah Jazz10", "Salt Lake City, Utah",
+                -23.124, -45.666,
+                new SerialBlob(new FileInputStream(pathToConfigImages + "UtahJazz.png").readAllBytes())));
     }
 }

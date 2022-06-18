@@ -3,7 +3,7 @@ import { number } from '@amcharts/amcharts4/core';
 import { DatePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { AfterViewInit, ChangeDetectorRef, Component, Injector, OnInit, QueryList, Type, ViewChild, ViewChildren } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, Subscription } from 'rxjs';
 import { Team } from 'src/app/classes/team';
 import { DropDownComponent } from 'src/app/components/drop-down/drop-down.component';
 import { InputComponent } from 'src/app/components/input/input/input.component';
@@ -42,22 +42,27 @@ export class TeamsComponent implements OnInit{
   page: number = 1
   count: number = 5
 
+
   constructor(private http: HttpClient,
               private injector: Injector,
               private dynamicService: DynamicService) {
     dynamicService.data = {
       location: undefined,
-      page: new Subject<number>(),
-      count: new Subject<number>()
+      pageSubject: new Subject<number>(),
+      countSubject: new Subject<number>(),
+      page: this.page,
+      count: this.count
     }
-    dynamicService.data.page.subscribe((page: number) => {
-      console.log(page)
+    dynamicService.data.pageSubject.subscribe((page: number) => {
       this.page = page
+      dynamicService.data.page = page
       this.loadTeams(this.count, this.page)
     })
-    dynamicService.data.count.subscribe((count: number) => {
-      console.log(count)
+    dynamicService.data.countSubject.subscribe((count: number) => {
+      this.page = Math.ceil(((this.page - 1) * this.count + 1) / count)
       this.count = count
+      dynamicService.data.count = count
+      dynamicService.data.page = this.page
       this.loadTeams(this.count, this.page)
     })
   };
@@ -86,7 +91,6 @@ export class TeamsComponent implements OnInit{
   }
 
   addTeam(){
-    console.log(this.locationField.control.value)
     if (this.location == undefined){
       this.sendError("Select location on the map!")
       return
@@ -109,7 +113,7 @@ export class TeamsComponent implements OnInit{
         icon: "success",
         timer: 5000,
       })
-      this.loadTeams(this.dynamicService.data.count, this.dynamicService.data.page)
+      this.loadTeams(this.count, this.page)
       this.dynamicService.data.location = this.location = undefined
     }, (error: any) => {
       console.log(error)

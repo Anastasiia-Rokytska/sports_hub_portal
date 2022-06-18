@@ -192,4 +192,5 @@ mat-form-field{
 }
 .currentPage{
   color:#4F5963 !important;
+  opacity: 1 !important;
 }

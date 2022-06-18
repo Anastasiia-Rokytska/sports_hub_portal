@@ -51,12 +51,12 @@
       <div><</div>
       <div *ngFor="let page of pagesStructure.pages" (click)="changePage($event.target)" [class]="getClass(page)">{{page}}</div>
       <div>></div>
-      <div>{{(currentPage - 1) * selectedResultPerPage + 1}} - {{currentPage * selectedResultPerPage}} of {{teamsCount}} results</div>
+      <div>{{(currentPage - 1) * selectedResultPerPage + 1}} - {{maxResult()}} of {{teamsCount}} results</div>
     </div>
     <div class="per_page">
       <div>Result per page</div>
       <mat-form-field floatLabel="never">
-        <mat-select [value]="pagesStructure.resultsPerPage[0]" [(ngModel)]="selectedResultPerPage">
+        <mat-select [value]="selectedResultPerPage" [(ngModel)]="selectedResultPerPage" (ngModelChange)="changeCount()">
           <mat-option *ngFor="let option of pagesStructure.resultsPerPage" [value]="option">
             {{option}}
           </mat-option>
