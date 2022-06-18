@@ -48,15 +48,15 @@
   </table>
   <div class="navigation">
     <div class="pages">
-      <span><</span>
-      <span *ngFor="let page of pagesStructure.pages">{{page}}</span>
-      <span>></span>
-      <span>{{pagesStructure.firstRow}} - {{pagesStructure.lastRow}} of {{teams.length}} results</span>
+      <div><</div>
+      <div *ngFor="let page of pagesStructure.pages" (click)="changePage($event.target)" [class]="getClass(page)">{{page}}</div>
+      <div>></div>
+      <div>{{(currentPage - 1) * selectedResultPerPage + 1}} - {{currentPage * selectedResultPerPage}} of {{teamsCount}} results</div>
     </div>
     <div class="per_page">
-      <span>Result per page</span>
+      <div>Result per page</div>
       <mat-form-field floatLabel="never">
-        <mat-select [value]="pagesStructure.resultsPerPage[0]" [(ngModel)]="pagesStructure.selectedResultPerPage">
+        <mat-select [value]="pagesStructure.resultsPerPage[0]" [(ngModel)]="selectedResultPerPage">
           <mat-option *ngFor="let option of pagesStructure.resultsPerPage" [value]="option">
             {{option}}
           </mat-option>

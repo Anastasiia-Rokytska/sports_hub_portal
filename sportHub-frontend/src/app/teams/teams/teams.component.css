@@ -15,7 +15,11 @@
   height: 578px;
   margin-top: 46px;
 }
-app-map{
+.map{
+  width: 862px;
+  height: 578px;
+}
+::ng-deep app-map{
   width: 862px;
   height: 578px;
 }
@@ -99,7 +103,7 @@ app-map{
   color: #D72130;
 }
 
-app-all-teams{
+::ng-deep app-all-teams{
   width: auto;
   margin-top: 74px;
   margin-bottom: 52px;
@@ -117,5 +121,12 @@ app-all-teams{
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.map-wrapper{
+  display: flex;
+}
+.map-wrapper-wrapper{
+  width: 862px;
+  height: 578px;
 }
 

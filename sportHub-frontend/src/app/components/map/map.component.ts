@@ -1,4 +1,4 @@
-import { Component, Inject, Input, NgZone, Output, PLATFORM_ID } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, NgZone, Output, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import * as am4core from '@amcharts/amcharts4/core';
 import * as am4charts from '@amcharts/amcharts4/charts';
@@ -7,6 +7,7 @@ import * as am4maps from "@amcharts/amcharts4/maps";
 import am4geodata_worldLow from "@amcharts/amcharts4-geodata/worldLow";
 import * as am4plugins_bullets from "@amcharts/amcharts4/plugins/bullets";
 import { Team } from 'src/app/classes/team';
+import { DynamicService } from 'src/app/dynamic.service';
 
 am4core.useTheme(am4themes_animated);
 
@@ -17,7 +18,7 @@ am4core.useTheme(am4themes_animated);
 })
 export class MapComponent{
 
-  @Input() teams!: Array<Team>
+  teams = new Array<Team>()
 
   locationData: any = {
     location: undefined,
@@ -25,9 +26,18 @@ export class MapComponent{
     longitude: undefined
   }
 
-  private chart: am4charts.XYChart | undefined = undefined;
+  private chart: am4maps.MapChart | undefined = undefined;
 
-  constructor(@Inject(PLATFORM_ID) private platformId: any, private zone: NgZone) {}
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: any,
+    private zone: NgZone,
+    @Inject(Team) teamsInjected: Team[],
+    private dynamicService: DynamicService) {
+      console.log('create')
+      am4core.options.autoDispose = true;
+      this.teams = teamsInjected
+
+    }
 
   browserOnly(f: () => void) {
     if (isPlatformBrowser(this.platformId)) {
@@ -37,8 +47,8 @@ export class MapComponent{
     }
   }
 
-
   ngAfterViewInit() {
+    console.log('Map: ', this.teams)
     let teams = this.teams
     let selectedTeamData: any
     let activeMarker: any
@@ -63,6 +73,7 @@ export class MapComponent{
     imageSeries.mapImages.template.propertyFields.latitude = "latitude";
     imageSeries.mapImages.template.tooltipText = "{title}";
     imageSeries.mapImages.template.propertyFields.url = "url";
+    imageSeries.mapImages.template.id = "id"
 
     let circle = imageSeries.mapImages.template.createChild(am4core.Circle);
     circle.radius = 3;
@@ -103,7 +114,7 @@ export class MapComponent{
       }
       let marker = imageSeries.mapImages.create();
       marker.fill = am4core.color("#D72130")
-      createPin(marker)
+      console.log('selected Team: ', selectedTeamData)
       activeMarker = marker
       if (selectedTeamData == undefined){
         let coords = chart.svgPointToGeo(ev.svgPoint);
@@ -115,44 +126,49 @@ export class MapComponent{
           "longitude": marker.longitude,
           "color": am4core.color("#D72130")
         })
+        createPin(marker, null)
       } else {
+        console.log('selected Team: ', selectedTeamData)
         marker.latitude = selectedTeamData.latitude;
         marker.longitude = selectedTeamData.longitude;
         marker.fill = am4core.color("#D72130")
-        this.locationData.location = undefined
-        this.locationData.latitude = undefined
-        this.locationData.longitude = undefined
+        createPin(marker, selectedTeamData.image)
+        this.dynamicService.data.location = undefined
       }
     });
 
     polygonTemplate.events.on("hit", (ev) => {
-      const locationData: any = ev.target.dataItem.dataContext
+      const location: any = ev.target.dataItem.dataContext
       const coord: any = chart.svgPointToGeo(ev.svgPoint)
-      this.locationData.location = locationData.name
+      this.locationData.location = location.name
       this.locationData.latitude = coord.latitude
       this.locationData.longitude = coord.longitude
       console.log("Polygon template: ", ev.target.dataItem.dataContext, chart.svgPointToGeo(ev.svgPoint));
+      console.log("Locat data: ", this.locationData )
+      this.dynamicService.data.location = this.locationData
     });
 
-    teams.forEach((team) => {
+    teams.forEach((team: Team) => {
       console.log(team.name, team.latitude, team.longitude)
       imageSeries.data.push({
         "title": team.name,
         "latitude": team.latitude,
         "longitude": team.longitude,
-        "color": am4core.color("#D72130")
+        "color": am4core.color("#D72130"),
+        "image": team.image
       })
     })
 
-    function createPin(marker: any) {
+    function createPin(marker: any, image: any) {
       console.log("create pin")
+      console.log('selected Team: ', selectedTeamData)
       let pin = marker.createChild(am4plugins_bullets.PinBullet);
       imageSeries.tooltip!.pointerOrientation = "right";
       pin.background.fill = am4core.color("#D72130");
       pin.background.pointerAngle = 90;
       pin.background.pointerBaseWidth = 10;
       pin.image = new am4core.Image();
-      pin.image.href = "/assets/icons/userExample.png";
+      pin.image.href = image;
       imageSeries.heatRules.push({
         "target": pin.background,
         "property": "radius",
@@ -163,11 +179,13 @@ export class MapComponent{
     }
   }
 
-  ngOnDestroy() {
-    this.browserOnly(() => {
-      if (this.chart) {
-        this.chart.dispose();
-      }
-    });
-  }
+  // ngOnDestroy() {
+  //   console.log(this.chart)
+  //   this.browserOnly(() => {
+  //     // am4core.disposeAllCharts();
+  //     // if (this.chart) {
+  //     //   this.chart.dispose();
+  //     // }
+  //   });
+  // }
 }

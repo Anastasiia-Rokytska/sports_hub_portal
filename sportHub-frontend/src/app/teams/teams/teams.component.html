@@ -4,7 +4,11 @@
   <app-left-side-menu-admin></app-left-side-menu-admin>
   <div class="main_content">
     <div class="main_team_form">
-      <app-map [teams]="teams" type="button" (click)="updateLocation()"></app-map>
+      <div class="map-wrapper-wrapper">
+        <div class="map-wrapper" (click)="updateLocation()" *ngIf="show">
+          <app-map class="map" *ngComponentOutlet="mapComponent; injector: teamsInjector"></app-map>
+        </div>
+      </div>
       <div class="add_team">
         <div class="team_form">
           <app-select></app-select>
@@ -23,14 +27,17 @@
           </div>
         </div>
         <div class="loaded_image" *ngIf="url != undefined">
-          <img [src]="url">
+          <label class="load_photo">
+            <input type="file" name="file_input" accept="image/*" hidden (change)="loadPhoto($event)">
+            <img [src]="image">
+          </label>
         </div>
         <div class="buttons">
-          <button class="apply">Apply</button>
+          <button class="apply" (click)="addTeam()">Apply</button>
           <button class="cancel">Cancel</button>
         </div>
       </div>
     </div>
-    <app-all-teams [teams]="teams"></app-all-teams>
+    <ng-container class="map" *ngComponentOutlet="teamListComponent; injector: teamsInjector"></ng-container>
   </div>
 </div>

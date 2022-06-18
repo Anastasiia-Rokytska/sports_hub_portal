@@ -76,10 +76,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .exceptionHandling().accessDeniedHandler(accessDeniedHandler());
   }
 
-  @Override
-  public void configure(WebSecurity web) {
-    web.ignoring().antMatchers("/assets/**", "/user/verify/**");
-  }
 
   @Override
   protected void configure(AuthenticationManagerBuilder auth) throws Exception {

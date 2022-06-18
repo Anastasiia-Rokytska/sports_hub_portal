@@ -38,6 +38,8 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
         || request.getRequestURI().equals("/forgot-password")
         || request.getRequestURI().equals("/user/forgot-password")
         || request.getRequestURI().equals("/teams")
+        || request.getRequestURI().equals("/team")
+        || request.getRequestURI().matches("/team/.*$")
         || request.getRequestURI().matches("/reset-password/.*$")
         || request.getRequestURI().matches("/user/reset-password/.*$")
         || request.getRequestURI().matches("/user/verify/.*$")

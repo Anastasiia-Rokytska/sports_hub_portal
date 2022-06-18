@@ -114,7 +114,7 @@ th.mat-header-cell{
   gap: 5px;
   align-items: center;
 }
-.pages span, .per_page span{
+.pages div, .per_page div{
   font-family: 'Mukta';
   font-style: normal;
   font-weight: 500;
@@ -189,4 +189,7 @@ mat-select:hover{
 }
 mat-form-field{
   margin-right: -148px;
+}
+.currentPage{
+  color:#4F5963 !important;
 }
