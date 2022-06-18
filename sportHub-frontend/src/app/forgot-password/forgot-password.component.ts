@@ -27,10 +27,6 @@ export class ForgotPasswordComponent implements OnInit {
   hideInput = true
   showCheck = false
 
-  hideMessages() {
-    this.errorVisible = "display: none"
-  }
-
   request_link() {
 
     let param = Array.from(this.inputs)[0].value
@@ -61,7 +57,7 @@ export class ForgotPasswordComponent implements OnInit {
 
         Swal.fire({
           title: 'Error...',
-          text: 'No user with this email is registered\'',
+          text: 'No user with this email is registered',
           icon: 'error',
           timer: 5000,
         })

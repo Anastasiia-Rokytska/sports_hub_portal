@@ -37,6 +37,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DropDownComponent } from './components/drop-down/drop-down.component';
+import {AdminPanelArticlesComponent} from "./admin-panel-articles/admin-panel-articles.component";
+import {ClickOutsideModule} from "ng-click-outside";
+import {ArticleComponent} from "./article/article.component";
+import {EventEmitterService} from "./event-emitter.service";
 
 @NgModule({
   declarations: [
@@ -70,11 +74,15 @@ import { DropDownComponent } from './components/drop-down/drop-down.component';
     SelectComponent,
     AllTeamsComponent,
     DropDownComponent,
+    AdminPanelArticlesComponent,
+    ArticleComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    HttpClientModule,
+    ClickOutsideModule
     ReactiveFormsModule,
     HttpClientModule,
     MatAutocompleteModule,
@@ -84,7 +92,7 @@ import { DropDownComponent } from './components/drop-down/drop-down.component';
     MatSelectModule,
     BrowserAnimationsModule
   ],
-  providers: [],
+  providers: [EventEmitterService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

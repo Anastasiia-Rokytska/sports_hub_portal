@@ -35,3 +35,6 @@ typings/
 **/Thumbs.db
 
 log/
+src/main/resources/application.properties
+log/spring.log
+*.gz

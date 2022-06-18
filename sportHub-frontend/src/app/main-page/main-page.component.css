@@ -1,0 +1,59 @@
+.article-preview{
+  margin-left:25%;
+}
+
+.article-preview p{
+  margin-top: 3%;
+  font-family: 'Open Sans', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+  color: black;
+}
+
+.image-card{
+  position: relative;
+}
+
+.article-image{
+  width:65%;
+  position: absolute;
+  top:0;
+  left:0;
+}
+
+.card{
+  border-radius: 0;
+  border: 0;
+  background-color: whitesmoke;
+  margin-top:7%;
+  margin-left:55%;
+  position: absolute;
+  top:0;
+  left:0;
+  z-index: 10;
+}
+
+.buttons{
+  margin-top: 6%;
+  margin-left: 55%;
+}
+.buttons a {
+  font-size: 20px;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.buttons a:hover {
+  background-color: #F7D2D5;
+  color: black;
+}
+
+
+.next {
+  padding: 8px 12px;
+  background-color: whitesmoke;
+  color: lightgray;
+}
+

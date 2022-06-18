@@ -39,6 +39,10 @@ export class AdminPanelComponent implements OnInit {
 
   //variables to show/hide modal
   tempIdNewItem: number =20000;
+  newParentId = new Map<number, number>();
+
+  userName: string = "";
+  userEmail: string = "";
 
 
   constructor(private http: HttpClient) {}
@@ -291,24 +295,40 @@ export class AdminPanelComponent implements OnInit {
       this.tempIdNewItem = temp.reverse()[0].id + 1;
       console.log(this.tempIdNewItem)
     });
+    this.getUser().subscribe((response: any) => {
+      console.log("Response: ", response)
+      this.userName = response.firstName + ' ' + response.lastName
+      if (this.userName.length > 19){
+        this.userName = this.userName.slice(0, 16) + '...'
+      }
+      this.userEmail = response.email
+    }, (error) => {
+      console.log("Error: ", error.error)
+    })
+  }
+  getUser(){
+    const httpOptions = {
+      headers: new HttpHeaders({'Content-Type': 'application/json', 'Accept': 'application/json'})
+    }
+    return this.http.get("user/own_information", httpOptions)
   }
 
-  saveChanges(){
-    this.newItems.forEach((value: MenuItem[], key: number) => {
+  async saveChanges(){
+    await this.newItems.forEach((value: MenuItem[], key: number) => {
       let temp = value;
       for(let i = 0 ; i < temp.length ; i++){
         let name = temp[i].name;
         let parentId = key;
         let id = temp[i].id;
-
         let hidden = temp[i].hidden;
-        let body = JSON.stringify({id : id, name : name,parentId : parentId, hidden : hidden});
+        let body = JSON.stringify({id:id, name : name,parentId : parentId, hidden : hidden});
         const httpOptions = {
           headers: new HttpHeaders({'Content-Type': 'application/json', 'Accept': 'application/json'})
         }
         this.http.post<MenuItem>("/api/category", body, httpOptions).subscribe(
           (data) => {
-              console.log(data.id + "    " + data.name)
+
+              console.log(data.id)
           },
           (error) => {
             console.log(error);
@@ -317,7 +337,7 @@ export class AdminPanelComponent implements OnInit {
       }
     });
 
-    this.editedItems.forEach((value: MenuItem, key: number) => {
+    await this.editedItems.forEach((value: MenuItem, key: number) => {
       let name = value.name;
       let hidden = value.hidden;
       let body = JSON.stringify({name : name, hidden : hidden});
@@ -334,7 +354,7 @@ export class AdminPanelComponent implements OnInit {
       );
     });
 
-    this.deletedItems.forEach((value: number[], key: number) => {
+    await this.deletedItems.forEach((value: number[], key: number) => {
       let temp = value;
       for(let i = 0 ; i < temp.length ; i++){
         this.http.delete<String>("/api/category/" + temp[i]).subscribe(
@@ -347,6 +367,8 @@ export class AdminPanelComponent implements OnInit {
         );
       }
     });
+
+
 
     this.newItems.clear();
     this.editedItems.clear();

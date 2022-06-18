@@ -1,8 +1,6 @@
 div{
   display: flex;
-  justify-content: space-between;
   align-items: flex-end;
-
   margin-bottom: 8px;
 }
 label{
@@ -56,4 +54,13 @@ a:hover{
 }
 a:active{
   color:#3C80CF;
+}
+
+.eye_button{
+  background: url("src/assets/icons/password_eye.png") no-repeat center;
+
+  background-size: contain;
+  width: 42px;
+  height: 42px;
+
 }

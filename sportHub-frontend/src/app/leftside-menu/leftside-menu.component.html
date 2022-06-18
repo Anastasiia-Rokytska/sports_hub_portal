@@ -1,28 +1,50 @@
-<div class="sidenav">
-  <ul class="menuItems firstMenu">
-    <li *ngFor="let item of menuItems">
-        <input type="radio" id="{{item.id}}" name="firstMenu" (click)="showSecondMenu(item.id)"/>
-        <label for="{{item.id}}" class="button" (click)="showSecondMenu(item.id)">{{item.name}}</label>
-    </li>
-  </ul>
-</div>
+<div class="leftside-menu" (clickOutside)="clickedOut()">
+  <div class="sidenav">
+    <ul class="menuItems firstMenu">
+      <li *ngFor="let item of menuItems">
+        <input type="radio" id="{{item.id}}" name="firstMenu"/>
+        <label for="{{item.id}}" class="button" (click)="showSecondMenu(item.id, item.name)">{{item.name}}</label>
+      </li>
+      <li>
+        <div class="row justify-content-evenly" >
+          <h5 class="col-2">Follow</h5></div>
+        <div class="row justify-content-evenly" >
 
-<div class="sidenavSecondMenu" *ngIf="secondMenuVisible">
-  <ul class="menuItems secondMenu">
-    <li *ngFor="let secondItem of secondMenuItems">
-        <input type="radio" id="{{secondItem.id}}" name="secondMenu" (click)="showThirdMenu(secondItem.id)"/>
-        <label for="{{secondItem.id}}" class="button" (click)="showThirdMenu(secondItem.id)">{{secondItem.name}}</label>
-    </li>
-  </ul>
-</div>
+          <div class="col-2 "><a href="https://www.facebook.com" target="_blank">
+            <img class="filter" src="assets/icons/facebook_logo.png"></a></div>
+          <div class="col-2 justify-content-center"><a href="https://www.twitter.com" target="_blank">
+            <img src=" assets/icons/twitter_logo.png"></a>
+          </div>
+        </div>
+        <div class="row justify-content-evenly" style="margin-top: 15px">
+          <div class="col-2"><a href="https://www.instagram.com" target="_blank">
+            <img src="assets/icons/instagram_logo.png">
+          </a></div>
+          <div class="col-2"><a href="https://www.youtube.com" target="_blank">
+            <img src="assets/icons/youtube_logo.png">
+          </a></div>
+        </div>
+      </li>
+    </ul>
+  </div>
 
-<div class="sidenavThirdMenu" *ngIf="thirdMenuVisible">
-  <ul class="menuItems secondMenu">
-    <li *ngFor="let thirdItem of thirdMenuItems">
+  <div class="sidenavSecondMenu" *ngIf="secondMenuVisible">
+    <ul class="menuItems secondMenu">
+      <li *ngFor="let secondItem of secondMenuItems">
+        <input type="radio" id="{{secondItem.id}}" name="secondMenu" />
+        <label for="{{secondItem.id}}" class="button" (click)="showThirdMenu(secondItem.id, secondItem.name)">{{secondItem.name}}</label>
+      </li>
+    </ul>
+  </div>
+
+  <div class="sidenavThirdMenu" *ngIf="thirdMenuVisible">
+    <ul class="menuItems secondMenu">
+      <li *ngFor="let thirdItem of thirdMenuItems">
         <input type="radio" id="{{thirdItem.id}}" name="thirdMenu"/>
-        <label for="{{thirdItem.id}}" class="button">{{thirdItem.name}}</label>
-    </li>
-  </ul>
+        <label for="{{thirdItem.id}}" class="button" (click)="handleThirdMenuClick(thirdItem.id, thirdItem.name)">{{thirdItem.name}}</label>
+      </li>
+    </ul>
+  </div>
 </div>
 
 

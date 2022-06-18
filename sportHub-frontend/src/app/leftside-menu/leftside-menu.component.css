@@ -140,4 +140,20 @@
 }
 
 
+img{width: 25px}
 
+img:hover{
+
+  filter: invert(8%) sepia(100%) saturate(7370%) hue-rotate(354deg) brightness(111%) contrast(106%)
+}
+h5{
+  text-decoration: none;
+  font-family: "Open Sans";
+  font-size: 14px;
+  color: #b2b2b2;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+.row{}

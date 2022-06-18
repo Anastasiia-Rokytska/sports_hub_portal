@@ -8,6 +8,8 @@ import {AdminPanelComponent} from "./admin-panel/admin-panel.component";
 import {ForgotPasswordComponent} from "./forgot-password/forgot-password.component";
 import {ResetPasswordComponent} from "./reset-password/reset-password.component";
 import { TeamsComponent } from './teams/teams/teams.component';
+import {AdminPanelArticlesComponent} from "./admin-panel-articles/admin-panel-articles.component";
+import {ArticleComponent} from "./article/article.component";
 
 const routes: Routes = [
   {path: '', component: MainPageComponent},
@@ -17,7 +19,10 @@ const routes: Routes = [
   {path: 'admin', component: AdminPanelComponent},
   {path: 'forgot-password', component: ForgotPasswordComponent},
   {path: 'reset-password/:id', component: ResetPasswordComponent},
-  {path: 'teams', component: TeamsComponent}
+  {path: 'teams', component: TeamsComponent},
+  {path: 'reset-password/:id', component: ResetPasswordComponent},
+  {path: 'admin/article', component: AdminPanelArticlesComponent},
+  {path: 'article/:id', component: ArticleComponent}
 ];
 
 @NgModule({
