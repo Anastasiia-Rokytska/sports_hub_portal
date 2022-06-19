@@ -5,14 +5,9 @@ import com.company.sportHubPortal.Database.AuthProvider;
 import com.company.sportHubPortal.Database.User;
 import com.company.sportHubPortal.Database.UserRole;
 import com.company.sportHubPortal.Repositories.UserRepository;
-import com.company.sportHubPortal.Security.CustomUserDetails;
-import com.company.sportHubPortal.Security.CustomUserDetailsService;
 import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -86,6 +81,7 @@ public class UserService {
       user.setAuthProvider(AuthProvider.valueOf(provider));
       user.setRole(UserRole.USER);
       user.setEnabled(true);
+      user.setPhotoLink(userAttributes.get("picture").toString());
       userRepository.save(user);
     }
 

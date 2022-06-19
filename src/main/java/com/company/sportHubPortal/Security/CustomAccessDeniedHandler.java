@@ -18,7 +18,6 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
                      AccessDeniedException accessDeniedException) throws IOException {
     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     if (auth != null) {
-      logger.info(auth.getAuthorities().toString());
       logger.info("User '" + auth.getName() + "' has no access to : " + request.getRequestURI());
     }
     response.sendRedirect("/");

@@ -41,12 +41,10 @@ export class LoginComponent implements OnInit {
     }
 
     this.response = this.http.post<string>('/user/login', body, httpOptions)
-    console.log(this.response)
     this.response.subscribe(() => {
       this.hasError = false
       this.router.navigate(['/personal_page'], {relativeTo: this.route})
     }, (error) => {
-      console.log(error.error)
       this.hasError = true
     })
   }

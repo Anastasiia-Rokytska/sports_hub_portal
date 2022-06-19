@@ -108,7 +108,6 @@ export class MapComponent{
     })
 
     chart.seriesContainer.events.on("hit", (ev) => {
-      console.log('chart event')
       if (this.activeMarker != undefined) this.activeMarker.disabled = true
       if (imageSeries.data.length - 1 == teams.length){
         imageSeries.mapImages.pop()
@@ -173,14 +172,4 @@ export class MapComponent{
       });
     }
   }
-
-  // ngOnDestroy() {
-  //   console.log(this.chart)
-  //   this.browserOnly(() => {
-  //     // am4core.disposeAllCharts();
-  //     // if (this.chart) {
-  //     //   this.chart.dispose();
-  //     // }
-  //   });
-  // }
 }

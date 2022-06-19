@@ -1,7 +1,6 @@
 package com.company.sportHubPortal.Services.ArticleServices;
 
 import com.company.sportHubPortal.Database.Article;
-import com.company.sportHubPortal.Database.Category;
 import com.company.sportHubPortal.Repositories.ArticleRepository;
 import com.company.sportHubPortal.Services.CategoryServices.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;

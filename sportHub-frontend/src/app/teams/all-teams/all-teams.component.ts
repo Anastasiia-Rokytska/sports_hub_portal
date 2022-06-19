@@ -47,11 +47,9 @@ export class AllTeamsComponent implements OnInit {
       for (let i = 5; i <= this.maxResultsPerPage; i += 5) this.pagesStructure.resultsPerPage.push(i)
     }, (error) => {
     })
-    console.log('init', this.currentPage)
   }
 
   changeClass(row: any){
-    console.log(row)
     if (this.classRow == '') this.classRow = 'activated_row'
     else this.classRow = ''
   }

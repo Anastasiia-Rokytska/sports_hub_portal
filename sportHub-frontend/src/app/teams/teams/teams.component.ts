@@ -191,7 +191,6 @@ export class TeamsComponent implements OnInit{
         providers.push({provide: StringInjector, useValue: {name: category.name}, multi: true})
       })
       this.categoriesInjector = Injector.create(providers, this.injector)
-      console.log(this.categoriesInjector.get(StringInjector))
       this.dropDownCategoryComponent = DropDownComponent
     }, () => {
       this.sendError('Categories loading error')
@@ -215,7 +214,6 @@ export class TeamsComponent implements OnInit{
 
   loadSubCategoriesByCategory(category: string){
     this.http.get('/api/category/subcategory/' + category).subscribe((response: any) => {
-      console.log(response)
       let providers = new Array<any>()
       providers.push({provide: StringInjector, useValue: {name: "SELECT SUBCATEGORY"}, multi: true})
       providers.push({provide: StringInjector, useValue: {name: "All"}, multi: true})
