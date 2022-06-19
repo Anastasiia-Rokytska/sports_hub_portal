@@ -121,7 +121,6 @@ export class PersonalPageComponent implements OnInit {
       new_response.subscribe(res => {
 
 
-
         Swal.fire({
           title: 'Your password is changed!',
           icon: 'success',
