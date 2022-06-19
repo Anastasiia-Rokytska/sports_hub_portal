@@ -1,19 +1,23 @@
-import { cos } from '@amcharts/amcharts4/.internal/core/utils/Math';
-import { number } from '@amcharts/amcharts4/core';
-import { DatePipe } from '@angular/common';
+import { string } from '@amcharts/amcharts4/core';
 import { HttpClient } from '@angular/common/http';
-import { AfterViewInit, ChangeDetectorRef, Component, Injector, OnInit, QueryList, Type, ViewChild, ViewChildren } from '@angular/core';
-import { Observable, Subject, Subscription } from 'rxjs';
+import { Component, InjectionToken, Injector, OnInit, QueryList, Type, ViewChild, ViewChildren } from '@angular/core';
+import { Subject } from 'rxjs';
 import { Team } from 'src/app/classes/team';
 import { DropDownComponent } from 'src/app/components/drop-down/drop-down.component';
 import { InputComponent } from 'src/app/components/input/input/input.component';
 import { MapComponent } from 'src/app/components/map/map.component';
 import { SelectComponent } from 'src/app/components/select/select.component';
 import { DynamicService } from 'src/app/dynamic.service';
-import { HeaderComponent } from 'src/app/header/header.component';
 import Swal from 'sweetalert2';
 import { AllTeamsComponent } from '../all-teams/all-teams.component';
+import { TeamsHeaderComponent } from '../teams-header/teams-header.component';
 
+export class StringInjector{
+  name: string
+  constructor(name: string){
+    this.name = name
+  }
+}
 @Component({
   selector: 'app-teams',
   templateUrl: './teams.component.html',
@@ -23,24 +27,31 @@ export class TeamsComponent implements OnInit{
 
   @ViewChild(SelectComponent) locationField!: SelectComponent
   @ViewChild(InputComponent) teamName!: InputComponent
-  @ViewChildren(DropDownComponent) categoriesFields!: Array<DropDownComponent>
+  @ViewChild(TeamsHeaderComponent) teamsHeader!: TeamsHeaderComponent
 
   teams = new Array<Team>()
   url!: any
-  showChild = false
-
   showLogo = true
-  categories = ["All", "category1", 'category2', 'category3']
-  subcategories = ["All", "subcategory1", 'subcategory2', 'subcategory3']
+  locationsLoaded = false
+  locations!: Array<string>
 
   image!: any
 
   teamsInjector!: Injector
+  categoriesInjector!: Injector
+  subcategoriesInjector!: Injector
+
   mapComponent!: Type<any>
   teamListComponent!: Type<any>
+  dropDownCategoryComponent!: Type<any>
+  dropDownSubCategoryComponent!: Type<any>
+
   location: any
   page: number = 1
   count: number = 5
+  show = false
+  selectedCategory: string = "All"
+  selectedSubcategory: string = "All"
 
 
   constructor(private http: HttpClient,
@@ -51,7 +62,9 @@ export class TeamsComponent implements OnInit{
       pageSubject: new Subject<number>(),
       countSubject: new Subject<number>(),
       page: this.page,
-      count: this.count
+      count: this.count,
+      selectedCategory: new Subject<string>(),
+      clearForm: new Subject<boolean>()
     }
     dynamicService.data.pageSubject.subscribe((page: number) => {
       this.page = page
@@ -65,15 +78,22 @@ export class TeamsComponent implements OnInit{
       dynamicService.data.page = this.page
       this.loadTeams(this.count, this.page)
     })
+    dynamicService.data.selectedCategory.subscribe((category: any) => {
+      if (category.name == "SELECT CATEGORY"){
+        this.selectedCategory = category.value
+        if (category.value == "All") this.loadAllSubCategories()
+        else this.loadSubCategoriesByCategory(category.value)
+      } else if (category.name == "SELECT SUBCATEGORY"){
+        this.selectedSubcategory = category.value
+      }
+    })
   };
-  show = false
 
   ngOnInit(): void {
     this.loadTeams(this.count, this.page)
-  }
-
-  getImage() {
-    return this.http.get('/assets/LoginPage.png', {responseType: "blob"}).toPromise();
+    this.loadCategories()
+    this.loadAllSubCategories()
+    this.loadAllLocations()
   }
 
   loadPhoto(event: any){
@@ -88,6 +108,13 @@ export class TeamsComponent implements OnInit{
   updateLocation(){
     if (this.dynamicService.data.location != undefined) this.locationField.control.setValue(this.dynamicService.data.location.location)
     this.location = this.dynamicService.data.location
+  }
+
+  clearForm(){
+    this.dynamicService.data.clearForm.next(true)
+    this.teamName.value = ''
+    this.locationField.control.setValue('')
+    this.image = this.url = undefined
   }
 
   addTeam(){
@@ -107,6 +134,8 @@ export class TeamsComponent implements OnInit{
     formData.append('longitude', this.location.longitude)
     formData.append('location', this.locationField.control.value)
     if (this.url != undefined) formData.append('icon', this.url)
+    formData.append('selectedCategory', this.selectedCategory)
+    formData.append('selectedSubCategory', this.selectedSubcategory)
     this.http.post('/team', formData).subscribe(() => {
       Swal.fire({
         title: "A new team is successfully added!",
@@ -115,9 +144,10 @@ export class TeamsComponent implements OnInit{
       })
       this.loadTeams(this.count, this.page)
       this.dynamicService.data.location = this.location = undefined
+      this.clearForm()
     }, (error: any) => {
-      console.log(error)
       this.sendError(error.error)
+      this.clearForm()
     })
   }
 
@@ -127,18 +157,15 @@ export class TeamsComponent implements OnInit{
       let providers = new Array<any>()
       this.teams = new Array<Team>()
       response.forEach((team: any) => {
-        let teamIcon
+        let teamIcon, category, subCategory
         if (team.icon == null) teamIcon = null
         else teamIcon = 'data:image/png;base64,' + team.icon
-        let newTeam = new Team(
-          team.name,
-          team.location,
-          team.addedAt,
-          "Category1",
-          "SubCategory1",
-          team.longitude,
-          team.latitude,
-          teamIcon)
+        if (team.category == null) category = "All"
+        else category = team.category.name
+        if (team.subCategory == null) subCategory = "All"
+        else subCategory = team.subCategory.name
+        let newTeam = new Team(team.name, team.location, team.addedAt,
+          category, subCategory, team.longitude, team.latitude, teamIcon)
         this.teams.push(newTeam)
         providers.push({
           provide: Team,
@@ -149,12 +176,71 @@ export class TeamsComponent implements OnInit{
       this.mapComponent = MapComponent
       this.teamListComponent = AllTeamsComponent
       this.teamsInjector = Injector.create(providers, this.injector)
-      console.log(this.teams)
-      this.showChild = true
       this.show = true
-    }, (error: any) => {
-      console.log(error.message)
+    }, () => {
+      this.sendError('Teams loading error')
     })
+  }
+
+  loadCategories(){
+    this.http.get("/api/category/category").subscribe((response: any) => {
+      let providers = new Array<any>()
+      providers.push({provide: StringInjector, useValue: {name: "SELECT CATEGORY"}, multi: true})
+      providers.push({provide: StringInjector, useValue: {name: "All"}, multi: true})
+      response.forEach((category: any) => {
+        providers.push({provide: StringInjector, useValue: {name: category.name}, multi: true})
+      })
+      this.categoriesInjector = Injector.create(providers, this.injector)
+      console.log(this.categoriesInjector.get(StringInjector))
+      this.dropDownCategoryComponent = DropDownComponent
+    }, () => {
+      this.sendError('Categories loading error')
+    })
+  }
+
+  loadAllSubCategories(){
+    this.http.get("/api/category/subcategory").subscribe((response: any) => {
+      let providers = new Array<any>()
+      providers.push({provide: StringInjector, useValue: {name: "SELECT SUBCATEGORY"}, multi: true})
+      providers.push({provide: StringInjector, useValue: {name: "All"}, multi: true})
+      response.forEach((subcategory: any) => {
+        providers.push({provide: StringInjector, useValue: {name: subcategory.name}, multi: true})
+      })
+      this.subcategoriesInjector = Injector.create(providers, this.injector)
+      this.dropDownSubCategoryComponent = DropDownComponent
+    }, () => {
+      this.sendError('Subcategories loading error')
+    })
+  }
+
+  loadSubCategoriesByCategory(category: string){
+    this.http.get('/api/category/subcategory/' + category).subscribe((response: any) => {
+      console.log(response)
+      let providers = new Array<any>()
+      providers.push({provide: StringInjector, useValue: {name: "SELECT SUBCATEGORY"}, multi: true})
+      providers.push({provide: StringInjector, useValue: {name: "All"}, multi: true})
+      response.forEach((subcategory: any) => {
+        providers.push({provide: StringInjector, useValue: {name: subcategory.name}, multi: true})
+      })
+      this.subcategoriesInjector = Injector.create(providers, this.injector)
+      this.dropDownSubCategoryComponent = DropDownComponent
+    }, () => {
+      this.sendError('Subcategories loading error')
+    })
+  }
+
+  loadAllLocations(){
+    this.http.get("/team/locations").subscribe((response: any) => {
+      this.locations = response
+      this.locationsLoaded = true
+    }, () => {
+      this.sendError('Locations loading error')
+    })
+  }
+
+  showAddingTeam(): boolean {
+    if (this.teamsHeader != undefined) return this.teamsHeader.show
+    return false
   }
 
   sendError(message: string){

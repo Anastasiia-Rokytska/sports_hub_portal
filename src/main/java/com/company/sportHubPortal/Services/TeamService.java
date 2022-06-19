@@ -37,6 +37,10 @@ public class TeamService {
         return teamRepository.findAllByOrderByAddedAtDesc(PageRequest.of(page - 1, count));
     }
 
+    public List<Team> allTeams(){
+        return (List<Team>) teamRepository.findAll();
+    }
+
     public Long teamsCount(){
         return teamRepository.count();
     }

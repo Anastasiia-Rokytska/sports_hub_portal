@@ -1,3 +1,5 @@
+import { last } from '@amcharts/amcharts4/.internal/core/utils/Array';
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -11,9 +13,17 @@ export class HeaderAdminComponent implements OnInit {
   adminName: string = 'AdminName'
   language: string = 'EN'
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
+    this.loadAdminInformation()
+  }
+
+  loadAdminInformation(){
+    this.http.get("/user/own_information").subscribe((response: any) => {
+      this.adminName = response.firstName + " " + response.lastName
+      this.adminName.slice(1, 18)
+    })
   }
 
 }

@@ -24,3 +24,9 @@
   text-align: center;
   color: #FFFFFF;
 }
+.add_team_button:hover{
+  background: #E02232;
+}
+.add_team_button:active{
+  background: #C80515;
+}

@@ -26,6 +26,8 @@ export class MapComponent{
     longitude: undefined
   }
 
+  activeMarker: any
+
   private chart: am4maps.MapChart | undefined = undefined;
 
   constructor(
@@ -33,10 +35,11 @@ export class MapComponent{
     private zone: NgZone,
     @Inject(Team) teamsInjected: Team[],
     private dynamicService: DynamicService) {
-      console.log('create')
       am4core.options.autoDispose = true;
       this.teams = teamsInjected
-
+      dynamicService.data.clearForm.subscribe((data: boolean) => {
+        if (this.activeMarker != undefined) this.activeMarker.disabled = true
+      })
     }
 
   browserOnly(f: () => void) {
@@ -48,10 +51,9 @@ export class MapComponent{
   }
 
   ngAfterViewInit() {
-    console.log('Map: ', this.teams)
     let teams = this.teams
     let selectedTeamData: any
-    let activeMarker: any
+    // let activeMarker: any
 
     let chart = am4core.create("chartdiv", am4maps.MapChart);
     chart.geodata = am4geodata_worldLow;
@@ -107,15 +109,14 @@ export class MapComponent{
 
     chart.seriesContainer.events.on("hit", (ev) => {
       console.log('chart event')
-      if (activeMarker != undefined) activeMarker.disabled = true
+      if (this.activeMarker != undefined) this.activeMarker.disabled = true
       if (imageSeries.data.length - 1 == teams.length){
         imageSeries.mapImages.pop()
         imageSeries.data.pop()
       }
       let marker = imageSeries.mapImages.create();
       marker.fill = am4core.color("#D72130")
-      console.log('selected Team: ', selectedTeamData)
-      activeMarker = marker
+      this.activeMarker = marker
       if (selectedTeamData == undefined){
         let coords = chart.svgPointToGeo(ev.svgPoint);
         marker.latitude = coords.latitude;
@@ -128,7 +129,6 @@ export class MapComponent{
         })
         createPin(marker, null)
       } else {
-        console.log('selected Team: ', selectedTeamData)
         marker.latitude = selectedTeamData.latitude;
         marker.longitude = selectedTeamData.longitude;
         marker.fill = am4core.color("#D72130")
@@ -143,13 +143,10 @@ export class MapComponent{
       this.locationData.location = location.name
       this.locationData.latitude = coord.latitude
       this.locationData.longitude = coord.longitude
-      console.log("Polygon template: ", ev.target.dataItem.dataContext, chart.svgPointToGeo(ev.svgPoint));
-      console.log("Locat data: ", this.locationData )
       this.dynamicService.data.location = this.locationData
     });
 
     teams.forEach((team: Team) => {
-      console.log(team.name, team.latitude, team.longitude)
       imageSeries.data.push({
         "title": team.name,
         "latitude": team.latitude,
@@ -160,8 +157,6 @@ export class MapComponent{
     })
 
     function createPin(marker: any, image: any) {
-      console.log("create pin")
-      console.log('selected Team: ', selectedTeamData)
       let pin = marker.createChild(am4plugins_bullets.PinBullet);
       imageSeries.tooltip!.pointerOrientation = "right";
       pin.background.fill = am4core.color("#D72130");

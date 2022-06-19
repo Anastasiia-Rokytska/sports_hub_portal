@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {startWith, map} from 'rxjs/operators';
@@ -11,14 +11,14 @@ import {startWith, map} from 'rxjs/operators';
 export class SelectComponent implements OnInit {
 
   control = new FormControl('');
-  streets: string[] = ['Champs-Élysées', 'Lombard Street', 'Abbey Road', 'Fifth Avenue'];
+  @Input() options: string[] = ['Champs-Élysées', 'Lombard Street', 'Abbey Road', 'Fifth Avenue'];
   placeholder: string = 'All'
   nameField: string = 'SELECT LOCATION'
 
-  filteredStreets: Observable<string[]> | undefined;
+  filteredOptions: Observable<string[]> | undefined;
 
   ngOnInit() {
-    this.filteredStreets = this.control.valueChanges.pipe(
+    this.filteredOptions = this.control.valueChanges.pipe(
       startWith(''),
       map(value => this._filter(value || '')),
     );
@@ -26,7 +26,7 @@ export class SelectComponent implements OnInit {
 
   private _filter(value: string): string[] {
     const filterValue = this._normalizeValue(value);
-    return this.streets.filter(street => this._normalizeValue(street).includes(filterValue));
+    return this.options.filter(option => this._normalizeValue(option).includes(filterValue));
   }
 
   private _normalizeValue(value: string): string {

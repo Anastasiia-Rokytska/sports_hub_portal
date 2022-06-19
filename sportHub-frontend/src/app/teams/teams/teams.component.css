@@ -59,6 +59,12 @@
   color: #FFFFFF;
   border: none;
 }
+.apply:hover{
+  background: #E02232;
+}
+.apply:active{
+  background: #C80515;
+}
 .cancel{
   width: 177px;
   height: 16px;
@@ -72,6 +78,12 @@
   line-height: 16px;
   text-align: center;
   color: #D72130;
+}
+.cancel:hover{
+  color: #E02232;
+}
+.cancel:active{
+  color: #C80515;
 }
 .team_logo{
   width: 246px;

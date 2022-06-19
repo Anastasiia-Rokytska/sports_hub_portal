@@ -1,16 +1,12 @@
 package com.company.sportHubPortal.Database;
 
 import org.springframework.lang.NonNull;
-import org.springframework.lang.Nullable;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import javax.sql.rowset.serial.SerialBlob;
 import java.io.IOException;
-import java.io.InputStream;
 import java.sql.Blob;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.sql.SQLException;
 import java.util.Calendar;
@@ -29,6 +25,12 @@ public class Team {
     private Double latitude;
     private Double longitude;
     private Date addedAt;
+    @ManyToOne
+    @JoinColumn(name = "category")
+    private Category category;
+    @ManyToOne
+    @JoinColumn(name = "subcategory")
+    private Category subCategory;
     @Lob
     private Blob icon;
 
@@ -99,11 +101,24 @@ public class Team {
         return addedAt;
     }
 
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public Category getSubCategory() {
+        return subCategory;
+    }
+
+    public void setSubCategory(Category subCategory) {
+        this.subCategory = subCategory;
+    }
+
     public void setAddedAt() {
         Calendar today = Calendar.getInstance();
-//        today.clear(Calendar.HOUR);
-//        today.clear(Calendar.MINUTE);
-//        today.clear(Calendar.SECOND);
         this.addedAt = today.getTime();
     }
 
@@ -116,6 +131,8 @@ public class Team {
                 ", latitude=" + latitude +
                 ", longitude=" + longitude +
                 ", addedAt=" + addedAt +
+                ", category=" + category +
+                ", subCategory=" + subCategory +
                 ", icon=" + icon +
                 '}';
     }

@@ -63,4 +63,7 @@ mat-form-field{
 mat-select:hover{
   border-color: #A6A9AF;
 }
+::ng-deep .mat-select-value{
+  color: #2B2F43;
+}
 

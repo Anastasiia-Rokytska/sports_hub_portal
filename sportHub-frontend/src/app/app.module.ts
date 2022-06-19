@@ -82,7 +82,7 @@ import {EventEmitterService} from "./event-emitter.service";
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    ClickOutsideModule
+    ClickOutsideModule,
     ReactiveFormsModule,
     HttpClientModule,
     MatAutocompleteModule,

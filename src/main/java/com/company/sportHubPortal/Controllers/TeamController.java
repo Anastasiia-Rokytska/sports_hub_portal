@@ -1,5 +1,7 @@
 package com.company.sportHubPortal.Controllers;
+import com.company.sportHubPortal.Database.Category;
 import com.company.sportHubPortal.Database.Team;
+import com.company.sportHubPortal.Services.CategoryServices.CategoryService;
 import com.company.sportHubPortal.Services.TeamService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -7,34 +9,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import javax.sql.rowset.serial.SerialBlob;
-import java.io.IOException;
-import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
-import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/team")
 public class TeamController {
 
     private TeamService teamService;
+    private CategoryService categoryService;
     Logger logger = LoggerFactory.getLogger(TeamController.class);
 
     @Autowired
-    public TeamController(TeamService teamService) {
+    public TeamController(TeamService teamService, CategoryService categoryService) {
         this.teamService = teamService;
+        this.categoryService = categoryService;
     }
 
     @PostMapping(consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
-    public ResponseEntity<Object> addNewTeam(@ModelAttribute Team team) {
+    public ResponseEntity<Object> addNewTeam(@ModelAttribute Team team,
+                                             @RequestPart String selectedCategory,
+                                             @RequestPart String selectedSubCategory) {
         team.setAddedAt();
-        logger.info(team.toString());
-//        logger.info(teamService.teamByCoordinates(team.getLatitude(), team.getLongitude()).toString());
         if (teamService.teamByName(team.getName()) != null) {
             logger.warn("Team name must be unique: " + team);
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY)
@@ -43,6 +41,14 @@ public class TeamController {
             logger.warn("Latitude and longitude must be unique: " + team);
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY)
                     .body("Team with latitude " + team.getLatitude() + " and longitude " + team.getLongitude() + " already exists");
+        }
+        if (!selectedCategory.equals("All")) {
+            Category category = categoryService.getCategoryByName(selectedCategory);
+            if (category != null) team.setCategory(categoryService.getCategoryByName(selectedCategory));
+        }
+        if (!selectedSubCategory.equals("All")) {
+            Category subcategory = categoryService.getCategoryByName(selectedSubCategory);
+            if (subcategory != null) team.setSubCategory(categoryService.getCategoryByName(selectedSubCategory));
         }
         teamService.saveTeam(team);
         logger.info("Success: " + team);
@@ -54,12 +60,21 @@ public class TeamController {
             @PathVariable Integer count,
             @PathVariable Integer page
     ) {
-        List<Team> teams = teamService.allTeams(count, page);
         return teamService.allTeams(count, page);
     }
 
     @GetMapping("/count")
     public ResponseEntity<Object> getTeamCount(){
         return ResponseEntity.ok().body(teamService.teamsCount());
+    }
+
+    @GetMapping("/locations")
+    public ResponseEntity<Object> getAllLocations() {
+        Set<String> locations = new HashSet<>();
+        List<Team> allTeams = teamService.allTeams();
+        allTeams.forEach(team -> {
+            locations.add(team.getLocation());
+        });
+        return ResponseEntity.ok().body(locations);
     }
 }

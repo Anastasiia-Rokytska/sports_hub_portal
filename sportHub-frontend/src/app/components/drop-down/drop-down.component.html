@@ -1,7 +1,7 @@
 <div class="drop-down">
   <label>{{nameField}}</label>
   <mat-form-field floatLabel="never">
-    <mat-select [value]="options[0]">
+    <mat-select [(ngModel)]="selectedOption" [value]="options[0]" (ngModelChange)="selectOption()">
       <mat-option *ngFor="let option of options" [value]="option">
         {{option}}
       </mat-option>
