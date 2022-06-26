@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,6 +26,7 @@ public class ArticleController {
 
     @PostMapping()
     public ResponseEntity<Article> saveArticle(@RequestBody Article article) {
+        article.setPublishedDate(new Date(System.currentTimeMillis()));
         articleService.saveArticle(article);
         return ResponseEntity.ok(article);
     }

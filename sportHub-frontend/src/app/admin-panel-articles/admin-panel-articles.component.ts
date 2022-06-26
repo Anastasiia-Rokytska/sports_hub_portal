@@ -166,8 +166,6 @@ export class AdminPanelArticlesComponent implements OnInit {
     this.caption = Array.from(this.inputs)[1].value;
     this.publishedDate = new Date().toLocaleDateString();
     if(this.articleContent.length > 0 && this.headline.length > 0 && this.caption.length > 0){
-      let tempDate: string[] = this.publishedDate.split('.');
-      this.publishedDate = tempDate[2] + '-' + tempDate[1] + '-' + tempDate[0];
       this.errorMessage = false;
       this.previewMode = this.articleContent.replace(/\n+?/g, '<br>');
 
@@ -180,7 +178,7 @@ export class AdminPanelArticlesComponent implements OnInit {
         categoriesTemp.push({id: this.selectedTeamId});
       }
 
-      let body = JSON.stringify({commentable: true, content:this.previewMode, caption: this.caption, title: this.headline, language: this.language, publishedDate: this.publishedDate, categories:categoriesTemp, author: this.userId});
+      let body = JSON.stringify({commentable: true, content:this.previewMode, caption: this.caption, title: this.headline, language: this.language, categories:categoriesTemp, author: this.userId});
       const httpOptions = {
         headers: new HttpHeaders({'Content-Type': 'application/json', 'Accept': 'application/json'})
       }
