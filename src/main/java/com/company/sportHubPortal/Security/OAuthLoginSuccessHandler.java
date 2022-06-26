@@ -51,7 +51,4 @@ public class OAuthLoginSuccessHandler extends SavedRequestAwareAuthenticationSuc
     response.sendRedirect("/personal_page");
     super.onAuthenticationSuccess(request, response, authentication);
   }
-
-
-
 }

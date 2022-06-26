@@ -27,6 +27,12 @@ export class InputComponent implements OnInit {
 
   @Input() value: string = ''
 
+  @Input() width: string = '390'
+
+  @Input() height: string = '42'
+
+  style: string = ''
+
   isPassword: boolean = false
 
   constructor() {
@@ -34,9 +40,8 @@ export class InputComponent implements OnInit {
 
 
   ngOnInit(): void {
-    console.log(this.typeInput)
     if (this.typeInput == 'password') this.isPassword = true
-    console.log(this.isPassword)
+    this.style = `width: ${this.width}px; height: ${this.height}px;`
   }
 
 

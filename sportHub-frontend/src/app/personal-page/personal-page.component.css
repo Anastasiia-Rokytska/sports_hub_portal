@@ -38,3 +38,6 @@ app-input{
 app-large-button{
   padding-top: 35px;
 }
+app-header{
+  height: auto;
+}

@@ -30,7 +30,6 @@ export class PersonalPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.getUser().subscribe((response: any) => {
-      console.log("Response: ", response)
       this.firstName = response.firstName
       this.lastName = response.lastName
       this.email = response.email
@@ -38,7 +37,6 @@ export class PersonalPageComponent implements OnInit {
       if (response.photoLink != null) {
         this.image = response.photoLink
       }
-
     }, (error) => {
       console.log("Error: ", error.error)
     })

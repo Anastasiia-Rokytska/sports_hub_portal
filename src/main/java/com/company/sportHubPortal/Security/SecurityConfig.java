@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -101,13 +102,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .and()
         .exceptionHandling().accessDeniedHandler(accessDeniedHandler());
 
-
+    httpSecurity.authorizeRequests()
+            .antMatchers(HttpMethod.POST, "/team").hasAuthority("ADMIN")
+            .and()
+            .exceptionHandling().accessDeniedHandler(accessDeniedHandler());
   }
 
-  @Override
-  public void configure(WebSecurity web) {
-    web.ignoring().antMatchers("/assets/**", "/user/verify/**");
-  }
 
   @Override
   protected void configure(AuthenticationManagerBuilder auth) throws Exception {

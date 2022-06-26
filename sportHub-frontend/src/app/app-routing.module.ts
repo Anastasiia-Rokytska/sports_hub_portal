@@ -7,6 +7,7 @@ import {MainPageComponent} from "./main-page/main-page.component";
 import {AdminPanelComponent} from "./admin-panel/admin-panel.component";
 import {ForgotPasswordComponent} from "./forgot-password/forgot-password.component";
 import {ResetPasswordComponent} from "./reset-password/reset-password.component";
+import { TeamsComponent } from './teams/teams/teams.component';
 import {AdminPanelArticlesComponent} from "./admin-panel-articles/admin-panel-articles.component";
 import {ArticleComponent} from "./article/article.component";
 
@@ -17,6 +18,7 @@ const routes: Routes = [
   {path: 'personal_page', component: PersonalPageComponent},
   {path: 'admin', component: AdminPanelComponent},
   {path: 'forgot-password', component: ForgotPasswordComponent},
+  {path: 'admin/teams', component: TeamsComponent},
   {path: 'reset-password/:id', component: ResetPasswordComponent},
   {path: 'admin/article', component: AdminPanelArticlesComponent},
   {path: 'article/:id', component: ArticleComponent}
