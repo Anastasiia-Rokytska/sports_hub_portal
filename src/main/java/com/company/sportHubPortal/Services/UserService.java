@@ -83,6 +83,7 @@ public class UserService {
       user.setEnabled(true);
       user.setPhotoLink(userAttributes.get("picture").toString());
       userRepository.save(user);
+
     }
 
 
