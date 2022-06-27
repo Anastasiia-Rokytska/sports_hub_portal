@@ -31,8 +31,9 @@ jobs:
              mysql root password: '1234'
              mysql user: 'root'
              mysql password: '1234'
-         - name: Give github permission to use gradle
-           run: chmod +x ./gradlew
+
+#         - name: Give github permission to use gradle
+#           run: chmod +x ./gradlew
 
 #         - name: Build
 #           run: ./gradlew build
@@ -58,4 +59,4 @@ jobs:
            env:
              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
              SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-           run: ./gradlew build sonarqube --info
+           run: ./gradlew sonarqube --info
