@@ -43,6 +43,13 @@ public class Team {
         setAddedAt();
     }
 
+    public Team(@NonNull String name, String location, Double latitude, Double longitude) {
+        this.name = name;
+        this.location = location;
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
+
     public Team(String name, String location, Double latitude, Double longitude, Blob icon) {
         this.name = name;
         this.location = location;
