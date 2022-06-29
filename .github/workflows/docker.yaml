@@ -2,7 +2,7 @@ name: Update image on docker hub
 on:
   push:
     branches:
-      - docker
+      - main
 jobs:
   build:
     name: Build
