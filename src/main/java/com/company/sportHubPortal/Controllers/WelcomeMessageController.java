@@ -33,4 +33,9 @@ public class WelcomeMessageController {
     return view;
   }
 
+  @GetMapping("/test")
+  public String testEndpoint() {
+    return "Success!";
+  }
+
 }
