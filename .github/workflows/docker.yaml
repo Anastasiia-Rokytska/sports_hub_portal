@@ -19,6 +19,14 @@ jobs:
       - name: Make gradlew executable
         run: chmod +x ./gradlew
 
+      - uses: mirromutth/mysql-action@v1.1
+        with:
+          mysql version: '8.0'
+          mysql database: 'sporthubportal'
+          mysql root password: '1234'
+          mysql user: 'root'
+          mysql password: '1234'
+
       - name: Build project
         run: ./gradlew build
 
