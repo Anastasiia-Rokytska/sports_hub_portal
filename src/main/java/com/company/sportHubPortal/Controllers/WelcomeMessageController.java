@@ -35,7 +35,7 @@ public class WelcomeMessageController {
 
   @GetMapping("/test")
   public String testEndpoint() {
-    return "Success!";
+    return "Successfully updated!";
   }
 
 }
