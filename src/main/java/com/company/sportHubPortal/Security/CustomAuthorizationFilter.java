@@ -15,7 +15,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.util.WebUtils;
 
-
 @Component
 public class CustomAuthorizationFilter extends OncePerRequestFilter {
 
@@ -42,6 +41,11 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
         || request.getRequestURI().matches("/oauth2/.*$")
         || request.getRequestURI().equals("/user/oauthSuccess")
         || request.getRequestURI().equals("/welcome")
+        || (request.getRequestURI().equals("/team") && !request.getMethod().equals("POST"))
+        || request.getRequestURI().equals("/api/category/category")
+        || request.getRequestURI().equals("/api/category/subcategory")
+        || request.getRequestURI().matches("/api/category/subcategory/.*$")
+        || request.getRequestURI().matches("/team/.*$")
         || request.getRequestURI().matches("/reset-password/.*$")
         || request.getRequestURI().matches("/user/reset-password/.*$")
         || request.getRequestURI().matches("/user/verify/.*$")

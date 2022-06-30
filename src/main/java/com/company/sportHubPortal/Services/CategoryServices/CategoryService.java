@@ -17,4 +17,12 @@ public interface CategoryService {
   Category updateCategory(Category category, Long id);
 
   void deleteCategory(Long id);
+
+  List<Category> getCategories();
+
+  List<Category> getSubCategories();
+
+  Category getCategoryByName(String name);
+
+  List<Category> getSubCategoriesByCategoryName(String name);
 }

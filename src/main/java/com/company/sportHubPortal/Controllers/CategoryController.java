@@ -78,4 +78,20 @@ public class CategoryController {
     return ResponseEntity.ok("Category deleted successfully");
   }
 
+  @GetMapping("/category")
+  public ResponseEntity<Object> getCategories(){
+    return ResponseEntity.ok().body(categoryService.getCategories());
+  }
+
+  @GetMapping("/subcategory")
+  public ResponseEntity<Object> getSubCategories(){
+    return ResponseEntity.ok().body(categoryService.getSubCategories());
+  }
+
+  @GetMapping("/subcategory/{category}")
+  public ResponseEntity<Object> getSubCategoriesByCategory(@PathVariable String category){
+    return ResponseEntity.ok().body(categoryService.getSubCategoriesByCategoryName(category));
+  }
+
+
 }

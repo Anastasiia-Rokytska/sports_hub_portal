@@ -61,4 +61,24 @@ public class CategoryServiceImpl implements CategoryService {
   public void deleteCategory(Long id) {
     categoryRepository.findById(id).ifPresent(categoryRepository::delete);
   }
+
+  @Override
+  public List<Category> getCategories(){
+    return categoryRepository.findAllByParentId(0L);
+  }
+
+  @Override
+  public List<Category> getSubCategories(){
+    return categoryRepository.findAllByParentIdNot(0L);
+  }
+
+  @Override
+  public Category getCategoryByName(String name){
+    return categoryRepository.findByName(name);
+  }
+
+  @Override
+  public List<Category> getSubCategoriesByCategoryName(String name) {
+    return categoryRepository.findAllByParentId(categoryRepository.findByName(name).getId());
+  }
 }

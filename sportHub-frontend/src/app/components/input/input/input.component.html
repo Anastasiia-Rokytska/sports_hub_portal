@@ -3,7 +3,7 @@
   <a routerLink="/forgot-password" [style]="forgotPassword">Forgot password?</a>
 </div>
 <div>
-  <input [(ngModel)]="value" [type]="typeInput" [name]="nameField" [placeholder]="placeholder">
+  <input [(ngModel)]="value" [type]="typeInput" [name]="nameField" [placeholder]="placeholder" [style]="style">
   <button type="button" id = "password_eye" class = "eye_button" *ngIf="isPassword" (click)="show_pass()"></button>
 </div>
 <router-outlet></router-outlet>
