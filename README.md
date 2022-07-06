@@ -22,3 +22,13 @@ Website about different sports and these leagues
 4. Create the spring boot configuration in your Java IDE
 5. Run the project in your IDE
 6. View the website by the http://localhost:8000    (or another port, which you've written in application.properties)
+
+## Algoritm to run project using Docker
+1. If you don`t have Docker installed , you can do it from link:
+https://www.docker.com/get-started/
+2. Open project and run next command in terminal:
+``docker-compose up``
+3. View the website by the http://localhost:8000
+
+Don`t forget to remove the containers with the following command:
+``docker-compose down``
