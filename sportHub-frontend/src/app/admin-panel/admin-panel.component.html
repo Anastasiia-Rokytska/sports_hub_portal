@@ -1,0 +1,142 @@
+<div class="container-fluid" style="border-bottom: 0.5px solid lightgray">
+  <div class="row">
+    <div class="col-md-3" style="margin-left:0;padding-left: 0;">
+      <app-home-button></app-home-button>
+    </div>
+    <div class="col-md-2 offset-md-7" style="margin-right:0;padding-right: 0;float:right;">
+      <app-user-header-menu [userEmail]="userEmail" [userName]="userName"></app-user-header-menu>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid" style="border-bottom: 1px solid lightgray;">
+  <div class="row">
+    <div class="col-md-3 align-self-center">
+      <h2>Information Architecture</h2>
+    </div>
+    <div class="col-md-2 offset-md-7 align-self-center">
+      <app-white-small-button textButton="Save" (click)="saveChanges()"></app-white-small-button>
+    </div>
+  </div>
+</div>
+
+
+<div style="display:inline-flex;position: relative;">
+  <div class="firstCategoryEditor">
+    <button type="button" class="addButton" href="#addCategory" (click)="showModalWindowAddItems(0)">+ Add
+      category
+    </button>
+    <ul class="menuItems firstMenu">
+      <li *ngFor="let item of menuItems">
+        <div class="btn-group">
+          <button class="mainButton" (click)="showSubcategoryItems(item.id)">
+            <div class="container" style="width:170px">
+              <div class="row">
+                <div class="col-sm-1">
+                  <a href="" style="float:left; padding-left:0">...</a>
+                  <span class="badge badge-pill bg-secondary" style="font-size:7px; padding-left:3px"
+                        *ngIf="item.hidden == true">hidden</span>
+                </div>
+                <div class="col-sm">
+                  <span style="font-size: 14px; padding-left:3px;">{{item.name}}</span>
+                </div>
+                <div class="col-sm-1">
+                  <img src="../../assets/icons/elipses.png" alt="" style="width:15px"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <div class="dropdown-menu">
+                        <span class="dropdown-item" *ngIf="item.hidden == false"
+                              (click)="hideShowItems(item)">Hide</span>
+                    <span class="dropdown-item" *ngIf="item.hidden == true"
+                          (click)="hideShowItems(item)">Show</span>
+                    <span class="dropdown-item" (click)="deleteItemModal(item)">Delete</span>
+                    <span class="dropdown-item" (click)="editItemModal(item)">Edit</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </button>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="SecondCategoryEditor" *ngIf="secondMenuVisible">
+    <button type="button" class="addButton" (click)="showModalWindowAddItems(1)">+Add subcategory</button>
+    <ul class="menuItems firstMenu">
+      <li *ngFor="let item of subcategory">
+        <div class="btn-group" (click)="showTeamItems(item.id)">
+          <button class="mainButton">
+            <div class="container" style="width:170px">
+              <div class="row">
+                <div class="col-sm-1">
+                  <a href="" style="float:left; padding-left:0">...</a>
+                  <span class="badge badge-pill bg-secondary" style="font-size:7px; padding-left:3px"
+                        *ngIf="item.hidden == true">hidden</span>
+                </div>
+                <div class="col-sm">
+                  <span style="font-size: 14px; padding-left:3px;">{{item.name}}</span>
+                </div>
+                <div class="col-sm-1">
+                  <img src="../../assets/icons/elipses.png" alt="" style="width:15px"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <div class="dropdown-menu">
+                        <span class="dropdown-item" *ngIf="item.hidden == false"
+                              (click)="hideShowItems(item)">Hide</span>
+                    <span class="dropdown-item" *ngIf="item.hidden == true"
+                          (click)="hideShowItems(item)">Show</span>
+                    <span class="dropdown-item" (click)="deleteItemModal(item)">Delete</span>
+                    <span class="dropdown-item" (click)="editItemModal(item)">Edit</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </button>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="ThirdCategoryEditor" *ngIf="thirdMenuVisible">
+    <button type="button" class="addButton" (click)="showModalWindowAddItems(2)">+Add team</button>
+    <ul class="menuItems firstMenu">
+      <li *ngFor="let item of teams">
+        <div class="btn-group">
+          <button class="mainButton">
+
+            <div class="container" style="width:170px">
+              <div class="row">
+                <div class="col-sm-1">
+                  <a href="" style="float:left; padding-left:0">...</a>
+                  <span class="badge badge-pill bg-secondary" style="font-size:7px; padding-left:3px"
+                        *ngIf="item.hidden == true">hidden</span>
+                </div>
+                <div class="col-sm">
+                  <span style="font-size: 14px; padding-left:3px;">{{item.name}}</span>
+                </div>
+                <div class="col-sm-1">
+                  <img src="../../assets/icons/elipses.png" alt="" style="width:15px"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <div class="dropdown-menu">
+                        <span class="dropdown-item" *ngIf="item.hidden == false"
+                              (click)="hideShowItems(item)">Hide</span>
+                    <span class="dropdown-item" *ngIf="item.hidden == true"
+                          (click)="hideShowItems(item)">Show</span>
+                    <span class="dropdown-item" (click)="deleteItemModal(item)">Delete</span>
+                    <span class="dropdown-item" (click)="editItemModal(item)">Edit</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </button>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+
+
+
+

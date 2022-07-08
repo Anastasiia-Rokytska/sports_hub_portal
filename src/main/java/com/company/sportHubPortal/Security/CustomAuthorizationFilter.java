@@ -34,9 +34,18 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
   protected boolean shouldNotFilter(HttpServletRequest request) {
     return request.getRequestURI().equals("/user/sign-up")
         || request.getRequestURI().equals("/sign-up")
+        || request.getRequestURI().equals("/user/sign-up")
         || request.getRequestURI().equals("/login")
         || request.getRequestURI().equals("/forgot-password")
         || request.getRequestURI().equals("/user/forgot-password")
+        || request.getRequestURI().matches("/oauth2/.*$")
+        || request.getRequestURI().equals("/user/oauthSuccess")
+        || request.getRequestURI().equals("/welcome")
+        || (request.getRequestURI().equals("/team") && !request.getMethod().equals("POST"))
+        || request.getRequestURI().equals("/api/category/category")
+        || request.getRequestURI().equals("/api/category/subcategory")
+        || request.getRequestURI().matches("/api/category/subcategory/.*$")
+        || request.getRequestURI().matches("/team/.*$")
         || request.getRequestURI().matches("/reset-password/.*$")
         || request.getRequestURI().matches("/user/reset-password/.*$")
         || request.getRequestURI().matches("/user/verify/.*$")
@@ -46,7 +55,7 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
   @Override
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
                                   FilterChain filterChain) throws ServletException, IOException {
-    logger.info(request.getRequestURI());
+    logger.info("URL : " + request.getRequestURI());
     if (shouldNotFilter(request)) {
       filterChain.doFilter(request, response);
     } else {

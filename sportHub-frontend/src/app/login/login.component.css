@@ -78,6 +78,8 @@ span{
 }
 #error{
   color: #D72130;
+  width: 390px;
+  text-align: justify;
 }
 #success{
   color: #57A902;
@@ -85,3 +87,4 @@ span{
 app-large-button{
   margin-top: 15px;
 }
+

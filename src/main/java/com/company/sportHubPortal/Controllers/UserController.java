@@ -1,25 +1,30 @@
 package com.company.sportHubPortal.Controllers;
 
-import com.company.sportHubPortal.Models.*;
-import com.company.sportHubPortal.Security.CustomUserDetails;
+import com.company.sportHubPortal.Models.User;
+import com.company.sportHubPortal.Models.UserRole;
 import com.company.sportHubPortal.Models.EmailSender;
+import com.company.sportHubPortal.Models.EmailMessage;
+import com.company.sportHubPortal.Security.CustomUserDetails;
+import com.company.sportHubPortal.Services.EmailSenderService;
 import com.company.sportHubPortal.Services.JwtTokenService;
 import com.company.sportHubPortal.Services.UserService;
-import com.company.sportHubPortal.Services.EmailSenderService;
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
-
+import java.util.Date;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import net.bytebuddy.utility.RandomString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,6 +32,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 @RestController
 @RequestMapping("/user")
@@ -38,18 +44,26 @@ public class UserController {
   final UserService userService;
   final JwtTokenService jwtTokenService;
   final EmailSenderService emailSenderService;
-  private final JavaMailSenderImpl javaMailSender;
-  final ScheduledExecutorService executor;
   Logger logger = LoggerFactory.getLogger(UserController.class);
+  private OAuth2AuthorizedClientService authorizedClientService;
+  private Environment environment;
+
 
   @Autowired
-  public UserController(UserService userService, JwtTokenService jwtTokenService,
-                        JavaMailSenderImpl javaMailSender, ScheduledExecutorService executor, EmailSenderService emailSenderService) {
+  public UserController(UserService userService,
+                        JwtTokenService jwtTokenService,
+                        EmailSenderService emailSenderService,
+                        JavaMailSenderImpl javaMailSender,
+                        ScheduledExecutorService executor,
+                        OAuth2AuthorizedClientService authorizedClientService,
+                        Environment environment) {
     this.userService = userService;
     this.jwtTokenService = jwtTokenService;
     this.javaMailSender = javaMailSender;
     this.executor = executor;
     this.emailSenderService = emailSenderService;
+    this.authorizedClientService = authorizedClientService;
+    this.environment = environment;
   }
 
   public static boolean validate(String emailStr) {
@@ -137,6 +151,57 @@ public class UserController {
     }
     return ResponseEntity.ok(new Gson().toJson(user));
   }
+
+  @PostMapping("/check-old-pass")
+  public ResponseEntity<Object> checkOldPass(@RequestBody String password) {
+
+    String o = new Object() {
+    }.getClass().getEnclosingMethod().getName() + "() ";
+
+    UserDetails userDetails =
+        (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    User user = userService.getByEmail(userDetails.getUsername());
+    if (user == null) {
+      logger.info(o + "User is not found");
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+    }
+    password = new Gson().fromJson(password, StringRequestParam.class).getParam();
+
+    if (userService.decodePassword(password, user.getPassword())) {
+      return ResponseEntity.ok(new Gson().toJson(user));
+    } else {
+      logger.info(o + password);
+      logger.info(o + "Password is not decoded");
+
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+    }
+  }
+
+  @PatchMapping("/change-password")
+  public ResponseEntity<Object> changePassword(@RequestBody String password) {
+
+    String o = new Object() {
+    }.getClass().getEnclosingMethod().getName() + "() ";
+
+    password = new Gson().fromJson(password, StringRequestParam.class).getParam();
+
+    UserDetails userDetails =
+        (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    User user = userService.getByEmail(userDetails.getUsername());
+    if (user == null) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+    }
+
+    logger.info(o + "User is found");
+
+    user.setPassword(userService.encodePassword(password));
+    userService.save(user);
+
+    logger.info(o + "Password is changed");
+
+    return ResponseEntity.ok(HttpStatus.OK);
+  }
+
 
   @PostMapping("/forgot-password")
   public ResponseEntity<Object> requestResetLink(@RequestBody String email) {

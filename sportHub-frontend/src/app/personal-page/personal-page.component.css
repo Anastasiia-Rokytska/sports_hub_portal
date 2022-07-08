@@ -23,6 +23,8 @@
 .user_icon{
   position: absolute;
   border-radius: 50%;
+  width: 120px;
+  height: 120px;
 }
 .load_photo{
   position: absolute;
@@ -35,4 +37,7 @@ app-input{
 }
 app-large-button{
   padding-top: 35px;
+}
+app-header{
+  height: auto;
 }

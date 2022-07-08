@@ -1,0 +1,144 @@
+.page{
+  display: flex;
+  width: 100%;
+}
+.main_content{
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+}
+.main_team_form{
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  height: 578px;
+  margin-top: 46px;
+}
+.map{
+  width: 862px;
+  height: 578px;
+}
+::ng-deep app-map{
+  width: 862px;
+  height: 578px;
+}
+.team_form{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.add_team{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 304px;
+  height: auto;
+  box-shadow: 7px 7px 24px -17px rgba(0, 0, 0, 0.09);
+  padding: 30px;
+  justify-content: space-between;
+  align-items: center;
+}
+.buttons{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
+.apply{
+  width: 246px;
+  height: 32px;
+  background: #D72130;
+
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  text-align: center;
+  color: #FFFFFF;
+  border: none;
+}
+.apply:hover{
+  background: #E02232;
+}
+.apply:active{
+  background: #C80515;
+}
+.cancel{
+  width: 177px;
+  height: 16px;
+  border: none;
+  background-color: white;
+
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 16px;
+  text-align: center;
+  color: #D72130;
+}
+.cancel:hover{
+  color: #E02232;
+}
+.cancel:active{
+  color: #C80515;
+}
+.team_logo{
+  width: 246px;
+  height: 155px;
+  background: rgba(196, 196, 196, 0.08);
+  border: 1px dashed #D1D1D1;
+}
+.team_logo{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 18px;
+}
+.team_logo img{
+  width: 39px;
+}
+.logo_text{
+  width: 130px;
+  height: 20px;
+
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 19px;
+}
+#red_text{
+  color: #D72130;
+}
+
+::ng-deep app-all-teams{
+  width: auto;
+  margin-top: 74px;
+  margin-bottom: 52px;
+}
+
+.loaded_image img{
+  height: 126px;
+}
+
+.loaded_image{
+  width: 246px;
+  height: 155px;
+  background: rgba(196, 196, 196, 0.08);
+  border: 1px dashed #D1D1D1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.map-wrapper{
+  display: flex;
+}
+.map-wrapper-wrapper{
+  width: 862px;
+  height: 578px;
+}
+

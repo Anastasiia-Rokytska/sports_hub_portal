@@ -19,6 +19,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.util.StreamUtils;
 
+
 public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
   private final AuthenticationManager authenticationManager;
@@ -37,6 +38,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
   public Authentication attemptAuthentication(HttpServletRequest request,
                                               HttpServletResponse response)
       throws AuthenticationException {
+
     logger.info("Authentication: " + request.getRequestURI());
     byte[] body;
     Map<String, String> jsonRequest = null;
@@ -56,8 +58,9 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
     CustomUserDetails userDetails = userDetailsService.loadUserByUsername(email);
     logger.info("Email is " + email);
     logger.info("Password is " + password);
+    logger.info("Role is " + userDetails.getAuthorities());
     UsernamePasswordAuthenticationToken authenticationToken =
-        new UsernamePasswordAuthenticationToken(email, password);
+        new UsernamePasswordAuthenticationToken(email, password, userDetails.getAuthorities());
     return authenticationManager.authenticate(authenticationToken);
   }
 

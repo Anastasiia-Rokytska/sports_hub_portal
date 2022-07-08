@@ -1,0 +1,45 @@
+<app-header-admin></app-header-admin>
+<app-teams-header></app-teams-header>
+<div class="page">
+  <app-left-side-menu-admin></app-left-side-menu-admin>
+  <div class="main_content">
+    <div class="main_team_form" *ngIf="showAddingTeam()">
+      <div class="map-wrapper-wrapper">
+        <div class="map-wrapper" (click)="updateLocation()" *ngIf="show">
+          <app-map class="map" *ngComponentOutlet="mapComponent; injector: teamsInjector"></app-map>
+        </div>
+      </div>
+      <div class="add_team" *ngIf="locationsLoaded &&
+                                  dropDownCategoryComponent != undefined &&
+                                  dropDownSubCategoryComponent != undefined">
+        <div class="team_form">
+          <app-select [options]="locations"></app-select>
+          <app-drop-down *ngComponentOutlet="dropDownCategoryComponent; injector: categoriesInjector" nameField="Category"></app-drop-down>
+          <app-drop-down *ngComponentOutlet="dropDownSubCategoryComponent; injector: subcategoriesInjector" nameField="Subcategory"></app-drop-down>
+          <app-input nameField="Team" width="246" height="36" placeholder="Name of team"></app-input>
+        </div>
+        <div class="team_logo" *ngIf="url == undefined">
+          <label class="load_photo">
+            <input type="file" name="file_input" accept="image/*" hidden (change)="loadPhoto($event)">
+            <img src="/assets/icons/loadPhoto.svg">
+          </label>
+          <div class="logo_text_block">
+            <span class="logo_text" id="red_text">Add logo</span>
+            <span class="logo_text" id="black_text"> right here</span>
+          </div>
+        </div>
+        <div class="loaded_image" *ngIf="url != undefined">
+          <label class="load_photo">
+            <input type="file" name="file_input" accept="image/*" hidden (change)="loadPhoto($event)">
+            <img [src]="image">
+          </label>
+        </div>
+        <div class="buttons">
+          <button class="apply" (click)="addTeam()">Apply</button>
+          <button class="cancel" (click)="clearForm()">Cancel</button>
+        </div>
+      </div>
+    </div>
+    <ng-container class="map" *ngComponentOutlet="teamListComponent; injector: teamsInjector"></ng-container>
+  </div>
+</div>

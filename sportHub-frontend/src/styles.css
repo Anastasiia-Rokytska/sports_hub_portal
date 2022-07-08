@@ -20,3 +20,21 @@ app-input{
   display: flex;
   flex-direction: column;
 }
+
+app-header-admin{
+  display: flex;
+  justify-content: space-between;
+  height: 83px;
+  border-bottom: #EDEDED solid 1px;
+}
+
+app-teams-header{
+  height: 78px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #D4D9E2;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

@@ -1,0 +1,76 @@
+p{
+  padding: 0;
+  margin: 0;
+}
+.logo{
+  display: flex;
+  background-color: #D72130;
+  width: 252px;
+  height: auto;
+
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 28px;
+  color: #FFFBFB;
+
+  align-items: center;
+  justify-content: center;
+}
+.admin_header_menu{
+  display: flex;
+  justify-content: space-around;
+  width: 375px;
+  height: auto;
+  align-items: center;
+  border-left: #EDEDED solid 1px;
+}
+.admin_data{
+  display: flex;
+  align-items: center;
+  width: 152px;
+  justify-content: space-between;
+}
+.admin_icon{
+  width: 34px;
+  height: 34px;
+}
+.admin_name{
+  display: flex;
+  flex-direction: column;
+  margin-right: 11px;
+  height: auto;
+}
+.name{
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 24px;
+  color: #000000;
+  margin-bottom: 12px;
+}
+.role{
+  position: absolute;
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 8px;
+  line-height: 24px;
+  color: #B2B2B2;
+  margin-top: 12px;
+}
+.language{
+  display: flex;
+}
+.lang{
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 17px;
+  text-align: center;
+  color: #000000;
+  margin-right: 8px;
+}

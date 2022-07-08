@@ -30,5 +30,4 @@ public class WelcomeMessageController {
     view.setUrl("https://www.youtube.com/feed/subscriptions");
     return view;
   }
-
 }

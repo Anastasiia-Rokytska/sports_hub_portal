@@ -1,9 +1,16 @@
 package com.company.sportHubPortal.Security;
 
+import com.company.sportHubPortal.Controllers.UserController;
 import com.company.sportHubPortal.Services.JwtTokenService;
+import com.company.sportHubPortal.Services.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -13,22 +20,36 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.access.AccessDeniedHandler;
 
-@EnableWebSecurity
+
 @Configuration
+@EnableWebSecurity
+@PropertySource("classpath:application.properties")
+
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-  final CustomUserDetailsService userDetailsService;
-  final PasswordEncoder passwordEncoder;
-  final JwtTokenService jwtTokenService;
+  private final CustomUserDetailsService userDetailsService;
+  private final PasswordEncoder passwordEncoder;
+  private final JwtTokenService jwtTokenService;
+  private final Environment env;
+  private final UserService userService;
+  private final OAuthLoginSuccessHandler oAuthLoginSuccessHandler;
+  Logger logger = LoggerFactory.getLogger(UserController.class);
 
   @Autowired
   public SecurityConfig(CustomUserDetailsService userDetailsService,
                         PasswordEncoder passwordEncoder,
-                        JwtTokenService jwtTokenService) {
+                        JwtTokenService jwtTokenService,
+                        Environment env,
+                        UserService userService,
+                        OAuthLoginSuccessHandler oAuthLoginSuccessHandler) {
     this.userDetailsService = userDetailsService;
     this.passwordEncoder = passwordEncoder;
     this.jwtTokenService = jwtTokenService;
+    this.env = env;
+    this.userService = userService;
+    this.oAuthLoginSuccessHandler = oAuthLoginSuccessHandler;
   }
 
 
@@ -55,11 +76,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .and()
         .addFilterAfter(authorizationFilter, authenticationFilter.getClass());
 
+
     httpSecurity
         .formLogin()
         .loginPage("/login")
         .usernameParameter("email")
         .permitAll()
+        .and()
+        .oauth2Login()
+        .loginPage("/login")
+        .successHandler(oAuthLoginSuccessHandler)
+        .failureHandler((request, response, exception) ->
+            logger.info(exception.toString()))
         .and().addFilter(authenticationFilter);
 
     httpSecurity
@@ -68,12 +96,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .logoutSuccessUrl("/login")
         .deleteCookies("access_token")
         .deleteCookies("refresh_token");
+
+    httpSecurity.authorizeRequests()
+        .antMatchers("/admin/**").hasAuthority("ADMIN")
+        .and()
+        .exceptionHandling().accessDeniedHandler(accessDeniedHandler());
+
+    httpSecurity.authorizeRequests()
+            .antMatchers(HttpMethod.POST, "/team").hasAuthority("ADMIN")
+            .and()
+            .exceptionHandling().accessDeniedHandler(accessDeniedHandler());
   }
 
-  @Override
-  public void configure(WebSecurity web) {
-    web.ignoring().antMatchers("/assets/**", "/user/verify/**");
-  }
 
   @Override
   protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -86,5 +120,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     return super.authenticationManagerBean();
   }
 
+  @Bean
+  public AccessDeniedHandler accessDeniedHandler() {
+    return new CustomAccessDeniedHandler();
+  }
 
 }

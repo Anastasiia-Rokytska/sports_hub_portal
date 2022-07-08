@@ -10,7 +10,7 @@ export class HeaderComponent implements OnInit {
 
   userName = "Ivan Baloh"
   userEmail = "ivanbaloh@gmail.com"
-
+  photoLink = "assets/images/userPhoto.jpg"
   constructor(
     private http: HttpClient
   ) {}
@@ -23,6 +23,11 @@ export class HeaderComponent implements OnInit {
         this.userName = this.userName.slice(0, 16) + '...'
       }
       this.userEmail = response.email
+
+      if(response.photoLink != null){
+        this.photoLink = response.photoLink
+      }
+
     }, (error) => {
       console.log("Error: ", error.error)
     })

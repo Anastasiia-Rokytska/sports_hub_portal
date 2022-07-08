@@ -4,7 +4,11 @@ div{
 }
 
 img{
-  width: 25px;
+  width: 30px;
+}
+img:hover{
+  filter: invert(8%) sepia(100%) saturate(7370%) hue-rotate(354deg) brightness(111%) contrast(106%)
+
 }
 /*img:hover{*/
 /*  width: 30px;*/

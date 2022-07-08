@@ -1,6 +1,13 @@
 package com.company.sportHubPortal.Models;
 
-public enum UserRole {
-    USER,
-    ADMIN
+import org.springframework.security.core.GrantedAuthority;
+
+public enum UserRole implements GrantedAuthority {
+  USER,
+  ADMIN;
+
+  @Override
+  public String getAuthority() {
+    return name();
+  }
 }

@@ -1,0 +1,13 @@
+.menu{
+  display: flex;
+  flex-direction: column;
+  padding-top: 43px;
+  padding-bottom: 43px;
+  width: 87px;
+  gap: 43px;
+  border-right: 1px solid #D8D8D8;
+}
+.icon{
+  display: flex;
+  justify-content: space-around;
+}

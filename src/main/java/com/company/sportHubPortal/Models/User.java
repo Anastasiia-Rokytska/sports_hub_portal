@@ -24,8 +24,13 @@ public class User {
   boolean enabled;
   String recoverPassHash;
 
+  String photoLink;
+
   @Enumerated(EnumType.STRING)
   UserRole role;
+
+  @Enumerated(EnumType.STRING)
+  private AuthProvider authProvider;
 
   public User() {
   }
@@ -135,11 +140,27 @@ public class User {
         + '}';
   }
 
+  public AuthProvider getAuthProvider() {
+    return authProvider;
+  }
+
+  public void setAuthProvider(AuthProvider authProvider) {
+    this.authProvider = authProvider;
+  }
+
   public String getRecoverPassHash() {
     return recoverPassHash;
   }
 
   public void setRecoverPassHash(String recoverPassHash) {
     this.recoverPassHash = recoverPassHash;
+  }
+
+  public String getPhotoLink() {
+    return photoLink;
+  }
+
+  public void setPhotoLink(String photoLink) {
+    this.photoLink = photoLink;
   }
 }

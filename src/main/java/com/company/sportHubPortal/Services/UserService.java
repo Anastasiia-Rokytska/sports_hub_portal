@@ -1,8 +1,11 @@
 package com.company.sportHubPortal.Services;
 
 import com.company.sportHubPortal.Controllers.UserController;
+import com.company.sportHubPortal.Models.AuthProvider;
 import com.company.sportHubPortal.Models.User;
+import com.company.sportHubPortal.Models.UserRole;
 import com.company.sportHubPortal.Repositories.UserRepository;
+import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -29,7 +32,6 @@ public class UserService {
   public Boolean decodePassword(String password, String encodedPassword) {
     return passwordEncoder.matches(password, encodedPassword);
   }
-
 
   public void save(User user) {
     userRepository.save(user);
@@ -63,6 +65,26 @@ public class UserService {
 
   public User getByRecoverPassHash(String uri) {
     return userRepository.getUserByRecoverPassHash(uri);
+  }
+
+  public void processOAuthPostLogin(Map<String, Object> userAttributes, String provider) {
+    User user = userRepository.getUserByEmail(userAttributes.get("email").toString());
+
+    if (user == null) {
+      user = new User();
+      user.setEmail(userAttributes.get("email").toString());
+      user.setFirstName(userAttributes.get("given_name").toString());
+      user.setLastName(userAttributes.get("family_name").toString());
+      user.setAuthProvider(AuthProvider.valueOf(provider));
+      user.setRole(UserRole.USER);
+      user.setEnabled(true);
+      user.setPhotoLink(userAttributes.get("picture").toString());
+      userRepository.save(user);
+
+    }
+
+
+
   }
 
 

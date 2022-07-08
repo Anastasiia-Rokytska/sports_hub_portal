@@ -1,0 +1,22 @@
+<app-header></app-header>
+<leftside-menu></leftside-menu>
+<div class="article-preview">
+  <div class="image-card">
+    <div class="article-image">
+      <img src="../../assets/images/userPhoto.jpg" width=100% height="400px" alt="">
+      <h4 [innerHtml]="article.content" style="font-family: 'Open Sans';"></h4>
+    </div>
+    <div class="card" style="width: 350px;height: 200px;">
+      <div class="card-body">
+        <h6 style="color:gray; font-size: 10px">Published on {{article.publishedDate}}</h6>
+        <br>
+        <h6 style="color:#E02232;font-size: 14px">{{article.caption}}</h6>
+        <br>
+        <h5 style="font-size:20px; color:black;">{{article.title}}</h5>
+        <br>
+        <p>Created by {{article.author}}</p>
+      </div>
+    </div>
+  </div>
+
+</div>

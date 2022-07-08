@@ -1,5 +1,7 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Component, OnInit, ViewChildren} from '@angular/core';
+import {InputComponent} from "../components/input/input/input.component";
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-personal-page',
@@ -8,36 +10,159 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PersonalPageComponent implements OnInit {
 
+  @ViewChildren(InputComponent) inputs: InputComponent[] = [];
+
   constructor(
     private http: HttpClient,
-  ) { }
+  ) {
+  }
 
   firstName: string = ''
   lastName: string = ''
   email: string = ''
-  image: Blob | null = null
+  image: string = 'assets/images/userPhoto.jpg'
+
+  public class: Array<string> = ["active_segment", "nonactive_segment", "nonactive_segment", "nonactive_segment"]
+
+  public personal_show = true
+  public pass_show = false
+
 
   ngOnInit(): void {
     this.getUser().subscribe((response: any) => {
-      console.log("Response: ", response)
       this.firstName = response.firstName
       this.lastName = response.lastName
       this.email = response.email
+
+      if (response.photoLink != null) {
+        this.image = response.photoLink
+      }
     }, (error) => {
       console.log("Error: ", error.error)
     })
   }
 
-  getUser(){
+
+  getUser() {
     const httpOptions = {
       headers: new HttpHeaders({'Content-Type': 'application/json', 'Accept': 'application/json'})
     }
     return this.http.get("user/own_information", httpOptions)
   }
 
-  changePassword(){}
 
-  mySurveys(){}
+  show_personal() {
+    this.personal_show = true
+    this.pass_show = false
 
-  teamHub(){}
+    this.class[0] = "active_segment"
+    this.class[1] = "nonactive_segment"
+  }
+
+  show_pass() {
+    this.personal_show = false
+    this.pass_show = true
+
+    this.class[0] = "nonactive_segment"
+    this.class[1] = "active_segment"
+  }
+
+  mySurveys() {
+  }
+
+  teamHub() {
+  }
+
+
+  changePassword() {
+
+    let old_pass = Array.from(this.inputs)[3].value
+    let new_pass = Array.from(this.inputs)[4].value
+    let confirmation_pass = Array.from(this.inputs)[5].value
+
+    if (old_pass == '' || new_pass == '' || confirmation_pass == '') {
+      Swal.fire({
+        title: 'Fill all fields',
+        icon: 'error',
+        timer: 5000,
+      })
+      return
+    }
+
+    this.checkOldPass(old_pass).subscribe((response: any) => {
+
+      if (new_pass.length < 8) {
+        Swal.fire({
+          title: 'Password does not meet the requirements',
+          icon: 'error',
+          timer: 5000,
+        })
+        return
+      }
+
+      if (new_pass != confirmation_pass) {
+        Swal.fire({
+          title: 'Passwords do not match',
+          icon: 'error',
+          timer: 5000,
+        })
+        return
+      }
+
+      let param = new_pass
+      let body = JSON.stringify({param})
+      const httpOptions = {
+        headers: new HttpHeaders({'Content-Type': 'application/json', 'Accept': 'application/json'})
+      }
+
+      let new_response = this.http.patch<string>('/user/change-password', body, httpOptions)
+      console.log(new_response)
+
+      new_response.subscribe(res => {
+
+
+        Swal.fire({
+          title: 'Your password is changed!',
+          icon: 'success',
+          timer: 3000
+        })
+        Array.from(this.inputs)[3].value = ''
+        Array.from(this.inputs)[4].value = ''
+        Array.from(this.inputs)[5].value = ''
+        Array.from(this.inputs)[3].typeInput = 'password'
+        Array.from(this.inputs)[4].value = 'password'
+        Array.from(this.inputs)[5].value = 'password'
+        this.show_personal()
+
+
+      }, (error) => {
+        console.log("Error: ", error.error)
+      })
+
+    }, error => {
+
+      if (error.status == 404) {
+
+        Swal.fire({
+          title: 'Error...',
+          text: 'Old password is incorrect',
+          icon: 'error',
+          timer: 5000,
+        })
+        console.log('User not found')
+        return
+
+      }
+    })
+  }
+
+  checkOldPass(param: string) {
+    const httpOptions = {
+      headers: new HttpHeaders({'Content-Type': 'application/json', 'Accept': 'application/json'})
+    }
+    let body = JSON.stringify({param})
+    return this.http.post<string>("user/check-old-pass", body, httpOptions)
+  }
+
+
 }
