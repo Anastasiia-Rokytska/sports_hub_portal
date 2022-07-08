@@ -1,18 +1,11 @@
 package com.company.sportHubPortal.Services;
 
-import com.company.sportHubPortal.Database.Team;
+import com.company.sportHubPortal.Models.Team;
 import com.company.sportHubPortal.Repositories.TeamRepository;
-import org.hibernate.JDBCException;
-import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.awt.print.Pageable;
-import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service

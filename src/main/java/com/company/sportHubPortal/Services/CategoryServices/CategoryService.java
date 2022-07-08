@@ -1,6 +1,6 @@
 package com.company.sportHubPortal.Services.CategoryServices;
 
-import com.company.sportHubPortal.Database.Category;
+import com.company.sportHubPortal.Models.Category;
 import java.util.List;
 
 public interface CategoryService {

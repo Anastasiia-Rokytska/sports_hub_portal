@@ -1,12 +1,10 @@
-package com.company.sportHubPortal.Database;
+package com.company.sportHubPortal.Models;
 
 import com.fasterxml.jackson.annotation.*;
 import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
