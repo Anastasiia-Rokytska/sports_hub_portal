@@ -1,6 +1,6 @@
 package com.company.sportHubPortal.Configs;
 
-import com.company.sportHubPortal.Database.Team;
+import com.company.sportHubPortal.Models.Team;
 import com.company.sportHubPortal.Services.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -9,13 +9,9 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.client.MultipartBodyBuilder;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.multipart.MultipartFile;
-
 import javax.sql.rowset.serial.SerialBlob;
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Objects;

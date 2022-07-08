@@ -1,4 +1,4 @@
-package com.company.sportHubPortal.Database;
+package com.company.sportHubPortal.Models;
 
 import java.util.Collection;
 import java.util.Map;

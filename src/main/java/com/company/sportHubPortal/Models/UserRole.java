@@ -1,4 +1,4 @@
-package com.company.sportHubPortal.Database;
+package com.company.sportHubPortal.Models;
 
 import org.springframework.security.core.GrantedAuthority;
 

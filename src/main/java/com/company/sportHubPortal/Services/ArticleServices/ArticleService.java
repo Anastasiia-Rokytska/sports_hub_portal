@@ -1,6 +1,6 @@
 package com.company.sportHubPortal.Services.ArticleServices;
 
-import com.company.sportHubPortal.Database.Article;
+import com.company.sportHubPortal.Models.Article;
 
 import java.util.List;
 
