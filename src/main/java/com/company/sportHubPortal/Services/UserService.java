@@ -1,7 +1,7 @@
 package com.company.sportHubPortal.Services;
 
 import com.company.sportHubPortal.Controllers.UserController;
-import com.company.sportHubPortal.Database.User;
+import com.company.sportHubPortal.Models.User;
 import com.company.sportHubPortal.Repositories.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

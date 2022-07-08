@@ -81,6 +81,14 @@ export class ForgotPasswordComponent implements OnInit {
         return;
 
       }
+      if(error.status == 503){
+        Swal.fire({
+          title: 'Error...',
+          text: 'Unfortunately, this function is currently unavailable, please try again later\'',
+          icon: 'error',
+          timer: 5000,
+        })
+      }
       console.log(error)
     })
 

@@ -41,7 +41,7 @@ dependencies {
 	implementation 'com.h2database:h2:2.1.210'
 	implementation 'checkstyle:checkstyle:5.0'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	runtimeOnly 'mysql:mysql-connector-java'
+	runtimeOnly 'mysql:mysql-connector-java:8.0.29'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
 	implementation 'org.springframework.boot:spring-boot-configuration-processor'

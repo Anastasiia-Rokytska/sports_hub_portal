@@ -1,5 +1,6 @@
 package com.company.sportHubPortal.Controllers;
 
+import com.company.sportHubPortal.Models.EmailSender;
 import com.company.sportHubPortal.Services.EmailSenderService;
 import com.company.sportHubPortal.Services.UserService;
 import org.slf4j.Logger;
