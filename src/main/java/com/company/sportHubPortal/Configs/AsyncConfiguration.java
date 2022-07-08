@@ -34,7 +34,6 @@ public class AsyncConfiguration {
 
     } catch (IOException | ParseException e) {
       logger.info(e.getMessage());
-      e.printStackTrace();
     }
     ScheduledExecutorService executor =  Executors.newScheduledThreadPool(corePoolSize);
 
