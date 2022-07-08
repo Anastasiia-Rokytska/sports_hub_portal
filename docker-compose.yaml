@@ -18,6 +18,8 @@ services:
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://database:3306/sporthubportal
       SPRING_DATASOURCE_PASSWORD: 1234
+      SPRING_JPA_HIBERNATE_DDL-AUTO: update
+      SERVER_PORT: 8080
     depends_on:
       database:
         condition: service_healthy
