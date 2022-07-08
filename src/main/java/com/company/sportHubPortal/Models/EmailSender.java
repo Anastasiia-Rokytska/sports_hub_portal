@@ -39,7 +39,6 @@ public class EmailSender implements Runnable{
 
     } catch (IOException | ParseException e) {
       logger.info(e.getMessage());
-      e.printStackTrace();
     }
     this.capacity = queueCapacity;
     EmailSender.messageQueue = new LinkedBlockingQueue(this.capacity);
@@ -55,9 +54,6 @@ public class EmailSender implements Runnable{
     return emailMessage;
   }
 
-//  public void setEmailMessage(EmailMessage emailMessage) {
-//    this.emailMessage = emailMessage;
-//  }
 
   public boolean addToMessageQueue(UserRepository userRepository){
     if(userRepository.getUserByEmail(this.emailMessage.getEmail())!= null && !isInQueue(this.emailMessage)){
