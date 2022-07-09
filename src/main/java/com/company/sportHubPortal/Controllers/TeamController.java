@@ -1,6 +1,6 @@
 package com.company.sportHubPortal.Controllers;
-import com.company.sportHubPortal.Database.Category;
-import com.company.sportHubPortal.Database.Team;
+import com.company.sportHubPortal.Models.Category;
+import com.company.sportHubPortal.Models.Team;
 import com.company.sportHubPortal.Services.CategoryServices.CategoryService;
 import com.company.sportHubPortal.Services.TeamService;
 import org.slf4j.Logger;

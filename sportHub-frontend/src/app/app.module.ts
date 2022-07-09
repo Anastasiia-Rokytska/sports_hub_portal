@@ -42,6 +42,7 @@ import { ClickOutsideModule } from "ng-click-outside";
 import { ArticleComponent } from "./article/article.component";
 import { EventEmitterService } from "./event-emitter.service";
 
+
 @NgModule({
   declarations: [
     AppComponent,

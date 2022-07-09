@@ -1,7 +1,7 @@
 package com.company.sportHubPortal.Controllers;
 
-import com.company.sportHubPortal.Database.User;
-import com.company.sportHubPortal.Database.UserRole;
+import com.company.sportHubPortal.Models.User;
+import com.company.sportHubPortal.Models.UserRole;
 import com.company.sportHubPortal.Security.CustomUserDetails;
 import com.company.sportHubPortal.Services.EmailSenderService;
 import com.company.sportHubPortal.Services.JwtTokenService;
@@ -21,7 +21,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
-import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;

@@ -1,8 +1,8 @@
 package com.company.sportHubPortal;
 
 import com.company.sportHubPortal.Controllers.UserController;
-import com.company.sportHubPortal.Database.User;
-import com.company.sportHubPortal.Database.UserRole;
+import com.company.sportHubPortal.Models.User;
+import com.company.sportHubPortal.Models.UserRole;
 import com.company.sportHubPortal.Services.UserService;
 import com.google.gson.Gson;
 import org.junit.jupiter.api.Test;
