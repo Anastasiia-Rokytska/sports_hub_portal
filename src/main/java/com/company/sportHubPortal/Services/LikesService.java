@@ -5,6 +5,7 @@ import com.company.sportHubPortal.Repositories.LikesRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class LikesService {
@@ -38,10 +39,7 @@ public class LikesService {
     }
 
     public Likes getById(Long id) {
-        return likesRepository.findById(id).get();
-    }
-
-    public boolean isLiked(Long id) {
-        return likesRepository.findById(id).get().isLiked();
+        Optional<Likes> likes = likesRepository.findById(id);
+        return likes.orElse(null);
     }
 }

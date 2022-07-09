@@ -2,6 +2,8 @@ package com.company.sportHubPortal.Controllers;
 
 import com.company.sportHubPortal.Models.Comment;
 import com.company.sportHubPortal.Services.CommentService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;

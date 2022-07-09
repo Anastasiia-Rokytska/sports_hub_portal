@@ -5,17 +5,21 @@ import com.company.sportHubPortal.Repositories.CommentRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.logging.Logger;
 
 @Service
 public class CommentService {
     private final CommentRepository commentRepository;
+    Logger logger = Logger.getLogger(CommentService.class.getName());
 
     public CommentService(CommentRepository commentRepository) {
         this.commentRepository = commentRepository;
     }
 
     public void saveComment(Comment comment) {
-        System.out.println(comment);
+        logger.info(new Object() {
+        }.getClass().getEnclosingMethod().getName() + "() " + "Comment is saved");
         commentRepository.save(comment);
     }
 
@@ -28,7 +32,8 @@ public class CommentService {
     }
 
     public Comment getById(Long id) {
-        return commentRepository.findById(id).get();
+        Optional<Comment> comment = commentRepository.findById(id);
+        return comment.orElse(null);
     }
 
     public List<Comment> getByArticleId(Long id) {

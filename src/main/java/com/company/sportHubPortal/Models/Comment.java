@@ -44,7 +44,7 @@ public class Comment {
     private List<Likes> likes = new ArrayList<>();
 
 
-    public Comment(Long id, String content, Article article, User user, Comment parent, List<Comment> children, List<Likes> likes, Date date) {
+    public Comment(Long id, String content, Article article, User user, Comment parent, List<Comment> children, List<Likes> likes, Date date, boolean edited) {
         this.id = id;
         this.content = content;
         this.article = article;

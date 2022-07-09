@@ -193,19 +193,24 @@ export class AdminPanelArticlesComponent implements OnInit {
       }
       await this.http.post<String>("/api/article", body, httpOptions).subscribe(
         (data) => {
-          console.log(data)
+          Swal.fire({
+            icon: 'success',
+            title: 'Successfully saved',
+            showConfirmButton: false,
+            timer: 1500
+          });
+          this.emptyFields();
         },
         (error) => {
           console.log(error);
+          Swal.fire({
+            icon: 'warning',
+            title: 'Something went wrong',
+            showConfirmButton: false,
+            timer: 1500
+          })
         },
       );
-      this.emptyFields();
-      Swal.fire({
-        icon: 'success',
-        title: 'Successfully saved',
-        showConfirmButton: false,
-        timer: 1500
-      })
     }
     else{
       this.errorMessage = true;
