@@ -4,6 +4,7 @@ plugins {
 	id 'java'
 	id 'checkstyle'
 	id 'org.asciidoctor.jvm.convert' version '3.3.2'
+	id "org.sonarqube" version "3.4.0.2513"
 }
 
 
@@ -35,26 +36,32 @@ task deleteStaticFolder(type: Delete) {
 processResources.dependsOn('sportHub-frontend:build')
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-security'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'com.h2database:h2:2.1.210'
-    implementation 'checkstyle:checkstyle:5.0'
-    developmentOnly("org.springframework.boot:spring-boot-devtools")
-    runtimeOnly 'mysql:mysql-connector-java'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.springframework.security:spring-security-test'
-    implementation 'org.springframework.boot:spring-boot-configuration-processor'
-    implementation 'com.auth0:java-jwt:3.19.1'
-    implementation 'com.google.code.gson:gson:2.9.0'
-    implementation 'org.springframework.boot:spring-boot-starter-mail:2.6.7'
-    testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc:2.0.6.RELEASE'
-    implementation 'com.googlecode.json-simple:json-simple:1.1.1'
-    implementation 'org.springframework.security:spring-security-oauth2-client'
-    implementation 'org.springframework.security:spring-security-oauth2-jose'
-    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'com.h2database:h2:2.1.210'
+	implementation 'checkstyle:checkstyle:5.0'
+	developmentOnly("org.springframework.boot:spring-boot-devtools")
+	runtimeOnly 'mysql:mysql-connector-java:8.0.29'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.security:spring-security-test'
+	implementation 'org.springframework.boot:spring-boot-configuration-processor'
+	implementation 'com.auth0:java-jwt:3.19.1'
+	implementation 'com.google.code.gson:gson:2.9.0'
+	implementation 'org.springframework.boot:spring-boot-starter-mail:2.6.7'
+	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc:2.0.6.RELEASE'
+	implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+	implementation 'org.springframework.security:spring-security-oauth2-client'
+	implementation 'org.springframework.security:spring-security-oauth2-jose'
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+}
 
-
+sonarqube {
+	properties {
+		property "sonar.projectKey", "Anastasiia-Rokytska_sports_hub_portal"
+		property "sonar.organization", "anastasiia-rokytska"
+		property "sonar.host.url", "https://sonarcloud.io"
+	}
 }
 
 tasks.named('test') {

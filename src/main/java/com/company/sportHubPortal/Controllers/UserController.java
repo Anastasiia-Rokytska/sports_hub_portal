@@ -2,16 +2,21 @@ package com.company.sportHubPortal.Controllers;
 
 import com.company.sportHubPortal.Models.User;
 import com.company.sportHubPortal.Models.UserRole;
+import com.company.sportHubPortal.Models.EmailSender;
+import com.company.sportHubPortal.Models.EmailMessage;
+import com.company.sportHubPortal.Models.MessageType;
+import com.company.sportHubPortal.Models.GenerationLinkStrategy;
+import com.company.sportHubPortal.Models.VerifyLink;
+import com.company.sportHubPortal.Models.ResetPasswordLink;
 import com.company.sportHubPortal.Security.CustomUserDetails;
 import com.company.sportHubPortal.Services.EmailSenderService;
 import com.company.sportHubPortal.Services.JwtTokenService;
 import com.company.sportHubPortal.Services.UserService;
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
-import java.util.Date;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import net.bytebuddy.utility.RandomString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +33,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 @RestController
 @RequestMapping("/user")
@@ -35,10 +41,12 @@ public class UserController {
   public static final Pattern VALID_EMAIL_ADDRESS_REGEX =
       Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 
-
+  private GenerationLinkStrategy generatedLink;
   final UserService userService;
   final JwtTokenService jwtTokenService;
   final EmailSenderService emailSenderService;
+  private final JavaMailSenderImpl javaMailSender;
+  final ScheduledExecutorService executor;
   Logger logger = LoggerFactory.getLogger(UserController.class);
   private OAuth2AuthorizedClientService authorizedClientService;
   private Environment environment;
@@ -48,11 +56,14 @@ public class UserController {
   public UserController(UserService userService,
                         JwtTokenService jwtTokenService,
                         EmailSenderService emailSenderService,
+                        JavaMailSenderImpl javaMailSender,
+                        ScheduledExecutorService executor,
                         OAuth2AuthorizedClientService authorizedClientService,
-                        Environment environment
-  ) {
+                        Environment environment) {
     this.userService = userService;
     this.jwtTokenService = jwtTokenService;
+    this.javaMailSender = javaMailSender;
+    this.executor = executor;
     this.emailSenderService = emailSenderService;
     this.authorizedClientService = authorizedClientService;
     this.environment = environment;
@@ -92,7 +103,8 @@ public class UserController {
 
     user.setPassword(userService.encodePassword(user.getPassword()));
     user.setRole(UserRole.USER);
-    user.setVerificationCode(RandomString.make(64));
+    generatedLink = new VerifyLink();
+    user.setVerificationCode(generatedLink.generateLink());
     user.setEnabled(false);
     userService.save(user);
 
@@ -104,7 +116,12 @@ public class UserController {
         user.getVerificationCode()
     );
 
-    emailSenderService.sendTextMessage(user.getEmail(), "Verification code", message);
+    EmailMessage emailMessage = new EmailMessage(user.getEmail(), "Verification code", message, MessageType.VERIFY);
+    EmailSender emailSender = new EmailSender(javaMailSender, emailMessage);
+    emailSenderService.setEmailSender(emailSender);
+    if(!emailSenderService.sendEmailInSeparateThread()){
+      return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(null);
+    }
 
     logger.info(new Object() {
     }.getClass().getEnclosingMethod().getName() + "() " + " New user: " + user);
@@ -209,9 +226,8 @@ public class UserController {
     }
 
     logger.info("User is found");
-
-    String recoverPassHash =
-        userService.encodePassword(String.valueOf(new Date().getTime())).replaceAll("[^\\w ]", "");
+    generatedLink = new ResetPasswordLink(userService);
+    String recoverPassHash = generatedLink.generateLink();
     user.setRecoverPassHash(recoverPassHash);
 
     userService.save(user);
@@ -219,8 +235,12 @@ public class UserController {
     logger.info("new PassHash was saved");
 
     String emailText = "http://localhost:8000/reset-password/" + user.getRecoverPassHash();
-    emailSenderService.sendTextMessage(user.getEmail(), "Reset password", emailText);
-
+    EmailMessage emailMessage = new EmailMessage(user.getEmail(), "Reset password", emailText, MessageType.RESET_PASSWORD);
+    EmailSender emailSender = new EmailSender(javaMailSender, emailMessage);
+    emailSenderService.setEmailSender(emailSender);
+    if(!emailSenderService.sendEmailInSeparateThread()){
+      return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(null);
+    }
     logger.info("Email is sent");
 
     return ResponseEntity.ok(HttpStatus.OK);
@@ -262,5 +282,4 @@ public class UserController {
       return param;
     }
   }
-
 }

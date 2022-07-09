@@ -19,12 +19,9 @@ public class UserService {
   private final PasswordEncoder passwordEncoder;
   Logger logger = LoggerFactory.getLogger(UserController.class);
 
-
-  public UserService(UserRepository userRepository,
-                     PasswordEncoder passwordEncoder) {
+  public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
     this.userRepository = userRepository;
     this.passwordEncoder = passwordEncoder;
-
   }
 
 

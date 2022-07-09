@@ -1,0 +1,25 @@
+services:
+  database:
+    image: mysql
+    restart: always
+    ports:
+      - 3307:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: sporthubportal
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+      timeout: 20s
+      retries: 10
+  sport-hub-portal:
+    image: emilyyy0621/sport-hub-portal:latest
+    ports:
+      - 8000:8080
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://database:3306/sporthubportal
+      SPRING_DATASOURCE_PASSWORD: 1234
+      SPRING_JPA_HIBERNATE_DDL-AUTO: update
+      SERVER_PORT: 8080
+    depends_on:
+      database:
+        condition: service_healthy

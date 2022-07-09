@@ -1,6 +1,7 @@
 package com.company.sportHubPortal.Controllers;
 import com.company.sportHubPortal.Models.Category;
 import com.company.sportHubPortal.Models.Team;
+import com.company.sportHubPortal.POJO.TeamPOJO;
 import com.company.sportHubPortal.Services.CategoryServices.CategoryService;
 import com.company.sportHubPortal.Services.TeamService;
 import org.slf4j.Logger;
@@ -10,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -29,9 +31,18 @@ public class TeamController {
     }
 
     @PostMapping(consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
-    public ResponseEntity<Object> addNewTeam(@ModelAttribute Team team,
+    public ResponseEntity<Object> addNewTeam(@ModelAttribute TeamPOJO teamPOJO,
                                              @RequestPart String selectedCategory,
                                              @RequestPart String selectedSubCategory) {
+        Team team;
+        try {
+            team = new Team(teamPOJO.getName(), teamPOJO.getLocation(), teamPOJO.getLatitude(), teamPOJO.getLongitude());
+            if (!(teamPOJO.getIcon() == null)) team.setIcon(teamPOJO.getIcon());
+        } catch (Exception exception) {
+            logger.info(exception.getLocalizedMessage());
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY)
+                    .body("Incorrect input data");
+        }
         team.setAddedAt();
         if (teamService.teamByName(team.getName()) != null) {
             logger.warn("Team name must be unique: " + team);
