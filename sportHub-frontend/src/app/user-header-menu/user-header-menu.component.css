@@ -42,6 +42,6 @@ p{
 }
 a{
 
-  -moz-text-size-adjust: auto;
+  text-size-adjust: auto;
 
 }

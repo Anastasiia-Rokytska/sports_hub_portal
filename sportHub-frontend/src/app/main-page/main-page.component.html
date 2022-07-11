@@ -27,10 +27,10 @@
           <app-white-small-button textButton="More" (click)="goToArticle(activeArticle.id)"></app-white-small-button>
         </div>
 
-        <div class="buttons">
-          <a class="next" (click)="pageDown()">&#8249;</a>
-          <h5 style="margin-left: 15px; margin-right: 15px; text-decoration: none; display: inline-block;">  {{page}}  </h5>
-          <a class="next" (click)="pageUp()">&#8250;</a>
+        <div class="pages-controller">
+          <button class="arrows" (click)="pageDown()"><img src="../../assets/icons/arrowBack.svg"></button>
+          <h5 style="margin-left: 40px; margin-right: 40px; display: inline-block;">{{page}}</h5>
+          <button class="arrows revert" (click)="pageUp()"><img src="../../assets/icons/arrowBack.svg"></button>
         </div>
       </div>
     </div>

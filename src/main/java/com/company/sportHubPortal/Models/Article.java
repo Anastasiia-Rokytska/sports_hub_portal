@@ -17,9 +17,6 @@ public class Article {
 
     @Lob
     private String content;
-
-    /*    @ManyToOne
-        @JoinColumn(name = "author_id", nullable = false, referencedColumnName = "id")*/
     private String author;
 
     private boolean commentable;

@@ -5,6 +5,7 @@ import com.company.sportHubPortal.Services.ArticleServices.ArticleService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Date;
 import java.util.List;
 
 @RestController
@@ -19,6 +20,7 @@ public class ArticleController {
 
     @PostMapping()
     public ResponseEntity<Article> saveArticle(@RequestBody Article article) {
+        article.setPublishedDate(new Date(System.currentTimeMillis()));
         articleService.saveArticle(article);
         return ResponseEntity.ok(article);
     }

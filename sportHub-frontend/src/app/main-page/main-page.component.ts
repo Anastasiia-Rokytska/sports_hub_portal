@@ -47,6 +47,7 @@ export class MainPageComponent implements OnInit {
 
   constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router,
               private eventEmitterService: EventEmitterService) {
+
   }
 
 
@@ -61,6 +62,7 @@ export class MainPageComponent implements OnInit {
 
   refreshArticles(id: number = 0) {
     this.page = 1;
+    this.noArticles = true;
     this.getArticle(id).subscribe((response: any) => {
       console.log("response: ", response);
       if (response.length > 0) {
