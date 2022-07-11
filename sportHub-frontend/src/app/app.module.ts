@@ -6,6 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { HomeButtonComponent } from './home-button/home-button.component';
 import { HeaderComponent } from './header/header.component';
+import { FooterComponent } from "./footer/footer.component";
 import { SearchBlockComponent } from './search-block/search-block.component';
 import { ShareNetworksComponent } from './share-networks/share-networks.component';
 import { UserHeaderMenuComponent } from './user-header-menu/user-header-menu.component';
@@ -42,11 +43,13 @@ import { ClickOutsideModule } from "ng-click-outside";
 import { ArticleComponent } from "./article/article.component";
 import { EventEmitterService } from "./event-emitter.service";
 
+
 @NgModule({
   declarations: [
     AppComponent,
     HomeButtonComponent,
     HeaderComponent,
+    FooterComponent,
     SearchBlockComponent,
     ShareNetworksComponent,
     UserHeaderMenuComponent,
