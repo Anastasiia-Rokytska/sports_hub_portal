@@ -1,6 +1,6 @@
 package com.company.sportHubPortal.Security;
 
-import com.company.sportHubPortal.Database.User;
+import com.company.sportHubPortal.Models.User;
 import com.company.sportHubPortal.Repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;

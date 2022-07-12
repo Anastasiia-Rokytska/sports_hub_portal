@@ -1,6 +1,6 @@
 package com.company.sportHubPortal.Controllers;
-import com.company.sportHubPortal.Database.Category;
-import com.company.sportHubPortal.Database.Team;
+import com.company.sportHubPortal.Models.Category;
+import com.company.sportHubPortal.Models.Team;
 import com.company.sportHubPortal.POJO.TeamPOJO;
 import com.company.sportHubPortal.Services.CategoryServices.CategoryService;
 import com.company.sportHubPortal.Services.TeamService;
@@ -11,7 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashSet;
 import java.util.List;

@@ -3,6 +3,7 @@ import { InputComponent } from '../components/input/input/input.component';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router'
 import { Observable } from 'rxjs';
+import Swal from "sweetalert2";
 
 
 @Component({
@@ -63,6 +64,12 @@ export class SignupComponent implements OnInit {
     this.response.subscribe(res => {
       this.hideMessages()
       this.verifyAccount = "display:block"
+      Swal.fire({
+        title: 'Verify',
+        text: 'You are successful registered Please verify your account via email\'',
+        icon: 'success',
+        timer: 5000,
+      })
       console.log(res)
     }, error => {
       if(error.status == 400){
@@ -72,6 +79,15 @@ export class SignupComponent implements OnInit {
       else if(error.status == 409){
         this.hideMessages()
         this.errorEmail = "display:block"
+      }
+      else if(error.status == 503){
+        this.hideMessages()
+        Swal.fire({
+          title: 'Error...',
+          text: 'Unfortunately, this function is currently unavailable, please try again later\'',
+          icon: 'error',
+          timer: 5000,
+        })
       }
       else{
         this.hideMessages()

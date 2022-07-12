@@ -1,6 +1,6 @@
 package com.company.sportHubPortal.Configs;
 
-import com.company.sportHubPortal.Database.Category;
+import com.company.sportHubPortal.Models.Category;
 import com.company.sportHubPortal.Services.CategoryServices.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

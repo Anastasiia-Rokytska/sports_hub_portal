@@ -1,4 +1,4 @@
-package com.company.sportHubPortal.Database;
+package com.company.sportHubPortal.Models;
 
 import org.springframework.lang.NonNull;
 import org.springframework.web.multipart.MultipartFile;

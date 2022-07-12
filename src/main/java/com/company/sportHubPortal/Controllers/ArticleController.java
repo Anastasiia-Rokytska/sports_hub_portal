@@ -1,17 +1,12 @@
 package com.company.sportHubPortal.Controllers;
 
-import com.company.sportHubPortal.Database.Article;
-import com.company.sportHubPortal.Database.Category;
+import com.company.sportHubPortal.Models.Article;
 import com.company.sportHubPortal.Services.ArticleServices.ArticleService;
-import com.company.sportHubPortal.Services.CategoryServices.CategoryService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/article")
@@ -25,6 +20,7 @@ public class ArticleController {
 
     @PostMapping()
     public ResponseEntity<Article> saveArticle(@RequestBody Article article) {
+        article.setPublishedDate(new Date(System.currentTimeMillis()));
         articleService.saveArticle(article);
         return ResponseEntity.ok(article);
     }

@@ -4,7 +4,247 @@
   <div class="image-card">
     <div class="article-image">
       <img src="../../assets/images/userPhoto.jpg" width=100% height="400px" alt="">
-      <h4 [innerHtml]="article.content" style="font-family: 'Open Sans';"></h4>
+      <h4 class="article-text" [innerHtml]="article.content" style="font-family: 'Open Sans'; padding-top: 3%;"></h4>
+      <div class="comments-block" *ngIf="!showRepliedMessages && article.commentable">
+        <h2 *ngIf="article.commentable">Comments({{comments.length}})</h2>
+        <div class="comments">
+          <div class="comments editor">
+            <div class="row" *ngIf="edit">
+              <h2 style="margin-bottom:1%;">Before editing "{{editCommentContent.content}}"</h2>
+            </div>
+            <div class="row">
+              <div class="col-sm-1">
+                <img src="{{userPhoto}}" alt="user photo">
+              </div>
+              <div class="col-sm-11">
+              <textarea type="text" id="main" class="md-textarea md-textarea-auto form-control"
+                        [(ngModel)]="commentContent"></textarea>
+                <div class="row" *ngIf="commentContent.length > 0">
+                  <div class="col-sm-1 offset-10">
+                    <button (click)="cancelComment()">Cancel</button>
+                  </div>
+                  <div class="col-sm-1" *ngIf="!edit">
+                    <button (click)="publishComment()">Submit</button>
+                  </div>
+                  <div class="col-sm-1" *ngIf="edit">
+                    <button (click)="submitEdit(commentContent)">Edit</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <ul class="main-comments-section" style="padding-left:1%">
+            <h2 *ngIf="noComments" id="noCommentsSign">No comments yet. Be the first one</h2>
+            <li *ngFor="let com of comments; let i = index">
+              <div class="row">
+                <div class="col-sm-1">
+                  <img src="{{com.user.photo}}" alt="user photo">
+                </div>
+                <div class="col-sm-11">
+                  <div class="content">
+                    <h4 style="font-weight: 700">{{com.user.firstName}} {{com.user.lastName}}</h4>
+                    <h6 style="display: inline">{{com.publishedDate}}<h6 style="font-weight: 700; display: inline" *ngIf="com.edited">, EDITED</h6></h6>
+                    <p>{{com.content}}</p>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-2 reactions">
+                      <button><img class="like-dislike" src="../../assets/icons/likeButton.svg"
+                                   (click)="addReaction(com, true)" *ngIf="userLiked(com)"></button>
+                      <button><img class="like-dislike revert" src="../../assets/icons/dislikeButton.svg"
+                                   (click)="addReaction(com, true)" *ngIf="!userLiked(com)"></button>
+                      <a style="color: gray">{{com.amountOfLikes}}</a>
+                    </div>
+                    <div class="col-sm-2 reactions">
+                      <button><img class="like-dislike revert" src="../../assets/icons/likeButton.svg"
+                                   (click)="addReaction(com, false)" *ngIf="userDisliked(com)"></button>
+                      <button><img class="like-dislike" src="../../assets/icons/dislikeButton.svg"
+                                   (click)="addReaction(com, false)" *ngIf="!userDisliked(com)"></button>
+                      <a style="color: gray">{{com.amountOfDislikes}}</a>
+                    </div>
+                    <div class="col-sm-1 offset-1 reactions">
+                      <button (click)="showAllReplies(com)">Replies({{com.children.length}})</button>
+                    </div>
+                    <div class="col-sm-1 offset-3 reactions" *ngIf="com.user.id == userId">
+                      <button (click)="editComment(com)">Edit</button>
+                    </div>
+                    <div class="col-sm-1 reactions" *ngIf="com.user.id == userId">
+                      <button (click)="manageRepliedBlock(i)" *ngIf="!hideReplyTextArea[i]">Reply</button>
+                      <button (click)="manageRepliedBlock(i)" *ngIf="hideReplyTextArea[i] && reply.length == 0">Cancel</button>
+                    </div>
+                    <div class="col-sm-1 reactions" *ngIf="com.user.id == userId">
+                      <button (click)="deleteComment(com.id)">Delete</button>
+                    </div>
+                    <div class="col-sm-1 offset-5 reactions" *ngIf="com.user.id != userId">
+                      <button (click)="manageRepliedBlock(i)" *ngIf="!hideReplyTextArea[i]">Reply</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="row" *ngIf="hideReplyTextArea[i]" style="margin-top: 1%;padding-left: 2%;">
+                  <div class="col-sm-1 offset-1">
+                    <img src="{{userPhoto}}" alt="user photo">
+                  </div>
+                  <div class="col-sm-10">
+                    <textarea type="text" id="reply" class="md-textarea md-textarea-auto form-control"
+                              [(ngModel)]="reply"></textarea>
+                    <div class="row" *ngIf="reply.length > 0">
+                      <div class="col-sm-1 offset-10">
+                        <button (click)="manageRepliedBlock(i)">Cancel</button>
+                      </div>
+                      <div class="col-sm-1">
+                        <button (click)="publishReply(com)">Submit</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="child-comment" style="padding-left: 10%">
+                  <ul class="child">
+                    <li *ngFor="let child of com.children | slice:0:2">
+                      <div class="row">
+                        <div class="col-sm-1">
+                          <img src="{{child.user.photo}}" alt="user photo">
+                        </div>
+                        <div class="col-sm-11">
+                          <div class="content">
+                            <h4 style="font-weight: 700">{{child.user.firstName}} {{child.user.lastName}}</h4>
+                            <h6 style="display: inline">{{child.publishedDate}}<h6 style="font-weight: 700; display: inline" *ngIf="child.edited">, EDITED</h6></h6>
+                            <p>{{child.content}}</p>
+                          </div>
+                          <div class="row">
+                            <div class="col-sm-2 reactions">
+                              <button><img class="like-dislike" src="../../assets/icons/likeButton.svg"
+                                           (click)="addReaction(child, true)" *ngIf="userLiked(child)"></button>
+                              <button><img class="like-dislike revert" src="../../assets/icons/dislikeButton.svg"
+                                           (click)="addReaction(child, true)" *ngIf="!userLiked(child)"></button>
+                              <a style="color: gray">{{child.amountOfLikes}}</a>
+                            </div>
+                            <div class="col-sm-2 reactions">
+                              <button><img class="like-dislike revert" src="../../assets/icons/likeButton.svg"
+                                           (click)="addReaction(child, false)" *ngIf="userDisliked(child)"></button>
+                              <button><img class="like-dislike" src="../../assets/icons/dislikeButton.svg"
+                                           (click)="addReaction(child, false)" *ngIf="!userDisliked(child)"></button>
+                              <a style="color: gray">{{child.amountOfDislikes}}</a>
+                            </div>
+                            <div class="col-sm-1 offset-6 reactions" *ngIf="child.user.id == userId">
+                              <button (click)="editComment(child)">Edit</button>
+                            </div>
+                            <div class="col-sm-1 reactions" *ngIf="child.user.id == userId">
+                              <button (click)="deleteComment(child.id)">Delete</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="comments-block" *ngIf="showRepliedMessages">
+        <button class="like-dislike" (click)="hideAllReplies()"><img src="../../assets/icons/arrowBack.svg"></button>
+        <h2 style="margin-top: 2px;">  Replies for '{{repliedComment.user.firstName}} {{repliedComment.user.lastName}}'
+          comment({{repliedComment.children.length}})</h2>
+        <div class="comments editor">
+          <div class="row" *ngIf="edit">
+            <h2 style="margin-bottom: 1%">Before editing: "{{editCommentContent.content}}"</h2>
+          </div>
+          <div class="row">
+            <div class="col-sm-1">
+              <img src="{{userPhoto}}" alt="user photo">
+            </div>
+            <div class="col-sm-11">
+              <textarea type="text" id="form7" class="md-textarea md-textarea-auto form-control"
+                        [(ngModel)]="reply"></textarea>
+              <div class="row" *ngIf="reply.length > 0">
+                <div class="col-sm-1 offset-10">
+                  <button (click)="cancelComment()">Cancel</button>
+                </div>
+                <div class="col-sm-1" *ngIf="!edit">
+                  <button (click)="publishReply(repliedComment)">Submit</button>
+                </div>
+                <div class="col-sm-1" *ngIf="edit">
+                  <button (click)="submitEdit(reply)">Edit</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="comments">
+          <ul class="main-comments-section" style="padding-left:1%; padding-top: 1%">
+            <div class="row">
+              <div class="col-sm-1">
+                <img src="{{repliedComment.user.photo}}" alt="user photo">
+              </div>
+              <div class="col-sm-11">
+                <div class="content">
+                  <h4 style="font-weight: 700">{{repliedComment.user.firstName}} {{repliedComment.user.lastName}}</h4>
+                  <h6 style="display: inline">{{repliedComment.publishedDate}}<h6 style="font-weight: 700; display: inline" *ngIf="repliedComment.edited">, EDITED</h6></h6>
+                  <p>{{repliedComment.content}}</p>
+                </div>
+                <div class="row">
+                  <div class="col-sm-2 reactions">
+                    <button><img class="like-dislike" src="../../assets/icons/likeButton.svg"
+                                 (click)="addReaction(repliedComment, true)" *ngIf="userLiked(repliedComment)"></button>
+                    <button><img class="like-dislike revert" src="../../assets/icons/dislikeButton.svg"
+                                 (click)="addReaction(repliedComment, true)" *ngIf="!userLiked(repliedComment)"></button>
+                    <a style="color: gray">{{repliedComment.amountOfLikes}}</a>
+                  </div>
+                  <div class="col-sm-2 reactions">
+                    <button><img class="like-dislike revert" src="../../assets/icons/likeButton.svg"
+                                 (click)="addReaction(repliedComment, false)" *ngIf="userDisliked(repliedComment)"></button>
+                    <button><img class="like-dislike" src="../../assets/icons/dislikeButton.svg"
+                                 (click)="addReaction(repliedComment, false)" *ngIf="!userDisliked(repliedComment)"></button>
+                    <a style="color: gray">{{repliedComment.amountOfDislikes}}</a>
+                  </div>
+                  <div class="col-sm-1 offset-6 reactions" *ngIf="repliedComment.user.id == userId">
+                    <button (click)="editComment(repliedComment)">Edit</button>
+                  </div>
+                  <div class="col-sm-1 reactions" *ngIf="repliedComment.user.id == userId">
+                    <button (click)="deleteComment(repliedComment.id)">Delete</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <li *ngFor="let com of repliedComment.children" style="padding-left: 10%">
+              <div class="row">
+                <div class="col-sm-1">
+                  <img src="{{com.user.photo}}" alt="user photo">
+                </div>
+                <div class="col-sm-11">
+                  <div class="content">
+                    <h4 style="font-weight: 700">{{com.user.firstName}} {{com.user.lastName}}</h4>
+                    <h6 style="display: inline">{{com.publishedDate}}<h6 style="font-weight: 700; display: inline" *ngIf="com.edited">, EDITED</h6></h6>
+                    <p>{{com.content}}</p>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-2 reactions">
+                      <button><img class="like-dislike" src="../../assets/icons/likeButton.svg"
+                                   (click)="addReaction(com, true)" *ngIf="userLiked(com)"></button>
+                      <button><img class="like-dislike revert" src="../../assets/icons/dislikeButton.svg"
+                                   (click)="addReaction(com, true)" *ngIf="!userLiked(com)"></button>
+                      <a style="color: gray">{{com.amountOfLikes}}</a>
+                    </div>
+                    <div class="col-sm-2 reactions">
+                      <button><img class="like-dislike revert" src="../../assets/icons/likeButton.svg"
+                                   (click)="addReaction(com, false)" *ngIf="userDisliked(com)"></button>
+                      <button><img class="like-dislike" src="../../assets/icons/dislikeButton.svg"
+                                   (click)="addReaction(com, false)" *ngIf="!userDisliked(com)"></button>
+                      <a style="color: gray">{{com.amountOfDislikes}}</a>
+                    </div>
+                    <div class="col-sm-1 offset-6 reactions" *ngIf="com.user.id == userId">
+                      <button (click)="editComment(com)">Edit</button>
+                    </div>
+                    <div class="col-sm-1 reactions" *ngIf="repliedComment.user.id == userId">
+                      <button (click)="deleteComment(com.id)">Delete</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
     <div class="card" style="width: 350px;height: 200px;">
       <div class="card-body">
@@ -18,5 +258,4 @@
       </div>
     </div>
   </div>
-
 </div>

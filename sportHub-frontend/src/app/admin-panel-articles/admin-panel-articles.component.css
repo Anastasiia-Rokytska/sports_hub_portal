@@ -12,7 +12,7 @@ li {
   float: left;
 }
 
-li a {
+li button {
   display: block;
   color: #b2b2b2;
   text-align: center;
@@ -20,7 +20,7 @@ li a {
   text-decoration: none;
 }
 
-li a:hover {
+li button:hover {
   background-color: transparent;
   color: #E02232;
 }
@@ -34,7 +34,7 @@ select{
   color: #b2b2b2;
 }
 .add-article{
-  margin-left: 25%;
+  margin-left: 20%;
   width: 50%;
 }
 
@@ -118,4 +118,17 @@ textarea:focus-visible{
   z-index: 10;
 }
 
+button {
+  background: none!important;
+  border: none;
+  padding: 0!important;
+  font-family: 'Open Sans', sans-serif;
+  text-decoration: none;
+  cursor: pointer;
+  margin-right:15px;
+  height: 30px;
+}
 
+.comment-switcher h6{
+  display: inline-block;
+}

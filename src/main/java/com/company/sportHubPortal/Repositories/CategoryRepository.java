@@ -1,6 +1,6 @@
 package com.company.sportHubPortal.Repositories;
 
-import com.company.sportHubPortal.Database.Category;
+import com.company.sportHubPortal.Models.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

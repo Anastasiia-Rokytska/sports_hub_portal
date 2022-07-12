@@ -1,6 +1,6 @@
 package com.company.sportHubPortal.Security;
 
-import com.company.sportHubPortal.Database.User;
+import com.company.sportHubPortal.Models.User;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;

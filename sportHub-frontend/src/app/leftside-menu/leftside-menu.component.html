@@ -1,9 +1,9 @@
 <div class="leftside-menu" (clickOutside)="clickedOut()">
   <div class="sidenav">
     <ul class="menuItems firstMenu">
-      <li *ngFor="let item of menuItems">
+      <li *ngFor="let item of menuItems" (click)="showSecondMenu(item.id, item.name)">
         <input type="radio" id="{{item.id}}" name="firstMenu"/>
-        <label for="{{item.id}}" class="button" (click)="showSecondMenu(item.id, item.name)">{{item.name}}</label>
+        <label for="{{item.id}}" class="button">{{item.name}}</label>
       </li>
       <li>
         <div class="row justify-content-evenly" >
@@ -30,18 +30,18 @@
 
   <div class="sidenavSecondMenu" *ngIf="secondMenuVisible">
     <ul class="menuItems secondMenu">
-      <li *ngFor="let secondItem of secondMenuItems">
+      <li *ngFor="let secondItem of secondMenuItems" (click)="showThirdMenu(secondItem.id, secondItem.name)">
         <input type="radio" id="{{secondItem.id}}" name="secondMenu" />
-        <label for="{{secondItem.id}}" class="button" (click)="showThirdMenu(secondItem.id, secondItem.name)">{{secondItem.name}}</label>
+        <label for="{{secondItem.id}}" class="button">{{secondItem.name}}</label>
       </li>
     </ul>
   </div>
 
   <div class="sidenavThirdMenu" *ngIf="thirdMenuVisible">
     <ul class="menuItems secondMenu">
-      <li *ngFor="let thirdItem of thirdMenuItems">
+      <li *ngFor="let thirdItem of thirdMenuItems" (click)="handleThirdMenuClick(thirdItem.id, thirdItem.name)">
         <input type="radio" id="{{thirdItem.id}}" name="thirdMenu"/>
-        <label for="{{thirdItem.id}}" class="button" (click)="handleThirdMenuClick(thirdItem.id, thirdItem.name)">{{thirdItem.name}}</label>
+        <label for="{{thirdItem.id}}" class="button">{{thirdItem.name}}</label>
       </li>
     </ul>
   </div>

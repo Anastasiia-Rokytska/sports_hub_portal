@@ -1,9 +1,9 @@
 package com.company.sportHubPortal.Services;
 
 import com.company.sportHubPortal.Controllers.UserController;
-import com.company.sportHubPortal.Database.AuthProvider;
-import com.company.sportHubPortal.Database.User;
-import com.company.sportHubPortal.Database.UserRole;
+import com.company.sportHubPortal.Models.AuthProvider;
+import com.company.sportHubPortal.Models.User;
+import com.company.sportHubPortal.Models.UserRole;
 import com.company.sportHubPortal.Repositories.UserRepository;
 import java.util.Map;
 import org.slf4j.Logger;
@@ -19,12 +19,9 @@ public class UserService {
   private final PasswordEncoder passwordEncoder;
   Logger logger = LoggerFactory.getLogger(UserController.class);
 
-
-  public UserService(UserRepository userRepository,
-                     PasswordEncoder passwordEncoder) {
+  public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
     this.userRepository = userRepository;
     this.passwordEncoder = passwordEncoder;
-
   }
 
 

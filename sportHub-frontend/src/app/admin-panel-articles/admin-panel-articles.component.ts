@@ -45,6 +45,7 @@ export class AdminPanelArticlesComponent implements OnInit {
   userName: string = '';
   userEmail: string = '';
   userId: string = '';
+  commentable: boolean = true;
 
   ngOnInit(): void {
     this.getUser().subscribe((response: any) => {
@@ -62,6 +63,7 @@ export class AdminPanelArticlesComponent implements OnInit {
       this.categories = data;
     });
   }
+
   getUser(){
     const httpOptions = {
       headers: new HttpHeaders({'Content-Type': 'application/json', 'Accept': 'application/json'})
@@ -98,8 +100,15 @@ export class AdminPanelArticlesComponent implements OnInit {
   handleCategoryChanges(category: MenuItem){
     this.selectedCategoryId = category.id;
     this.title = category.name;
-    this.refreshSubcategories(this.selectedCategoryId);
-
+    if(category.id == 0){
+      this.selectedSubcategoryId = -1;
+      this.selectedTeamId = -1;
+      this.subcategories = [];
+      this.teams = [];
+    }
+    else{
+      this.refreshSubcategories(this.selectedCategoryId);
+    }
   }
 
   handleTeamChanges(value: number){
@@ -166,8 +175,6 @@ export class AdminPanelArticlesComponent implements OnInit {
     this.caption = Array.from(this.inputs)[1].value;
     this.publishedDate = new Date().toLocaleDateString();
     if(this.articleContent.length > 0 && this.headline.length > 0 && this.caption.length > 0){
-      let tempDate: string[] = this.publishedDate.split('.');
-      this.publishedDate = tempDate[2] + '-' + tempDate[1] + '-' + tempDate[0];
       this.errorMessage = false;
       this.previewMode = this.articleContent.replace(/\n+?/g, '<br>');
 
@@ -180,25 +187,30 @@ export class AdminPanelArticlesComponent implements OnInit {
         categoriesTemp.push({id: this.selectedTeamId});
       }
 
-      let body = JSON.stringify({commentable: true, content:this.previewMode, caption: this.caption, title: this.headline, language: this.language, publishedDate: this.publishedDate, categories:categoriesTemp, author: this.userId});
+      let body = JSON.stringify({commentable: this.commentable, content:this.previewMode, caption: this.caption, title: this.headline, language: this.language, categories:categoriesTemp, author: this.userId});
       const httpOptions = {
         headers: new HttpHeaders({'Content-Type': 'application/json', 'Accept': 'application/json'})
       }
       await this.http.post<String>("/api/article", body, httpOptions).subscribe(
         (data) => {
-          console.log(data)
+          Swal.fire({
+            icon: 'success',
+            title: 'Successfully saved',
+            showConfirmButton: false,
+            timer: 1500
+          });
+          this.emptyFields();
         },
         (error) => {
           console.log(error);
+          Swal.fire({
+            icon: 'warning',
+            title: 'Something went wrong',
+            showConfirmButton: false,
+            timer: 1500
+          })
         },
       );
-      this.emptyFields();
-      Swal.fire({
-        icon: 'success',
-        title: 'Successfully saved',
-        showConfirmButton: false,
-        timer: 1500
-      })
     }
     else{
       this.errorMessage = true;
