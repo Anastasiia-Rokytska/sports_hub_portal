@@ -1,0 +1,33 @@
+2022-07-12 14:16:52.947  INFO 16300 --- [restartedMain] c.c.s.SportHubPortalApplication          : Starting SportHubPortalApplication using Java 18 on DESKTOP-PJKNEPO with PID 16300 (C:\Users\HAPPY\Desktop\SS\sports_hub_portal\build\classes\java\main started by HAPPY in C:\Users\HAPPY\Desktop\SS\sports_hub_portal)
+2022-07-12 14:16:52.954 DEBUG 16300 --- [restartedMain] c.c.s.SportHubPortalApplication          : Running with Spring Boot v2.6.6, Spring v5.3.18
+2022-07-12 14:16:52.955  INFO 16300 --- [restartedMain] c.c.s.SportHubPortalApplication          : No active profile set, falling back to 1 default profile: "default"
+2022-07-12 14:16:53.038  INFO 16300 --- [restartedMain] o.s.b.devtools.restart.ChangeableUrls    : The Class-Path manifest attribute in C:\Users\HAPPY\.gradle\caches\modules-2\files-2.1\commons-logging\commons-logging\1.0.3\760c711c71588bc273d3e56d196d720a7678cd93\commons-logging-1.0.3.jar referenced one or more files that do not exist: file:/C:/Users/HAPPY/.gradle/caches/modules-2/files-2.1/commons-logging/commons-logging/1.0.3/760c711c71588bc273d3e56d196d720a7678cd93/log4j.jar,file:/C:/Users/HAPPY/.gradle/caches/modules-2/files-2.1/commons-logging/commons-logging/1.0.3/760c711c71588bc273d3e56d196d720a7678cd93/log4j-core.jar
+2022-07-12 14:16:53.038  INFO 16300 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2022-07-12 14:16:53.038  INFO 16300 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2022-07-12 14:16:54.973  INFO 16300 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-07-12 14:16:55.057  INFO 16300 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 73 ms. Found 4 JPA repository interfaces.
+2022-07-12 14:16:56.176  INFO 16300 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8000 (http)
+2022-07-12 14:16:56.193  INFO 16300 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-07-12 14:16:56.194  INFO 16300 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.60]
+2022-07-12 14:16:56.354  INFO 16300 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-07-12 14:16:56.355  INFO 16300 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 3316 ms
+2022-07-12 14:16:56.408  INFO 16300 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2022-07-12 14:16:56.976  INFO 16300 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2022-07-12 14:16:56.990  INFO 16300 --- [restartedMain] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:mysql://localhost:3306/sporthubportal'
+2022-07-12 14:16:57.351  INFO 16300 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-07-12 14:16:57.500  INFO 16300 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.7.Final
+2022-07-12 14:16:57.769  INFO 16300 --- [restartedMain] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2022-07-12 14:16:58.002  INFO 16300 --- [restartedMain] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2022-07-12 14:17:00.534  INFO 16300 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-07-12 14:17:00.544  INFO 16300 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-07-12 14:17:01.097  WARN 16300 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-07-12 14:17:01.154 DEBUG 16300 --- [restartedMain] c.c.s.S.CustomAuthorizationFilter        : Filter 'customAuthorizationFilter' configured for use
+2022-07-12 14:17:01.311  INFO 16300 --- [restartedMain] c.c.s.Configs.EmailSenderConfiguration   : JavaMailSender is successfully configured
+2022-07-12 14:17:03.478  INFO 16300 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will not secure any request
+2022-07-12 14:17:03.745  INFO 16300 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page: class path resource [static/index.html]
+2022-07-12 14:17:03.971  INFO 16300 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2022-07-12 14:17:04.032  INFO 16300 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8000 (http) with context path ''
+2022-07-12 14:17:04.044  INFO 16300 --- [restartedMain] c.c.s.SportHubPortalApplication          : Started SportHubPortalApplication in 11.603 seconds (JVM running for 12.76)
+2022-07-12 14:17:06.233  INFO 16300 --- [http-nio-8000-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-07-12 14:17:06.234  INFO 16300 --- [http-nio-8000-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2022-07-12 14:17:06.235  INFO 16300 --- [http-nio-8000-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
