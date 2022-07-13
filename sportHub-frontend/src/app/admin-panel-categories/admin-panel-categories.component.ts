@@ -13,12 +13,12 @@ interface MenuItem {
 }
 
 @Component({
-  selector: 'admin-panel',
-  templateUrl: './admin-panel.component.html',
-  styleUrls: ['./admin-panel.component.css']
+  selector: 'admin-panel-categories',
+  templateUrl: './admin-panel-categories.component.html',
+  styleUrls: ['./admin-panel-categories.component.css']
 })
 
-export class AdminPanelComponent implements OnInit {
+export class AdminPanelCategoriesComponent implements OnInit {
   // variables to show and hide the menu
   secondMenuVisible: boolean = false;
   thirdMenuVisible: boolean = false;
