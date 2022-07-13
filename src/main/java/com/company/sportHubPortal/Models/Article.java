@@ -1,7 +1,13 @@
 package com.company.sportHubPortal.Models;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.persistence.*;
+import javax.sql.rowset.serial.SerialBlob;
+import java.io.IOException;
+import java.sql.Blob;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -29,6 +35,9 @@ public class Article {
 
     private String caption;
 
+    @Lob
+    private Blob icon;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "article_category",
             joinColumns = @JoinColumn(name = "article_id"),
@@ -36,7 +45,7 @@ public class Article {
     private Set<Category> categories = new HashSet<>();
 
 
-    public Article(String title, String content, String author, boolean commentable, String language, Date publishedDate, String caption, Set<Category> categories) {
+    public Article(String title, String content, String author, boolean commentable, String language, Date publishedDate, String caption, Set<Category> categories, MultipartFile icon) throws IOException, SQLException {
         this.title = title;
         this.content = content;
         this.author = author;
@@ -45,13 +54,28 @@ public class Article {
         this.publishedDate = publishedDate;
         this.caption = caption;
         this.categories = categories;
+        this.icon = new SerialBlob(icon.getBytes());
     }
 
-    public Article(String title, String content, String user, boolean commentable) {
+    public Article(String title, String content, String author, boolean commentable, String language, Date publishedDate, String caption, Set<Category> categories, Blob icon){
+        this.title = title;
+        this.content = content;
+        this.author = author;
+        this.commentable = commentable;
+        this.language = language;
+        this.publishedDate = publishedDate;
+        this.caption = caption;
+        this.categories = categories;
+        this.icon = icon;
+    }
+
+    public Article(String title, String content, String user, boolean commentable, String language, String caption) {
         this.title = title;
         this.content = content;
         this.author = user;
         this.commentable = commentable;
+        this.language = language;
+        this.caption = caption;
     }
 
     public Article() {
@@ -133,5 +157,14 @@ public class Article {
 
     public Long getId() {
         return id;
+    }
+
+    public byte[] getIcon() throws SQLException, IOException {
+        if (icon == null) return null;
+        return icon.getBinaryStream().readAllBytes();
+    }
+
+    public void setIcon(MultipartFile icon) throws IOException, SQLException {
+        this.icon = new SerialBlob(icon.getBytes());
     }
 }

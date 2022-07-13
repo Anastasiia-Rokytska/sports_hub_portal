@@ -62,3 +62,39 @@ button {
   -webkit-transform: scaleX(-1);
   transform: scaleX(-1);
 }
+
+ul{
+  list-style-type: none;
+  margin:0;
+  padding:0;
+  overflow: hidden;
+}
+li{
+  margin-top:1%;
+}
+
+.articles-buttons{
+  border: 0.5px solid transparent;
+  display: block;
+  width: 100%;
+}
+
+.articles-buttons:hover{
+  text-decoration: none;
+  border: 0.5px solid #E02232;
+}
+
+.third-section{
+  margin-top: 3%;
+}
+
+.most-commented{
+  width: 100%;
+  display:block;
+  border: 0.5px solid lightgray;
+}
+
+.most-commented:hover{
+  text-decoration: none;
+  border: 0.5px solid #E02232;
+}
