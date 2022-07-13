@@ -5,26 +5,8 @@ import {Comment} from "../classes/Comment";
 import {Like} from "../classes/Like";
 import {User} from "../classes/User";
 import Swal from "sweetalert2";
+import {Article} from "../classes/Article";
 
-
-interface MenuItem {
-  id: number;
-  hidden: boolean;
-  name: string;
-  parentId: number;
-}
-
-interface Article {
-  id: number;
-  title: string;
-  caption: string;
-  author: string;
-  categories: MenuItem[];
-  content: string;
-  publishedDate: string;
-  commentable: boolean;
-  language: string;
-}
 
 @Component({
   selector: 'article-component',
@@ -36,17 +18,7 @@ export class ArticleComponent implements OnInit {
     headers: new HttpHeaders({'Content-Type': 'application/json', 'Accept': 'application/json'})
   }
   id: string | null | undefined;
-  article: Article = {
-    id: 0,
-    title: '',
-    caption: '',
-    author: '',
-    categories: [],
-    content: '',
-    publishedDate: '',
-    commentable: false,
-    language: ''
-  };
+  article = new Article(0, "","","",[],"","",false,"",null)
   userId: number = 0;
   comments: Comment[] = [];
   noComments: boolean = false;
@@ -69,10 +41,10 @@ export class ArticleComponent implements OnInit {
 
   ngOnInit(): void {
     this.getArticle().subscribe((response: any) => {
-      this.article = response;
       if (response == null) {
         this.router.navigate(['/'], {relativeTo: this.route});
       }
+      this.article = new Article(response.id, response.title, response.caption, response.author, response.categories, response.content, response.publishedDate, response.commentable, response.language, response.icon);
     }, (error) => {
       console.log("Error: ", error.error)
     });
