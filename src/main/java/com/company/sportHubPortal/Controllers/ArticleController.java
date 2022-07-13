@@ -59,7 +59,7 @@ public class ArticleController {
         }
         article.setCategories(categories);
         articleService.saveArticle(article);
-        logger.info("Article saved "+article.getTitle());
+        logger.info("Article saved");
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 
