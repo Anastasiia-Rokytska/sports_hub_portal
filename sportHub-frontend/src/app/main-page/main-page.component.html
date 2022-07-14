@@ -11,26 +11,81 @@
 <app-header></app-header>
 <leftside-menu></leftside-menu>
 <div class="main-body">
-  <h6 style="padding-top:4%; margin-left: 25%; position:relative; color: #E02232">{{relativePath}}</h6>
+  <h4 style="padding-top:4%; margin-left: 25%; position:relative; color: #E02232">{{relativePath}}</h4>
   <div class="article-preview" *ngIf="!noArticles">
     <div class="image-card">
       <div class="article-image">
-        <img src="../../assets/images/userPhoto.jpg" width=100% height="400px" alt="">
+        <img [src]="activeArticle.icon" width=100% height="400px">
+        <div *ngIf="categorySorted" style="margin-top:3%">
+          <ul>
+            <li *ngFor="let item of allArticles | slice:1: allArticles.length">
+              <button class="articles-buttons" (click)="goToArticle(item.id)">
+                <div class="row" style="width: 100%">
+                  <div class="col-sm-4">
+                    <img [src]="item.icon" width=100% height="120px">
+                  </div>
+                  <div class="col-sm-8">
+                    <h3 style="font-weight: 700">{{item.title}}</h3>
+                    <p>{{item.content.split('.')[0]}}</p>
+                  </div>
+                </div>
+              </button>
+            </li>
+          </ul>
+          <div class="row third-section">
+            <div class="col-sm-6">
+              <h3>MOST POPULAR</h3>
+              <ul style="margin-top: 2%;">
+                <li *ngFor="let item of allArticles | slice:0:3">
+                  <button class="most-commented" (click)="goToArticle(item.id)">
+                    <div class="row" style="width: 100%">
+                      <div class="col-sm-4">
+                        <img [src]="item.icon" width=100% height="70px">
+                      </div>
+                      <div class="col-sm-8">
+                        <h3 style="font-weight: 700">{{item.title}}</h3>
+                        <p>{{item.content.split('.')[0]}}</p>
+                      </div>
+                    </div>
+                  </button>
+                </li>
+              </ul>
+            </div>
+            <div class="col-sm-6" >
+              <h3>MOST COMMENTED</h3>
+              <ul style="margin-top: 2%;">
+                <li *ngFor="let item of allArticles | slice:0:3">
+                  <button class="most-commented" (click)="goToArticle(item.id)">
+                    <div class="row" style="width: 100%">
+                      <div class="col-sm-4">
+                        <img [src]="item.icon" width=100% height="70px">
+                      </div>
+                      <div class="col-sm-8">
+                        <h3 style="font-weight: 700">{{item.title}}</h3>
+                        <p>{{item.content.split('.')[0]}}</p>
+                      </div>
+                    </div>
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="card" style="width: 350px;height: 200px;">
         <div class="card-body">
-          <h6 style="color:gray; font-size: 10px">Published on {{activeArticle.publishedDate}}</h6>
+          <h6 style="color:gray; font-size: 10px">Published / {{activeArticle.publishedDate}}</h6>
           <br>
-          <h6 style="color:#E02232;font-size: 14px">{{activeArticle.caption}}</h6>
+          <h6 style="color:#E02232;font-size: 14px">Article by {{activeArticle.author}}</h6>
           <br>
           <h5 style="font-size:20px; color:black;">{{activeArticle.title}}</h5>
           <app-white-small-button textButton="More" (click)="goToArticle(activeArticle.id)"></app-white-small-button>
         </div>
 
-        <div class="buttons">
-          <a class="next" (click)="pageDown()">&#8249;</a>
-          <h5 style="margin-left: 15px; margin-right: 15px; text-decoration: none; display: inline-block;">  {{page}}  </h5>
-          <a class="next" (click)="pageUp()">&#8250;</a>
+        <div class="pages-controller" *ngIf="!categorySorted">
+          <button class="arrows" (click)="pageDown()"><img src="../../assets/icons/arrowBack.svg"></button>
+          <h5 style="margin-left: 40px; margin-right: 40px; display: inline-block;">{{page}}</h5>
+          <button class="arrows revert" (click)="pageUp()"><img src="../../assets/icons/arrowBack.svg"></button>
         </div>
       </div>
     </div>

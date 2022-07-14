@@ -148,4 +148,8 @@ h4{
 
 #teamHub{
   margin-top: 75px;
+ }
+
+app-footer{
+  height: auto;
 }

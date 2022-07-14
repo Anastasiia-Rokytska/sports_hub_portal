@@ -23,8 +23,6 @@ public class ArticlePOJO {
         this.icon = icon;
     }
 
-
-
     public String getTitle() {
         return title;
     }
