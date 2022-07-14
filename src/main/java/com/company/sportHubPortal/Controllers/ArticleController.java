@@ -37,6 +37,8 @@ public class ArticleController {
         this.articleService = articleService;
         this.teamService = teamService;
         this.notificationService = notificationService;
+        this.categoryService = categoryService;
+    }
 
     @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<Object> saveArticle(@ModelAttribute ArticlePOJO articlePOJO,
