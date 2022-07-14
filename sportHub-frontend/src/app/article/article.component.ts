@@ -19,6 +19,7 @@ interface Article{
   publishedDate: string;
   commentable: boolean;
   language: string;
+  photo: string
 }
 
 @Component({
@@ -29,7 +30,7 @@ interface Article{
 export class ArticleComponent implements OnInit {
 
   id: string | null | undefined;
-  article: Article = {id: 0, title: '', caption: '', author: '', categories: [], content: '', publishedDate: '', commentable: false, language: ''};
+  article: Article = {id: 0, title: '', caption: '', author: '', categories: [], content: '', publishedDate: '', commentable: false, language: '', photo: "assets/images/userPhoto.jpg"};
 
   constructor(
     private http: HttpClient, private route: ActivatedRoute, private router: Router
@@ -43,6 +44,7 @@ export class ArticleComponent implements OnInit {
       if (response == null){
         this.router.navigate(['/'], {relativeTo: this.route});
       }
+      if (this.article.photo == null) this.article.photo = "assets/images/userPhoto.jpg"
     }, (error) => {
       console.log("Error: ", error.error)
     });

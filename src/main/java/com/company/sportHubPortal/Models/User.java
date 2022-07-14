@@ -1,17 +1,17 @@
 package com.company.sportHubPortal.Models;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.lang.NonNull;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "user")
+@JsonIgnoreProperties({"subscriptions"})
 public class User {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -33,6 +33,22 @@ public class User {
   private AuthProvider authProvider;
 
   public User() {
+  }
+
+  @ManyToMany
+  @JoinTable(name = "subscriptions",
+          joinColumns = @JoinColumn(name = "user"),
+          inverseJoinColumns = @JoinColumn(name = "team"))
+  private Set<Team> subscriptions = new HashSet<>();
+
+  public User(String firstName, String lastName, String email, String password, UserRole role, boolean enabled, Set<Team> subscriptions) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.email = email;
+    this.password = password;
+    this.enabled = enabled;
+    this.role = role;
+    this.subscriptions = subscriptions;
   }
 
   public User(@NonNull String firstName, @NonNull String lastName, @NonNull String email,
@@ -65,6 +81,18 @@ public class User {
   public User(String email, String password) {
     this.email = email;
     this.password = password;
+  }
+
+  public void addSubscription(Team team) {
+    subscriptions.add(team);
+  }
+
+  public void removeSubscription(Team team) {
+    subscriptions.remove(team);
+  }
+
+  public void addSubscriptions(List<Team> teams){
+    subscriptions.addAll(teams);
   }
 
   public String getFirstName() {
@@ -127,6 +155,9 @@ public class User {
     this.enabled = enabled;
   }
 
+  public Set<Team> getSubscriptions() {
+    return subscriptions;
+  }
 
   @Override
   public String toString() {

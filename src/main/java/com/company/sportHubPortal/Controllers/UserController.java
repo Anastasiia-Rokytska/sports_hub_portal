@@ -48,8 +48,6 @@ public class UserController {
   private final JavaMailSenderImpl javaMailSender;
   final ScheduledExecutorService executor;
   Logger logger = LoggerFactory.getLogger(UserController.class);
-  private OAuth2AuthorizedClientService authorizedClientService;
-  private Environment environment;
 
 
   @Autowired
@@ -57,16 +55,12 @@ public class UserController {
                         JwtTokenService jwtTokenService,
                         EmailSenderService emailSenderService,
                         JavaMailSenderImpl javaMailSender,
-                        ScheduledExecutorService executor,
-                        OAuth2AuthorizedClientService authorizedClientService,
-                        Environment environment) {
+                        ScheduledExecutorService executor) {
     this.userService = userService;
     this.jwtTokenService = jwtTokenService;
     this.javaMailSender = javaMailSender;
     this.executor = executor;
     this.emailSenderService = emailSenderService;
-    this.authorizedClientService = authorizedClientService;
-    this.environment = environment;
   }
 
   public static boolean validate(String emailStr) {
@@ -144,7 +138,7 @@ public class UserController {
   }
 
   @GetMapping("/own_information")
-  public ResponseEntity<Object> userByHimself() {
+  public ResponseEntity<User> userByHimself() {
     UserDetails userDetails =
         (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     String email = userDetails.getUsername();
@@ -152,7 +146,7 @@ public class UserController {
     if (user == null) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }
-    return ResponseEntity.ok(new Gson().toJson(user));
+    return ResponseEntity.ok(user);
   }
 
   @PostMapping("/check-old-pass")

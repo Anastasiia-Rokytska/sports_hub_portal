@@ -21,6 +21,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.header.writers.StaticHeadersWriter;
 
 
 @Configuration
@@ -32,8 +33,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   private final CustomUserDetailsService userDetailsService;
   private final PasswordEncoder passwordEncoder;
   private final JwtTokenService jwtTokenService;
-  private final Environment env;
-  private final UserService userService;
   private final OAuthLoginSuccessHandler oAuthLoginSuccessHandler;
   Logger logger = LoggerFactory.getLogger(UserController.class);
 
@@ -41,20 +40,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   public SecurityConfig(CustomUserDetailsService userDetailsService,
                         PasswordEncoder passwordEncoder,
                         JwtTokenService jwtTokenService,
-                        Environment env,
-                        UserService userService,
                         OAuthLoginSuccessHandler oAuthLoginSuccessHandler) {
     this.userDetailsService = userDetailsService;
     this.passwordEncoder = passwordEncoder;
     this.jwtTokenService = jwtTokenService;
-    this.env = env;
-    this.userService = userService;
     this.oAuthLoginSuccessHandler = oAuthLoginSuccessHandler;
   }
 
 
   @Override
   protected void configure(HttpSecurity httpSecurity) throws Exception {
+    httpSecurity.headers().addHeaderWriter(
+            new StaticHeadersWriter("Access-Control-Allow-Origin", "*"));
+
     CustomAuthenticationFilter authenticationFilter = new CustomAuthenticationFilter(
         authenticationManagerBean(),
         jwtTokenService,
@@ -124,5 +122,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   public AccessDeniedHandler accessDeniedHandler() {
     return new CustomAccessDeniedHandler();
   }
-
 }

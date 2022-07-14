@@ -41,6 +41,8 @@ import { AdminPanelArticlesComponent } from "./admin-panel-articles/admin-panel-
 import { ClickOutsideModule } from "ng-click-outside";
 import { ArticleComponent } from "./article/article.component";
 import { EventEmitterService } from "./event-emitter.service";
+import { NotificationComponent } from './notification/notification.component';
+import { TeamHubComponent } from './team-hub/team-hub.component';
 
 @NgModule({
   declarations: [
@@ -73,7 +75,9 @@ import { EventEmitterService } from "./event-emitter.service";
     AllTeamsComponent,
     DropDownComponent,
     AdminPanelArticlesComponent,
-    ArticleComponent
+    ArticleComponent,
+    NotificationComponent,
+    TeamHubComponent
   ],
   imports: [
     BrowserModule,

@@ -36,5 +36,25 @@
       <app-large-button textButton="Change password" (click)="changePassword()"></app-large-button>
     </div>
 
+    <div class="main_part" id="teamHub" *ngIf="show_teamHub">
+      <div class="followed_teams_list">
+        <div class="list_title">
+          <h4>YOUR FOLLOWED TEAMS</h4>
+          <ul class="teams">
+            <li *ngFor="let team of teams" class="team">
+              <img [src]='team.image' class="team_image">
+              <div class="team_info">
+                <h5>{{team.name}}</h5>
+                <h6>{{team.description}}</h6>
+              </div>
+            </li>
+          </ul>
+          <div class="teams_footer">
+            <span class="footer_text">Manage Teams List</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>

@@ -2,10 +2,15 @@ package com.company.sportHubPortal.Services;
 
 import com.company.sportHubPortal.Controllers.UserController;
 import com.company.sportHubPortal.Models.AuthProvider;
+import com.company.sportHubPortal.Models.Team;
 import com.company.sportHubPortal.Models.User;
 import com.company.sportHubPortal.Models.UserRole;
 import com.company.sportHubPortal.Repositories.UserRepository;
+
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -58,10 +63,13 @@ public class UserService {
     return true;
   }
 
+  public User getUserWithSubscriptions(String email){
+    return userRepository.getUserWithSubscriptions(email);
+  }
+
   public User getById(Integer id) {
     return userRepository.getUserById(id);
   }
-
 
   public User getByRecoverPassHash(String uri) {
     return userRepository.getUserByRecoverPassHash(uri);

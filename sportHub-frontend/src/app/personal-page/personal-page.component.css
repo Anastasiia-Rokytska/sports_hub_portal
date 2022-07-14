@@ -1,5 +1,5 @@
 .page{
-  margin-top: 75px;
+  margin-top: 160px;
   display: flex;
   justify-content: space-between;
 }
@@ -40,4 +40,112 @@ app-large-button{
 }
 app-header{
   height: auto;
+}
+
+ul{
+  list-style-type: none;
+}
+
+.team_image{
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin: 0 20px 0 20px;
+  object-fit: cover;
+}
+
+h4{
+  display: flex;
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 19px;
+  color: #434C5D;
+  margin: 0;
+  align-content: center;
+  width: 284px;
+  height: 48px;
+  margin: auto;
+  align-items: center;
+  padding-left: 20px;
+  background: #F2F2F2;
+}
+
+.followed_teams_list{
+  background: #F8F8F8;
+  width: 284px;
+  height: 370px;
+}
+
+.team{
+  width: 284px;
+  height: 89px;
+  display: flex;
+  align-items: center;
+  border-top: #F2F2F2 1px solid;
+  border-bottom: #F2F2F2 1px solid;
+}
+
+.teams{
+  padding: 0;
+  overflow-y: scroll;
+  height: 266px;
+  scrollbar-width: none;
+  margin-bottom: 0;
+}
+
+.teams::-webkit-scrollbar {
+  display: none;
+}
+
+.team_info{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 20px 0px 15px 0px;
+  height: 89px;
+}
+
+.team_info h5{
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 19px;
+  color: #2B2F43;
+  margin: 0;
+  text-align: start;
+}
+
+.team_info h6{
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 19px;
+  color: #7F7B7B;
+  margin: 0;
+  text-align: start;
+}
+
+.footer_text{
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 17px;
+  color: #D72130;
+  padding-left: 20px;
+}
+
+.teams_footer{
+  display: flex;
+  height: 54px;
+  align-items: center;
+  border-top: #F2F2F2 1px solid;
+}
+
+#teamHub{
+  margin-top: 75px;
 }

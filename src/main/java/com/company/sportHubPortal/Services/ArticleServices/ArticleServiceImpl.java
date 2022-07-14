@@ -1,9 +1,12 @@
 package com.company.sportHubPortal.Services.ArticleServices;
 
 import com.company.sportHubPortal.Models.Article;
+import com.company.sportHubPortal.Models.Team;
 import com.company.sportHubPortal.Repositories.ArticleRepository;
 import com.company.sportHubPortal.Services.CategoryServices.CategoryService;
+import com.company.sportHubPortal.Services.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,18 +14,19 @@ import java.util.stream.Collectors;
 
 @Service
 public class ArticleServiceImpl implements ArticleService {
-    private ArticleRepository articleRepository;
+    private final ArticleRepository articleRepository;
+    private final TeamService teamService;
 
     @Autowired
     private CategoryService categoryService;
 
-    public ArticleServiceImpl(ArticleRepository articleRepository) {
+    public ArticleServiceImpl(ArticleRepository articleRepository, TeamService teamService) {
         this.articleRepository = articleRepository;
+        this.teamService = teamService;
     }
 
     @Override
     public Article saveArticle(Article article) {
-        System.out.println(article.getCategories());
         return articleRepository.save(article);
     }
 
@@ -42,5 +46,17 @@ public class ArticleServiceImpl implements ArticleService {
                 .filter(article -> article.getCategories().stream()
                         .anyMatch(category -> category.getId().equals(id)))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Article> getAllArticlesByTeam(Integer id, Integer page) {
+        Team team = teamService.teamById(id);
+        if (team == null) return null;
+        return articleRepository.findAllByTeamOrderByPublishedDate(team, PageRequest.of(page - 1, 5));
+    }
+
+    @Override
+    public Article getFullArticle(Article article) {
+        return articleRepository.findFullArticle(article);
     }
 }

@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import {Component, Input, OnInit, ViewChildren} from '@angular/core';
+import {Component, OnInit, ViewChildren} from '@angular/core';
 import {InputComponent} from "../components/input/input/input.component";
 import Swal from "sweetalert2";
 
@@ -12,6 +12,10 @@ interface MenuItem{
 
 interface category{
   id: number;
+}
+interface team{
+  id: number;
+  name: string
 }
 
 @Component({
@@ -33,7 +37,7 @@ export class AdminPanelArticlesComponent implements OnInit {
   selectedSubcategoryId: number = -1;
   selectedTeamId: number = -1;
   subcategories: MenuItem[] = [];
-  teams: MenuItem[] = [];
+  teams: Array<team> = new Array();
   articleContent: string = '';
   preview: boolean = false;
   previewMode: string = '';
@@ -78,9 +82,9 @@ export class AdminPanelArticlesComponent implements OnInit {
   async refreshTeams(subcategoryId: number){
     this.selectedTeamId= -1;
     if(this.selectedSubcategoryId != -1) {
-      await this.http.get<MenuItem[]>('/api/category/parent/visible/' + subcategoryId).subscribe(data => {
-        this.teams = data;
-      });
+      await this.http.get<Array<team>>('/team/' + subcategoryId).subscribe(data => {
+        this.teams = data
+      })
     }
   }
 
@@ -102,7 +106,8 @@ export class AdminPanelArticlesComponent implements OnInit {
 
   }
 
-  handleTeamChanges(value: number){
+  handleTeamChanges(value: any){
+    console.log("value = ", value)
     this.selectedTeamId = value;
   }
 
@@ -171,16 +176,13 @@ export class AdminPanelArticlesComponent implements OnInit {
       this.errorMessage = false;
       this.previewMode = this.articleContent.replace(/\n+?/g, '<br>');
 
+      console.log("selected_team_id: ", this.selectedTeamId)
       let categoriesTemp: category[] = [];
       categoriesTemp.push({id: this.selectedCategoryId});
       if(this.selectedSubcategoryId > 0){
         categoriesTemp.push({id: this.selectedSubcategoryId});
       }
-      if(this.selectedTeamId > 0){
-        categoriesTemp.push({id: this.selectedTeamId});
-      }
-
-      let body = JSON.stringify({commentable: true, content:this.previewMode, caption: this.caption, title: this.headline, language: this.language, publishedDate: this.publishedDate, categories:categoriesTemp, author: this.userId});
+      let body = JSON.stringify({commentable: true, content:this.previewMode, caption: this.caption, title: this.headline, language: this.language, publishedDate: this.publishedDate, categories:categoriesTemp, author: this.userId, team: {id: this.selectedTeamId}});
       const httpOptions = {
         headers: new HttpHeaders({'Content-Type': 'application/json', 'Accept': 'application/json'})
       }

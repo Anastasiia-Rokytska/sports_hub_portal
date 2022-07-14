@@ -1,0 +1,18 @@
+<div class="notification" *ngIf="showNotification">
+  <div class="notification_header">
+    <h5>TEAM HUB</h5>
+    <div class="image_wrapper">
+      <img src="assets/icons/closeWindow.svg" (click)="hideNotification()">
+    </div>
+  </div>
+  <div class="notification_content">
+    <img [src]="icon" class="team_icon">
+    <div class="message">
+      <h5 class="team_name">{{teamName}}</h5>
+      <p class="message_text">{{message}}</p>
+    </div>
+  </div>
+  <div class="notification_footer">
+    <button type="button" class="view_article" (click)="viewArticle()">View</button>
+  </div>
+</div>

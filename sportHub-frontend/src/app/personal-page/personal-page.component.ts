@@ -21,11 +21,13 @@ export class PersonalPageComponent implements OnInit {
   lastName: string = ''
   email: string = ''
   image: string = 'assets/images/userPhoto.jpg'
+  teams: Array<any> = new Array()
 
   public class: Array<string> = ["active_segment", "nonactive_segment", "nonactive_segment", "nonactive_segment"]
 
   public personal_show = true
   public pass_show = false
+  public show_teamHub = false
 
 
   ngOnInit(): void {
@@ -54,6 +56,7 @@ export class PersonalPageComponent implements OnInit {
   show_personal() {
     this.personal_show = true
     this.pass_show = false
+    this.show_teamHub = false
 
     this.class[0] = "active_segment"
     this.class[1] = "nonactive_segment"
@@ -62,6 +65,7 @@ export class PersonalPageComponent implements OnInit {
   show_pass() {
     this.personal_show = false
     this.pass_show = true
+    this.show_teamHub = false
 
     this.class[0] = "nonactive_segment"
     this.class[1] = "active_segment"
@@ -71,6 +75,48 @@ export class PersonalPageComponent implements OnInit {
   }
 
   teamHub() {
+    this.personal_show = false
+    this.pass_show = false
+    this.show_teamHub = true
+    this.class = ["nonactive_segment", "nonactive_segment", "nonactive_segment", "active_segment"]
+    // this.teams.push({
+    //   image: 'assets/images/userPhoto.jpg',
+    //   name: 'Los Angeles Lakers',
+    //   description: 'Simple team'
+    // })
+    // this.teams.push({
+    //   image: 'assets/images/userPhoto.jpg',
+    //   name: 'Los Angeles Lakers1',
+    //   description: 'Simple team'
+    // })
+    // this.teams.push({
+    //   image: 'assets/images/userPhoto.jpg',
+    //   name: 'Los Angeles Lakers2',
+    //   description: 'Simple team'
+    // })
+    // this.teams.push({
+    //   image: 'assets/images/userPhoto.jpg',
+    //   name: 'Los Angeles Lakers3',
+    //   description: 'Simple team'
+    // })
+    // this.teams.push({
+    //   image: 'assets/images/userPhoto.jpg',
+    //   name: 'Los Angeles Lakers4',
+    //   description: 'Simple team'
+    // })
+    this.loadSubscriptions().then((response: any) => {
+      console.log(response)
+      response.forEach((team: any) => {
+        this.teams.push({
+          image: 'data:image/png;base64,' + team.icon,
+          name: team.name
+        })
+      });
+    })
+  }
+
+  loadSubscriptions(){
+    return this.http.get('/team/subscriptions').toPromise()
   }
 
 
