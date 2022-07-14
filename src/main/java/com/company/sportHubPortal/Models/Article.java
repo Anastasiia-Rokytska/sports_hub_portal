@@ -129,15 +129,6 @@ public class Article {
         this.icon = icon;
     }
 
-    public Article(String title, String content, String user, boolean commentable, String language, String caption) {
-        this.title = title;
-        this.content = content;
-        this.author = user;
-        this.commentable = commentable;
-        this.language = language;
-        this.caption = caption;
-    }
-
     public Article() {
 
     }
