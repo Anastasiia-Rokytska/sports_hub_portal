@@ -75,6 +75,7 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
           } catch (Exception e) {
             logger.error(e.getMessage());
+            response.sendRedirect("/login");
           }
         } else {
           logger.error("Access token is null");
