@@ -12,7 +12,7 @@ li {
   float: left;
 }
 
-li a {
+li button {
   display: block;
   color: #b2b2b2;
   text-align: center;
@@ -20,7 +20,7 @@ li a {
   text-decoration: none;
 }
 
-li a:hover {
+li button:hover {
   background-color: transparent;
   color: #E02232;
 }
@@ -34,7 +34,7 @@ select{
   color: #b2b2b2;
 }
 .add-article{
-  margin-left: 25%;
+  margin-left: 20%;
   width: 50%;
 }
 
@@ -118,4 +118,61 @@ textarea:focus-visible{
   z-index: 10;
 }
 
+button {
+  background: none!important;
+  border: none;
+  padding: 0!important;
+  font-family: 'Open Sans', sans-serif;
+  text-decoration: none;
+  cursor: pointer;
+  margin-right:15px;
+  height: 30px;
+}
 
+.comment-switcher h6{
+  display: inline-block;
+}
+
+.team_logo{
+  width: 770px;
+  height: 400px;
+  background: rgba(196, 196, 196, 0.08);
+  border: 1px dashed #D1D1D1;
+}
+.team_logo{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 18px;
+}
+.team_logo img{
+  width: 60px;
+}
+.logo_text{
+  width: 130px;
+  height: 20px;
+
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 19px;
+}
+#red_text{
+  color: #D72130;
+}
+
+.loaded_image img{
+  height: 350px;
+}
+
+.loaded_image{
+  width: 770px;
+  height: 400px;
+  background: rgba(196, 196, 196, 0.08);
+  border: 1px dashed #D1D1D1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

@@ -20,7 +20,7 @@
         </li>
         <ul class="articles_wrapper">
           <li class="articles" *ngFor="let article of team.articles" (click)="viewArticle(article.id)">
-            <img class="article_photo" [src]="article.photo" *ngIf="article.photo != null">
+            <img class="article_photo" [src]="'data:image/png;base64,' + article.icon" *ngIf="article.icon != null">
             <div class="article_text">
               <h3 class="title">{{article.title}}</h3>
               <p class="text">{{formatText(article.content)}}</p>

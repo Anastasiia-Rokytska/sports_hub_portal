@@ -13,8 +13,6 @@ import org.springframework.core.io.ResourceLoader;
 import javax.sql.rowset.serial.SerialBlob;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.HashSet;
 
 @Configuration
 public class TeamConfiguration {

@@ -9,10 +9,6 @@ interface MenuItem{
   name: string;
   parentId: number;
 }
-
-interface category{
-  id: number;
-}
 interface team{
   id: number;
   name: string
@@ -37,7 +33,7 @@ export class AdminPanelArticlesComponent implements OnInit {
   selectedSubcategoryId: number = -1;
   selectedTeamId: number = -1;
   subcategories: MenuItem[] = [];
-  teams: Array<team> = new Array();
+  teams: Array<team> = [];
   articleContent: string = '';
   preview: boolean = false;
   previewMode: string = '';
@@ -49,6 +45,9 @@ export class AdminPanelArticlesComponent implements OnInit {
   userName: string = '';
   userEmail: string = '';
   userId: string = '';
+  commentable: boolean = true;
+  imageUrl: string | undefined;
+  image = '../../../assets/images/userPhoto.jpg';
 
   ngOnInit(): void {
     this.getUser().subscribe((response: any) => {
@@ -102,12 +101,18 @@ export class AdminPanelArticlesComponent implements OnInit {
   handleCategoryChanges(category: MenuItem){
     this.selectedCategoryId = category.id;
     this.title = category.name;
-    this.refreshSubcategories(this.selectedCategoryId);
-
+    if(category.id == 0){
+      this.selectedSubcategoryId = -1;
+      this.selectedTeamId = -1;
+      this.subcategories = [];
+      this.teams = [];
+    }
+    else{
+      this.refreshSubcategories(this.selectedCategoryId);
+    }
   }
 
-  handleTeamChanges(value: any){
-    console.log("value = ", value)
+  handleTeamChanges(value: number){
     this.selectedTeamId = value;
   }
 
@@ -122,7 +127,12 @@ export class AdminPanelArticlesComponent implements OnInit {
       this.showPreview();
     }
     else{
-      this.errorMessage = true;
+      Swal.fire({
+        icon: 'warning',
+        title: 'Headline, caption and content are required!',
+        showConfirmButton: false,
+        timer: 1500
+      })
     }
   }
 
@@ -163,7 +173,8 @@ export class AdminPanelArticlesComponent implements OnInit {
     this.selectedSubcategoryId = -1;
     this.selectedTeamId = -1;
     this.title = 'Choose category';
-    this.errorMessage = false;
+    this.imageUrl = undefined;
+    this.image = '../../../assets/images/userPhoto.jpg';
   }
 
   async saveArticle(){
@@ -175,36 +186,56 @@ export class AdminPanelArticlesComponent implements OnInit {
       this.publishedDate = tempDate[2] + '-' + tempDate[1] + '-' + tempDate[0];
       this.errorMessage = false;
       this.previewMode = this.articleContent.replace(/\n+?/g, '<br>');
-
-      console.log("selected_team_id: ", this.selectedTeamId)
-      let categoriesTemp: category[] = [];
-      categoriesTemp.push({id: this.selectedCategoryId});
-      if(this.selectedSubcategoryId > 0){
-        categoriesTemp.push({id: this.selectedSubcategoryId});
+      let formData = new FormData();
+      formData.append('title', Array.from(this.inputs)[0].value);
+      formData.append('content', this.previewMode);
+      formData.append('author', this.userName);
+      formData.append('commentable', this.commentable.toString());
+      formData.append('language', this.language);
+      formData.append('caption', Array.from(this.inputs)[1].value);
+      if(this.imageUrl != undefined){
+        formData.append('icon', this.imageUrl);
       }
-      let body = JSON.stringify({commentable: true, content:this.previewMode, caption: this.caption, title: this.headline, language: this.language, publishedDate: this.publishedDate, categories:categoriesTemp, author: this.userId, team: {id: this.selectedTeamId}});
-      const httpOptions = {
-        headers: new HttpHeaders({'Content-Type': 'application/json', 'Accept': 'application/json'})
-      }
-      await this.http.post<String>("/api/article", body, httpOptions).subscribe(
-        (data) => {
-          console.log(data)
+      formData.append('selectedCategory', this.selectedCategoryId.toString());
+      formData.append('selectedSubCategory', this.selectedSubcategoryId.toString());
+      formData.append('selectedTeam', this.selectedTeamId.toString());
+      await this.http.post("/api/article", formData).subscribe(
+        () => {
+          Swal.fire({
+            icon: 'success',
+            title: 'Successfully saved',
+            showConfirmButton: false,
+            timer: 1500
+          });
+          this.emptyFields();
         },
         (error) => {
           console.log(error);
+          Swal.fire({
+            icon: 'warning',
+            title: 'Something went wrong',
+            showConfirmButton: false,
+            timer: 1500
+          })
         },
       );
-      this.emptyFields();
+    }
+    else{
       Swal.fire({
-        icon: 'success',
-        title: 'Successfully saved',
+        icon: 'warning',
+        title: 'Headline, caption and content are required',
         showConfirmButton: false,
         timer: 1500
       })
     }
-    else{
-      this.errorMessage = true;
-    }
 
+  }
+  loadPhoto(event: any){
+    let reader = new FileReader()
+    this.imageUrl = event.target.files[0]
+    reader.readAsDataURL(event.target.files[0])
+    reader.onload = (readerEvent: any) => {
+      this.image = readerEvent.target.result
+    }
   }
 }

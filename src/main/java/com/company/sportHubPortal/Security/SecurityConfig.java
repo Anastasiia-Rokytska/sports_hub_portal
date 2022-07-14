@@ -50,9 +50,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Override
   protected void configure(HttpSecurity httpSecurity) throws Exception {
-    httpSecurity.headers().addHeaderWriter(
-            new StaticHeadersWriter("Access-Control-Allow-Origin", "*"));
-
     CustomAuthenticationFilter authenticationFilter = new CustomAuthenticationFilter(
         authenticationManagerBean(),
         jwtTokenService,
@@ -102,6 +99,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     httpSecurity.authorizeRequests()
             .antMatchers(HttpMethod.POST, "/team").hasAuthority("ADMIN")
+            .and()
+            .exceptionHandling().accessDeniedHandler(accessDeniedHandler());
+
+    //Articles and categories
+    httpSecurity.authorizeRequests()
+            .antMatchers(HttpMethod.POST, "/api/article").hasAuthority("ADMIN")
+            .antMatchers(HttpMethod.PUT, "/api/article/**").hasAuthority("ADMIN")
+            .antMatchers(HttpMethod.DELETE, "/api/article/**").hasAuthority("ADMIN")
+            .antMatchers(HttpMethod.POST, "/api/category").hasAuthority("ADMIN")
+            .antMatchers(HttpMethod.PUT, "/api/category/**").hasAuthority("ADMIN")
+            .antMatchers(HttpMethod.DELETE, "/api/category/**").hasAuthority("ADMIN")
             .and()
             .exceptionHandling().accessDeniedHandler(accessDeniedHandler());
   }

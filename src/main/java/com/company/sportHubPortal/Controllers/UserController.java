@@ -138,7 +138,7 @@ public class UserController {
   }
 
   @GetMapping("/own_information")
-  public ResponseEntity<User> userByHimself() {
+  public ResponseEntity<Object> userByHimself() {
     UserDetails userDetails =
         (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     String email = userDetails.getUsername();

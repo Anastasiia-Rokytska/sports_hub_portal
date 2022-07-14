@@ -21,7 +21,7 @@ export class PersonalPageComponent implements OnInit {
   lastName: string = ''
   email: string = ''
   image: string = 'assets/images/userPhoto.jpg'
-  teams: Array<any> = new Array()
+  teams: Array<any> = []
 
   public class: Array<string> = ["active_segment", "nonactive_segment", "nonactive_segment", "nonactive_segment"]
 
@@ -58,8 +58,7 @@ export class PersonalPageComponent implements OnInit {
     this.pass_show = false
     this.show_teamHub = false
 
-    this.class[0] = "active_segment"
-    this.class[1] = "nonactive_segment"
+    this.class = ["active_segment", "nonactive_segment", "nonactive_segment", "nonactive_segment"]
   }
 
   show_pass() {
@@ -67,8 +66,7 @@ export class PersonalPageComponent implements OnInit {
     this.pass_show = true
     this.show_teamHub = false
 
-    this.class[0] = "nonactive_segment"
-    this.class[1] = "active_segment"
+    this.class = ["nonactive_segment", "active_segment", "nonactive_segment", "nonactive_segment"]
   }
 
   mySurveys() {
@@ -79,31 +77,7 @@ export class PersonalPageComponent implements OnInit {
     this.pass_show = false
     this.show_teamHub = true
     this.class = ["nonactive_segment", "nonactive_segment", "nonactive_segment", "active_segment"]
-    // this.teams.push({
-    //   image: 'assets/images/userPhoto.jpg',
-    //   name: 'Los Angeles Lakers',
-    //   description: 'Simple team'
-    // })
-    // this.teams.push({
-    //   image: 'assets/images/userPhoto.jpg',
-    //   name: 'Los Angeles Lakers1',
-    //   description: 'Simple team'
-    // })
-    // this.teams.push({
-    //   image: 'assets/images/userPhoto.jpg',
-    //   name: 'Los Angeles Lakers2',
-    //   description: 'Simple team'
-    // })
-    // this.teams.push({
-    //   image: 'assets/images/userPhoto.jpg',
-    //   name: 'Los Angeles Lakers3',
-    //   description: 'Simple team'
-    // })
-    // this.teams.push({
-    //   image: 'assets/images/userPhoto.jpg',
-    //   name: 'Los Angeles Lakers4',
-    //   description: 'Simple team'
-    // })
+    this.teams = []
     this.loadSubscriptions().then((response: any) => {
       console.log(response)
       response.forEach((team: any) => {
@@ -135,7 +109,7 @@ export class PersonalPageComponent implements OnInit {
       return
     }
 
-    this.checkOldPass(old_pass).subscribe((response: any) => {
+    this.checkOldPass(old_pass).subscribe(() => {
 
       if (new_pass.length < 8) {
         Swal.fire({
@@ -164,7 +138,7 @@ export class PersonalPageComponent implements OnInit {
       let new_response = this.http.patch<string>('/user/change-password', body, httpOptions)
       console.log(new_response)
 
-      new_response.subscribe(res => {
+      new_response.subscribe(() => {
 
 
         Swal.fire({

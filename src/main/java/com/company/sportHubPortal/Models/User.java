@@ -1,10 +1,8 @@
 package com.company.sportHubPortal.Models;
 
 import javax.persistence.*;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.lang.NonNull;
-
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;

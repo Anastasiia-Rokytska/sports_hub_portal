@@ -6,6 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { HomeButtonComponent } from './home-button/home-button.component';
 import { HeaderComponent } from './header/header.component';
+import { FooterComponent } from "./footer/footer.component";
 import { SearchBlockComponent } from './search-block/search-block.component';
 import { ShareNetworksComponent } from './share-networks/share-networks.component';
 import { UserHeaderMenuComponent } from './user-header-menu/user-header-menu.component';
@@ -20,7 +21,7 @@ import { LeftsideMenuComponent } from "./leftside-menu/leftside-menu.component";
 import { PersonalPageComponent } from './personal-page/personal-page.component';
 import { SegmentComponent } from './components/segment/segment/segment.component';
 import { MainPageComponent } from './main-page/main-page.component';
-import { AdminPanelComponent} from "./admin-panel/admin-panel.component";
+import { AdminPanelCategoriesComponent} from "./admin-panel-categories/admin-panel-categories.component";
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { HeaderAdminComponent } from './admin/header-admin/header-admin.component';
@@ -49,6 +50,7 @@ import { TeamHubComponent } from './team-hub/team-hub.component';
     AppComponent,
     HomeButtonComponent,
     HeaderComponent,
+    FooterComponent,
     SearchBlockComponent,
     ShareNetworksComponent,
     UserHeaderMenuComponent,
@@ -63,7 +65,7 @@ import { TeamHubComponent } from './team-hub/team-hub.component';
     PersonalPageComponent,
     SegmentComponent,
     MainPageComponent,
-    AdminPanelComponent,
+    AdminPanelCategoriesComponent,
     ForgotPasswordComponent,
     ResetPasswordComponent,
     HeaderAdminComponent,

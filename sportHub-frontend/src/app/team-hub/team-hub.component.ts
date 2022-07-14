@@ -6,7 +6,7 @@ interface Article{
   id: number,
   title: string,
   content: string,
-  photo: string
+  icon: string
 }
 interface Team{
   id: number,
@@ -25,11 +25,11 @@ interface Subscription{
 })
 export class TeamHubComponent implements OnInit {
 
-  teams: Array<Team> = new Array()
+  teams: Array<Team> = []
   teamsCount!: number
   prevPageIcon: string = "assets/pages/previousPage.svg"
   nextPageIcon: string = "assets/pages/nextPage.svg"
-  subscriptions: Array<Subscription> = new Array()
+  subscriptions: Array<Subscription> = []
   page = 1
   pages: Array<string> = ["01", "02", "03", "04", "05"]
 

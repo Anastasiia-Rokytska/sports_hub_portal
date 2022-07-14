@@ -17,8 +17,10 @@
       </div>
       <div class="col-md-4 offset-md-5 align-self-center">
         <app-white-small-button textButton="Cancel" (click)="cancelChanges()"></app-white-small-button>
-        <app-white-small-button textButton="Save" (click)="saveArticle()" style="padding-left: 10px;"></app-white-small-button>
-        <app-white-small-button textButton="Preview mode" (click)="previewArticle()" style="padding-left: 10px;"></app-white-small-button>
+        <app-white-small-button textButton="Save" (click)="saveArticle()"
+                                style="padding-left: 10px;"></app-white-small-button>
+        <app-white-small-button textButton="Preview mode" (click)="previewArticle()"
+                                style="padding-left: 10px;"></app-white-small-button>
       </div>
     </div>
   </div>
@@ -26,58 +28,91 @@
   <div class="category-selector">
     <ul>
       <li *ngFor="let category of categories">
-        <a (click)="handleCategoryChanges(category)">{{category.name}}</a>
+        <button (click)="handleCategoryChanges(category)">{{category.name}}</button>
       </li>
     </ul>
   </div>
-
-  <div class="add-article" *ngIf="selectedCategoryId != -1">
-    <div class="row">
-      <div class="col-sm-4 subcategories">
-        <h6>Subcategory</h6>
-        <select [(ngModel)]="selectedSubcategoryId" (ngModelChange)="handleSubcategoryChanges($event)"
-                name="Subcategory" id="subcategory">
-          <option value=-1 selected>Not selected</option>
-          <option *ngFor="let subcategory of subcategories" [ngValue]=subcategory.id>{{subcategory.name}}</option>
-        </select>
-      </div>
-      <div class="col-sm-4 teams">
-        <h6>Team</h6>
-        <select [(ngModel)]="selectedTeamId" (ngModelChange)="handleTeamChanges($event)" name="Team">
-          <option value=-1 selected>Not selected</option>
-          <option *ngFor="let team of teams" [ngValue]=team.id>{{team.name}}</option>
-        </select>
-      </div>
-      <div class="col-sm-4">
-        <h6>Language</h6>
-        <select [(ngModel)]="language" (ngModelChange)="handleLanguageChanges($event)" name="language">
-          <option value="English" selected>English</option>
-        </select>
-      </div>
+  <div class="row">
+    <div class="col-2">
+      <app-left-side-menu-admin></app-left-side-menu-admin>
     </div>
-    <div class="row">
-      <div class="col-sm-12">
-        <app-input typeInput="text" nameField="Article headline" placeholder="Name" id="headline" [value]="headline"></app-input>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-sm-12">
-        <app-input typeInput="text" nameField="Caption" placeholder="Write caption here" id="caption" [value]="caption"></app-input>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-sm-12">
-        <div class="md-form">
-          <h6>Content</h6>
-          <textarea type="text" id="form7" class="md-textarea md-textarea-auto form-control"
-                    [(ngModel)]="articleContent"></textarea>
-          <p style="color: red" *ngIf="errorMessage">Headline, caption and content must not be empty!</p>
+    <div class="col">
+      <div class="add-article" *ngIf="selectedCategoryId != -1">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="team_logo" *ngIf="imageUrl == undefined">
+              <label class="load_photo">
+                <input type="file" name="file_input" accept="image/*" hidden (change)="loadPhoto($event)">
+                <img src="/assets/icons/loadPhoto.svg">
+              </label>
+              <div class="logo_text_block">
+                <span class="logo_text" id="red_text">Add image</span>
+                <span class="logo_text" id="black_text"> right here</span>
+              </div>
+            </div>
+            <div class="loaded_image" *ngIf="imageUrl != undefined">
+              <label class="load_photo">
+                <input type="file" name="file_input" accept="image/*" hidden (change)="loadPhoto($event)">
+                <img [src]="image">
+              </label>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col">
-
+        <div class="row">
+          <div class="col-sm-4 subcategories">
+            <h6>Subcategory</h6>
+            <select [(ngModel)]="selectedSubcategoryId" (ngModelChange)="handleSubcategoryChanges($event)"
+                    name="Subcategory" id="subcategory">
+              <option value=-1 selected>Not selected</option>
+              <option *ngFor="let subcategory of subcategories" [ngValue]=subcategory.id>{{subcategory.name}}</option>
+            </select>
+          </div>
+          <div class="col-sm-4 teams">
+            <h6>Team</h6>
+            <select [(ngModel)]="selectedTeamId" (ngModelChange)="handleTeamChanges($event)" name="Team">
+              <option value=-1 selected>Not selected</option>
+              <option *ngFor="let team of teams" [ngValue]=team.id>{{team.name}}</option>
+            </select>
+          </div>
+          <div class="col-sm-4">
+            <h6>Language</h6>
+            <select [(ngModel)]="language" (ngModelChange)="handleLanguageChanges($event)" name="language">
+              <option value="English" selected>English</option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <app-input typeInput="text" nameField="Article headline" placeholder="Name" id="headline"
+                       [value]="headline"></app-input>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <app-input typeInput="text" nameField="Caption" placeholder="Write caption here" id="caption"
+                       [value]="caption"></app-input>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="md-form">
+              <h6>Content</h6>
+              <textarea type="text" id="form7" class="md-textarea md-textarea-auto form-control"
+                        [(ngModel)]="articleContent"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col comment-switcher">
+            <h6>Comments: </h6>
+            <h6 *ngIf="!commentable" style="margin-left: 5px;">Hide</h6>
+            <h6 *ngIf="commentable" style="margin-left: 5px;">Show</h6>
+            <button *ngIf="commentable" (click)="commentable = !commentable" style="margin-left: 5px;"><img
+              src="../../assets/icons/activeSwitcher.svg"></button>
+            <button *ngIf="!commentable" (click)="commentable = !commentable" style="margin-left: 5px;"><img
+              src="../../assets/icons/switcher.svg"></button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -88,7 +123,7 @@
   <div class="article-preview">
     <div class="image-card">
       <div class="article-image">
-        <img src="../../assets/images/userPhoto.jpg" width=100% height="400px" alt="">
+        <img [src]="image" width=100% height="400px" alt="">
         <p [innerHtml]="previewMode"></p>
       </div>
       <div class="card" style="width: 350px;height: 200px;">

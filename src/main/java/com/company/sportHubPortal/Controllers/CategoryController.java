@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/category")
 public class CategoryController {
-  private CategoryService categoryService;
-  Logger logger = LoggerFactory.getLogger(UserController.class);
+  private final CategoryService categoryService;
+  Logger logger = LoggerFactory.getLogger(CategoryController.class);
 
   public CategoryController(CategoryService categoryService) {
     this.categoryService = categoryService;
