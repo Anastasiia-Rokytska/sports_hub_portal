@@ -367,13 +367,9 @@ export class AdminPanelCategoriesComponent implements OnInit {
       }
     });
 
-
-
     this.newItems.clear();
     this.editedItems.clear();
     this.deletedItems.clear();
-
-
 
     Swal.fire({
       icon: 'success',
