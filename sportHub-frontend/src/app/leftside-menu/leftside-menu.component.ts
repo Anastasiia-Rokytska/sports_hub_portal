@@ -1,7 +1,7 @@
 import {Component, HostListener, OnInit, ElementRef} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
 import {EventEmitterService} from "../event-emitter.service";
+import {ActivatedRoute, Router} from "@angular/router";
 
 interface MenuItem{
   id: number;
@@ -17,7 +17,7 @@ interface MenuItem{
 })
 
 export class LeftsideMenuComponent implements OnInit {
-  constructor(private http: HttpClient, private eRef: ElementRef, private eventEmitterService: EventEmitterService) {}
+  constructor(private http: HttpClient, private eRef: ElementRef, private eventEmitterService: EventEmitterService, private route: ActivatedRoute, private router: Router) {}
 
   secondMenuVisible: boolean = false;
   thirdMenuVisible: boolean = false;
@@ -33,23 +33,28 @@ export class LeftsideMenuComponent implements OnInit {
   }
 
   async showSecondMenu(id: number, name: string){
-    this.thirdMenuVisible = false;
-    if(id == 0){
-      this.secondMenuVisible = false;
-      this.path_arr = [new Map<number,string>().set(id, name)];
-      this.eventComponentFunction(this.path_arr)
-    }else{
-      await this.http.get<MenuItem[]>('/api/category/parent/visible/' + id).subscribe(data => {
-        if(data.length > 0){
-          this.secondMenuVisible = true;
-          this.secondMenuItems = data;
-        }else{
-          this.secondMenuVisible = false;
-        }
-        this.path_arr = [new Map<number,string>().set(id, name)];
+    if(this.router.url != '/' && this.router.url != '/admin/article'){
+      this.router.navigate(['/'], {relativeTo: this.route});
+    }
+    else {
+      this.thirdMenuVisible = false;
+      if (id == 0) {
+        this.secondMenuVisible = false;
+        this.path_arr = [new Map<number, string>().set(id, name)];
         this.eventComponentFunction(this.path_arr)
-      });
+      } else {
+        await this.http.get<MenuItem[]>('/api/category/parent/visible/' + id).subscribe(data => {
+          if (data.length > 0) {
+            this.secondMenuVisible = true;
+            this.secondMenuItems = data;
+          } else {
+            this.secondMenuVisible = false;
+          }
+          this.path_arr = [new Map<number, string>().set(id, name)];
+          this.eventComponentFunction(this.path_arr)
+        });
 
+      }
     }
   }
 

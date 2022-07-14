@@ -9,6 +9,7 @@ interface MenuItem{
   name: string;
   parentId: number;
 }
+
 interface team{
   id: number;
   name: string
@@ -41,7 +42,6 @@ export class AdminPanelArticlesComponent implements OnInit {
   headline: string = '';
   language: string = 'English';
   publishedDate: string = '';
-  errorMessage: boolean = false;
   userName: string = '';
   userEmail: string = '';
   userId: string = '';
@@ -65,6 +65,7 @@ export class AdminPanelArticlesComponent implements OnInit {
       this.categories = data;
     });
   }
+
   getUser(){
     const httpOptions = {
       headers: new HttpHeaders({'Content-Type': 'application/json', 'Accept': 'application/json'})
@@ -123,7 +124,6 @@ export class AdminPanelArticlesComponent implements OnInit {
     this.headline = Array.from(this.inputs)[0].value;
     this.caption = Array.from(this.inputs)[1].value;
     if(this.articleContent.length > 0 && this.headline.length > 0 && this.caption.length > 0){
-      this.errorMessage = false;
       this.showPreview();
     }
     else{
@@ -180,11 +180,7 @@ export class AdminPanelArticlesComponent implements OnInit {
   async saveArticle(){
     this.headline = Array.from(this.inputs)[0].value;
     this.caption = Array.from(this.inputs)[1].value;
-    this.publishedDate = new Date().toLocaleDateString();
     if(this.articleContent.length > 0 && this.headline.length > 0 && this.caption.length > 0){
-      let tempDate: string[] = this.publishedDate.split('.');
-      this.publishedDate = tempDate[2] + '-' + tempDate[1] + '-' + tempDate[0];
-      this.errorMessage = false;
       this.previewMode = this.articleContent.replace(/\n+?/g, '<br>');
       let formData = new FormData();
       formData.append('title', Array.from(this.inputs)[0].value);

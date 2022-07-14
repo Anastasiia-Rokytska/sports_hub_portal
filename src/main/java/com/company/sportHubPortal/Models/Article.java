@@ -81,7 +81,6 @@ public class Article {
         this.caption = caption;
     }
 
-
     public Article(String title, String content, String author,
                    boolean commentable, boolean published,
                    String language, Date publishedDate, String caption,
@@ -127,13 +126,16 @@ public class Article {
         this.publishedDate = publishedDate;
         this.caption = caption;
         this.categories = categories;
+        this.icon = icon;
     }
 
-    public Article(String title, String content, String user, boolean commentable) {
+    public Article(String title, String content, String user, boolean commentable, String language, String caption) {
         this.title = title;
         this.content = content;
         this.author = user;
         this.commentable = commentable;
+        this.language = language;
+        this.caption = caption;
     }
 
     public Article() {

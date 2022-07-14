@@ -48,7 +48,7 @@ public class ArticleServiceImpl implements ArticleService {
                         .anyMatch(category -> category.getId().equals(id))).toList());
         Collections.reverse(articles);
         return articles;
-    }
+
     @Override
     public List<Article> getAllArticlesByTeam(Integer id, Integer page) {
         Team team = teamService.teamById(id);
@@ -59,5 +59,6 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public Article getFullArticle(Article article) {
         return articleRepository.findFullArticle(article);
+
     }
 }

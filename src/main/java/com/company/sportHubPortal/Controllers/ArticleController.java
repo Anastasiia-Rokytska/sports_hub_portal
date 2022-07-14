@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -36,8 +37,6 @@ public class ArticleController {
         this.articleService = articleService;
         this.teamService = teamService;
         this.notificationService = notificationService;
-        this.categoryService = categoryService;
-    }
 
     @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<Object> saveArticle(@ModelAttribute ArticlePOJO articlePOJO,
