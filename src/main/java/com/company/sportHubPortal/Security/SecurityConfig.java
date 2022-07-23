@@ -2,25 +2,23 @@ package com.company.sportHubPortal.Security;
 
 import com.company.sportHubPortal.Controllers.UserController;
 import com.company.sportHubPortal.Services.JwtTokenService;
-import com.company.sportHubPortal.Services.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.core.env.Environment;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 
 @Configuration
@@ -32,8 +30,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   private final CustomUserDetailsService userDetailsService;
   private final PasswordEncoder passwordEncoder;
   private final JwtTokenService jwtTokenService;
-  private final Environment env;
-  private final UserService userService;
   private final OAuthLoginSuccessHandler oAuthLoginSuccessHandler;
   Logger logger = LoggerFactory.getLogger(UserController.class);
 
@@ -41,14 +37,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   public SecurityConfig(CustomUserDetailsService userDetailsService,
                         PasswordEncoder passwordEncoder,
                         JwtTokenService jwtTokenService,
-                        Environment env,
-                        UserService userService,
                         OAuthLoginSuccessHandler oAuthLoginSuccessHandler) {
     this.userDetailsService = userDetailsService;
     this.passwordEncoder = passwordEncoder;
     this.jwtTokenService = jwtTokenService;
-    this.env = env;
-    this.userService = userService;
     this.oAuthLoginSuccessHandler = oAuthLoginSuccessHandler;
   }
 
@@ -66,8 +58,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         authenticationManagerBean(),
         userDetailsService);
 
-    httpSecurity.cors().disable();
-    httpSecurity.csrf().disable();
+    httpSecurity.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
 
     httpSecurity.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
