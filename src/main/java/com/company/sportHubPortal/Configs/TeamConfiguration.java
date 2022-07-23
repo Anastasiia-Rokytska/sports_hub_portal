@@ -6,27 +6,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ResourceLoader;
-import org.springframework.http.client.MultipartBodyBuilder;
-import org.springframework.util.ResourceUtils;
-import org.springframework.web.multipart.MultipartFile;
+
 import javax.sql.rowset.serial.SerialBlob;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.Objects;
 
 @Configuration
 public class TeamConfiguration {
 
-    private TeamService teamService;
+    private final TeamService teamService;
+    private final ResourceLoader resourceLoader;
 
     @Autowired
-    private ResourceLoader resourceLoader;
-
-    @Autowired
-    public TeamConfiguration(TeamService teamService) {
+    public TeamConfiguration(TeamService teamService, ResourceLoader resourceLoader) {
         this.teamService = teamService;
+        this.resourceLoader = resourceLoader;
     }
 
     @Bean

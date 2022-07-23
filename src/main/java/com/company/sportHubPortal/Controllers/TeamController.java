@@ -20,8 +20,8 @@ import java.util.Set;
 @RequestMapping("/team")
 public class TeamController {
 
-    private TeamService teamService;
-    private CategoryService categoryService;
+    private final TeamService teamService;
+    private final CategoryService categoryService;
     Logger logger = LoggerFactory.getLogger(TeamController.class);
 
     @Autowired
@@ -83,9 +83,7 @@ public class TeamController {
     public ResponseEntity<Object> getAllLocations() {
         Set<String> locations = new HashSet<>();
         List<Team> allTeams = teamService.allTeams();
-        allTeams.forEach(team -> {
-            locations.add(team.getLocation());
-        });
+        allTeams.forEach(team -> locations.add(team.getLocation()));
         return ResponseEntity.ok().body(locations);
     }
 }

@@ -24,7 +24,6 @@ public class UserService {
     this.passwordEncoder = passwordEncoder;
   }
 
-
   public String encodePassword(String password) {
     return passwordEncoder.encode(password);
   }
@@ -82,10 +81,5 @@ public class UserService {
       userRepository.save(user);
 
     }
-
-
-
   }
-
-
 }

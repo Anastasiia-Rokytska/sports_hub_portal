@@ -20,12 +20,10 @@ import java.util.regex.Pattern;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -48,8 +46,6 @@ public class UserController {
   private final JavaMailSenderImpl javaMailSender;
   final ScheduledExecutorService executor;
   Logger logger = LoggerFactory.getLogger(UserController.class);
-  private OAuth2AuthorizedClientService authorizedClientService;
-  private Environment environment;
 
 
   @Autowired
@@ -57,16 +53,12 @@ public class UserController {
                         JwtTokenService jwtTokenService,
                         EmailSenderService emailSenderService,
                         JavaMailSenderImpl javaMailSender,
-                        ScheduledExecutorService executor,
-                        OAuth2AuthorizedClientService authorizedClientService,
-                        Environment environment) {
+                        ScheduledExecutorService executor) {
     this.userService = userService;
     this.jwtTokenService = jwtTokenService;
     this.javaMailSender = javaMailSender;
     this.executor = executor;
     this.emailSenderService = emailSenderService;
-    this.authorizedClientService = authorizedClientService;
-    this.environment = environment;
   }
 
   public static boolean validate(String emailStr) {
