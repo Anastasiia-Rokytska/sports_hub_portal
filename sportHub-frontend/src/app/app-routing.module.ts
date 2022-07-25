@@ -10,6 +10,8 @@ import {ResetPasswordComponent} from "./reset-password/reset-password.component"
 import { TeamsComponent } from './teams/teams/teams.component';
 import {AdminPanelArticlesComponent} from "./admin-panel-articles/admin-panel-articles.component";
 import {ArticleComponent} from "./article/article.component";
+import {TeamHubComponent} from "./team-hub/team-hub.component";
+
 
 const routes: Routes = [
   {path: '', component: MainPageComponent},
@@ -21,7 +23,8 @@ const routes: Routes = [
   {path: 'admin/teams', component: TeamsComponent},
   {path: 'reset-password/:id', component: ResetPasswordComponent},
   {path: 'admin/article', component: AdminPanelArticlesComponent},
-  {path: 'article/:id', component: ArticleComponent}
+  {path: 'article/:id', component: ArticleComponent},
+  {path: 'team-hub', component: TeamHubComponent}
 ];
 
 @NgModule({
