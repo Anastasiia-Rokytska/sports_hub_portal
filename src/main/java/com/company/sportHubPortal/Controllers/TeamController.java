@@ -27,6 +27,7 @@ public class TeamController {
 
     private final TeamService teamService;
     private final CategoryService categoryService;
+    private final UserService userService;
     Logger logger = LoggerFactory.getLogger(TeamController.class);
 
     @Autowired
