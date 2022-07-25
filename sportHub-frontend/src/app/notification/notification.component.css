@@ -1,0 +1,88 @@
+.notification{
+  background: #F8F8F8;
+  width: 400px;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.notification_header{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #D72130;
+  height: 40px;
+}
+.notification_header h5{
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 19px;
+  color: #F8F8F8;
+  margin: 0;
+}
+.notification_content{
+  display: flex;
+}
+.team_icon{
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin: 0 20px 0 20px;
+  object-fit: cover;
+}
+.team_name{
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 19px;
+  color: #2B2F43;
+}
+.message_text{
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 19px;
+  text-align: center;
+  color: #000000;
+  display: flex;
+}
+.message{
+  display: flex;
+  flex-direction: column;
+}
+.view_article{
+  width: 100px;
+  height: 30px;
+  margin: 10px;
+  background: #D72130;
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 19px;
+  color: #FFFFFF;
+  border: none;
+}
+.view_article:hover{
+  background: #E02232;
+}
+.view_article:active{
+  background: #C80515;
+}
+.notification_footer{
+  display: flex;
+  height: auto;
+  background: #F2F2F2;
+  justify-content: flex-end;
+}
+.image_wrapper{
+  display: flex;
+  position: absolute;
+  width: 400px;
+  justify-content: flex-end;
+  padding-right: 20px;
+}

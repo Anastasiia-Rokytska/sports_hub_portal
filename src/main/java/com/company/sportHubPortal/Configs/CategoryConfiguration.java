@@ -1,19 +1,26 @@
 package com.company.sportHubPortal.Configs;
 
+import com.company.sportHubPortal.Models.Article;
 import com.company.sportHubPortal.Models.Category;
+import com.company.sportHubPortal.Services.ArticleServices.ArticleService;
 import com.company.sportHubPortal.Services.CategoryServices.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.Arrays;
+import java.util.HashSet;
+
 @Configuration
 public class CategoryConfiguration {
 
-    private CategoryService categoryService;
+    private final CategoryService categoryService;
+    private final ArticleService articleService;
 
     @Autowired
-    public CategoryConfiguration(CategoryService categoryService) {
+    public CategoryConfiguration(CategoryService categoryService, ArticleService articleService) {
         this.categoryService = categoryService;
+        this.articleService = articleService;
     }
 
     @Bean
@@ -34,4 +41,51 @@ public class CategoryConfiguration {
         categoryService.saveCategory(new Category(13L, "Team hub", 0L, false));
     }
 
+    @Bean
+    public void addCategoriesToArticles(){
+        Article article = articleService.getArticleById(1L);
+        article.setCategories(new HashSet<>(Arrays.asList(
+                categoryService.getCategoryById(1L), categoryService.getCategoryById(5L))));
+        articleService.saveArticle(article);
+        article = articleService.getArticleById(2L);
+        article.setCategories(new HashSet<>(Arrays.asList(
+                categoryService.getCategoryById(1L), categoryService.getCategoryById(5L))));
+        articleService.saveArticle(article);
+        article = articleService.getArticleById(3L);
+        article.setCategories(new HashSet<>(Arrays.asList(
+                categoryService.getCategoryById(1L), categoryService.getCategoryById(6L))));
+        articleService.saveArticle(article);
+        article = articleService.getArticleById(4L);
+        article.setCategories(new HashSet<>(Arrays.asList(
+                categoryService.getCategoryById(1L), categoryService.getCategoryById(7L))));
+        articleService.saveArticle(article);
+        article = articleService.getArticleById(5L);
+        article.setCategories(new HashSet<>(Arrays.asList(
+                categoryService.getCategoryById(1L), categoryService.getCategoryById(8L))));
+        articleService.saveArticle(article);
+        article = articleService.getArticleById(6L);
+        article.setCategories(new HashSet<>(Arrays.asList(
+                categoryService.getCategoryById(1L), categoryService.getCategoryById(5L))));
+        articleService.saveArticle(article);
+        article = articleService.getArticleById(7L);
+        article.setCategories(new HashSet<>(Arrays.asList(
+                categoryService.getCategoryById(1L), categoryService.getCategoryById(6L))));
+        articleService.saveArticle(article);
+        article = articleService.getArticleById(8L);
+        article.setCategories(new HashSet<>(Arrays.asList(
+                categoryService.getCategoryById(1L), categoryService.getCategoryById(5L))));
+        articleService.saveArticle(article);
+        article = articleService.getArticleById(9L);
+        article.setCategories(new HashSet<>(Arrays.asList(
+                categoryService.getCategoryById(1L), categoryService.getCategoryById(7L))));
+        articleService.saveArticle(article);
+        article = articleService.getArticleById(10L);
+        article.setCategories(new HashSet<>(Arrays.asList(
+                categoryService.getCategoryById(1L), categoryService.getCategoryById(8L))));
+        articleService.saveArticle(article);
+        article = articleService.getArticleById(11L);
+        article.setCategories(new HashSet<>(Arrays.asList(
+                categoryService.getCategoryById(1L), categoryService.getCategoryById(8L))));
+        articleService.saveArticle(article);
+    }
 }

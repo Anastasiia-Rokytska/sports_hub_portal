@@ -10,6 +10,11 @@ interface MenuItem{
   parentId: number;
 }
 
+interface team{
+  id: number;
+  name: string
+}
+
 @Component({
   selector: 'admin-panel-articles',
   templateUrl: './admin-panel-articles.component.html',
@@ -29,7 +34,7 @@ export class AdminPanelArticlesComponent implements OnInit {
   selectedSubcategoryId: number = -1;
   selectedTeamId: number = -1;
   subcategories: MenuItem[] = [];
-  teams: MenuItem[] = [];
+  teams: Array<team> = [];
   articleContent: string = '';
   preview: boolean = false;
   previewMode: string = '';
@@ -77,9 +82,9 @@ export class AdminPanelArticlesComponent implements OnInit {
   async refreshTeams(subcategoryId: number){
     this.selectedTeamId= -1;
     if(this.selectedSubcategoryId != -1) {
-      await this.http.get<MenuItem[]>('/api/category/parent/visible/' + subcategoryId).subscribe(data => {
-        this.teams = data;
-      });
+      await this.http.get<Array<team>>('/team/' + subcategoryId).subscribe(data => {
+        this.teams = data
+      })
     }
   }
 
@@ -191,7 +196,7 @@ export class AdminPanelArticlesComponent implements OnInit {
       formData.append('selectedSubCategory', this.selectedSubcategoryId.toString());
       formData.append('selectedTeam', this.selectedTeamId.toString());
       await this.http.post("/api/article", formData).subscribe(
-        (data) => {
+        () => {
           Swal.fire({
             icon: 'success',
             title: 'Successfully saved',

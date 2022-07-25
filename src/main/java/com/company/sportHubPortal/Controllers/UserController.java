@@ -144,7 +144,7 @@ public class UserController {
     if (user == null) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }
-    return ResponseEntity.ok(new Gson().toJson(user));
+    return ResponseEntity.ok(user);
   }
 
   @PostMapping("/check-old-pass")
