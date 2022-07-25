@@ -11,7 +11,7 @@ import {Article} from "../classes/Article";
 })
 export class MainPageComponent implements OnInit {
   carouselArticles: Article[] = [];
-  activeArticle =new Article(0, "", "", "", [], "", "", false, "", null);
+  activeArticle =new Article(0, "", "", "", [], "", "", false,false, "", null);
   otherArticles: Article[] = [];
   page: number = 1;
   noArticles: boolean = true;
@@ -49,10 +49,11 @@ export class MainPageComponent implements OnInit {
           let categories = item.categories;
           let content = item.content;
           let publishedDate = item.publishedDate;
+          let isPublished = item.isPublished;
           let commentable = item.commentable;
           let language = item.language;
           let icon = item.icon;
-          this.allArticles.push(new Article(id, title, caption, author, categories, content, publishedDate, commentable, language, icon));
+          this.allArticles.push(new Article(id, title, caption, author, categories, content, publishedDate, isPublished, commentable, language, icon));
         });
         this.noArticles = false;
         this.activeArticle = this.allArticles[0];

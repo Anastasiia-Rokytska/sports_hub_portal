@@ -36,6 +36,13 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    public List<Article> getPublishedArticles() {
+        List<Article> articles = articleRepository.getArticlesByPublishedIs(true);
+        Collections.reverse(articles);
+        return articles;
+    }
+
+    @Override
     public Article getArticleById(Long id) {
         return articleRepository.findById(id).orElse(null);
     }

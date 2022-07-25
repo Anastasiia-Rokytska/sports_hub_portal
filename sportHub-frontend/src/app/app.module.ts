@@ -39,6 +39,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DropDownComponent } from './components/drop-down/drop-down.component';
 import { AdminPanelArticlesComponent } from "./admin-panel-articles/admin-panel-articles.component";
+import { AdminPanelManageArticlesComponent } from "./admin-panel-manage-articles/admin-panel-manage-articles.component";
 import { ClickOutsideModule } from "ng-click-outside";
 import { ArticleComponent } from "./article/article.component";
 import { EventEmitterService } from "./event-emitter.service";
@@ -76,6 +77,7 @@ import { EventEmitterService } from "./event-emitter.service";
     AllTeamsComponent,
     DropDownComponent,
     AdminPanelArticlesComponent,
+    AdminPanelManageArticlesComponent,
     ArticleComponent
   ],
   imports: [

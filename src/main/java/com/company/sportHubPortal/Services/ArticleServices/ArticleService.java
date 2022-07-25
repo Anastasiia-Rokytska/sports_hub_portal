@@ -9,6 +9,8 @@ public interface ArticleService {
 
     List<Article> getAllArticles();
 
+    List<Article> getPublishedArticles();
+
     Article getArticleById(Long id);
 
     List<Article> getArticlesByCategoryId(Long id);

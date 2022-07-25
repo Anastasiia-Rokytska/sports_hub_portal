@@ -64,6 +64,11 @@ public class ArticleController {
     }
 
     @GetMapping()
+    public List<Article> getPublishedCategories() {
+        return articleService.getPublishedArticles();
+    }
+
+    @GetMapping("/manage")
     public List<Article> getAllCategories() {
         return articleService.getAllArticles();
     }

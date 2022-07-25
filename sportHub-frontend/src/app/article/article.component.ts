@@ -18,7 +18,7 @@ export class ArticleComponent implements OnInit {
     headers: new HttpHeaders({'Content-Type': 'application/json', 'Accept': 'application/json'})
   }
   id: string | null | undefined;
-  article = new Article(0, "","","",[],"","",false,"",null)
+  article = new Article(0, "","","",[],"","",false,false,"",null)
   userId: number = 0;
   comments: Comment[] = [];
   noComments: boolean = false;
@@ -44,7 +44,7 @@ export class ArticleComponent implements OnInit {
       if (response == null) {
         this.router.navigate(['/'], {relativeTo: this.route});
       }
-      this.article = new Article(response.id, response.title, response.caption, response.author, response.categories, response.content, response.publishedDate, response.commentable, response.language, response.icon);
+      this.article = new Article(response.id, response.title, response.caption, response.author, response.categories, response.content, response.publishedDate, response.isPublished, response.commentable, response.language, response.icon);
     }, (error) => {
       console.log("Error: ", error.error)
     });
