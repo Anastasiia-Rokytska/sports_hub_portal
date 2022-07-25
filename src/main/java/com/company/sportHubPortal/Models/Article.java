@@ -23,6 +23,7 @@ public class Article {
 
     @Lob
     private String content;
+
     private String author;
 
     private boolean commentable;
@@ -44,6 +45,8 @@ public class Article {
             inverseJoinColumns = @JoinColumn(name = "category_id"))
     private Set<Category> categories = new HashSet<>();
 
+    @ManyToOne
+    private Team team;
 
     public Article(String title, String content, String author, boolean commentable, String language, Date publishedDate, String caption, Set<Category> categories, MultipartFile icon) throws IOException, SQLException {
         this.title = title;
@@ -78,6 +81,54 @@ public class Article {
         this.caption = caption;
     }
 
+    public Article(String title, String content, String author,
+                   boolean commentable, boolean published,
+                   String language, Date publishedDate, String caption,
+                   MultipartFile icon, Set<Category> categories) throws IOException, SQLException {
+        this.title = title;
+        this.content = content;
+        this.author = author;
+        this.commentable = commentable;
+        this.published = published;
+        this.language = language;
+        this.publishedDate = publishedDate;
+        this.caption = caption;
+        this.icon = new SerialBlob(icon.getBytes());
+        this.categories = categories;
+    }
+
+    public Article(String title, String content, String author,
+                   boolean commentable, boolean published,
+                   String language, Date publishedDate, String caption,
+                   Blob icon, Set<Category> categories) throws IOException, SQLException {
+        this.title = title;
+        this.content = content;
+        this.author = author;
+        this.commentable = commentable;
+        this.published = published;
+        this.language = language;
+        this.publishedDate = publishedDate;
+        this.caption = caption;
+        this.icon = icon;
+        this.categories = categories;
+    }
+
+    public Article(String title, String content, String author,
+                   boolean commentable, boolean published,
+                   String language, Date publishedDate, String caption,
+                   Set<Category> categories) {
+        this.title = title;
+        this.content = content;
+        this.author = author;
+        this.commentable = commentable;
+        this.published = published;
+        this.language = language;
+        this.publishedDate = publishedDate;
+        this.caption = caption;
+        this.categories = categories;
+        this.icon = icon;
+    }
+
     public Article() {
 
     }
@@ -106,6 +157,9 @@ public class Article {
         this.content = content;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getAuthor() {
         return author;
@@ -157,6 +211,14 @@ public class Article {
 
     public Long getId() {
         return id;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
+    }
+
+    public Team getTeam() {
+        return team;
     }
 
     public byte[] getIcon() throws SQLException, IOException {

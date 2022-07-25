@@ -35,5 +35,4 @@ export class Article{
       this.icon = 'data:image/png;base64,' + icon;
     }
   }
-
 }

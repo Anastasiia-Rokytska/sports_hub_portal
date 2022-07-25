@@ -1,0 +1,42 @@
+<app-header></app-header>
+<div class="main_page">
+  <div class="background">
+    <h3 class="news_back">NEWS</h3>
+    <h3 class="team_hub_back">TEAM HUB</h3>
+  </div>
+  <leftside-menu></leftside-menu>
+  <div class="main_content">
+    <div class="team_content" *ngFor="let team of teams">
+      <ul class="teams_list">
+        <li class="title_team">
+          <img class="team_icon" [src]="'data:image/png;base64,' + team.icon">
+          <div class="team_name_block">
+            <h3 class="team_name">{{team.name}}</h3>
+            <span *ngIf="hasSubscription(team.id)">Following</span>
+          </div>
+          <div class="button_wrapper">
+            <button class="follow_button" (click)="subscribeAction(team.id)">{{buttonValue(team)}}</button>
+          </div>
+        </li>
+        <ul class="articles_wrapper">
+          <li class="articles" *ngFor="let article of team.articles" (click)="viewArticle(article.id)">
+            <img class="article_photo" [src]="'data:image/png;base64,' + article.icon" *ngIf="article.icon != null">
+            <div class="article_text">
+              <h3 class="title">{{article.title}}</h3>
+              <p class="text">{{formatText(article.content)}}</p>
+            </div>
+          </li>
+          <li class="articles" *ngIf="getLength(team.articles) == 0" id="empty_articles">
+            <span>Team has no articles yet</span>
+          </li>
+        </ul>
+      </ul>
+    </div>
+    <div class="pages">
+      <img [src]="prevPageIcon">
+      <div [ngClass]="parseInt(page_number) == page ? 'selected_page' : 'page_number'" *ngFor="let page_number of pages" (click)="changePage(parseInt(page_number))">{{page_number}}</div>
+      <img [src]="nextPageIcon">
+    </div>
+  </div>
+</div>
+

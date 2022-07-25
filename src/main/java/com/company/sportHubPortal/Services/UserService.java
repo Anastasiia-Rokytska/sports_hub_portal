@@ -58,10 +58,13 @@ public class UserService {
     return true;
   }
 
+  public User getUserWithSubscriptions(String email){
+    return userRepository.getUserWithSubscriptions(email);
+  }
+
   public User getById(Integer id) {
     return userRepository.getUserById(id);
   }
-
 
   public User getByRecoverPassHash(String uri) {
     return userRepository.getUserByRecoverPassHash(uri);

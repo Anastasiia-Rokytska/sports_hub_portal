@@ -21,11 +21,13 @@ export class PersonalPageComponent implements OnInit {
   lastName: string = ''
   email: string = ''
   image: string = 'assets/images/userPhoto.jpg'
+  teams: Array<any> = []
 
   public class: Array<string> = ["active_segment", "nonactive_segment", "nonactive_segment", "nonactive_segment"]
 
   public personal_show = true
   public pass_show = false
+  public show_teamHub = false
 
 
   ngOnInit(): void {
@@ -54,23 +56,41 @@ export class PersonalPageComponent implements OnInit {
   show_personal() {
     this.personal_show = true
     this.pass_show = false
+    this.show_teamHub = false
 
-    this.class[0] = "active_segment"
-    this.class[1] = "nonactive_segment"
+    this.class = ["active_segment", "nonactive_segment", "nonactive_segment", "nonactive_segment"]
   }
 
   show_pass() {
     this.personal_show = false
     this.pass_show = true
+    this.show_teamHub = false
 
-    this.class[0] = "nonactive_segment"
-    this.class[1] = "active_segment"
+    this.class = ["nonactive_segment", "active_segment", "nonactive_segment", "nonactive_segment"]
   }
 
   mySurveys() {
   }
 
   teamHub() {
+    this.personal_show = false
+    this.pass_show = false
+    this.show_teamHub = true
+    this.class = ["nonactive_segment", "nonactive_segment", "nonactive_segment", "active_segment"]
+    this.teams = []
+    this.loadSubscriptions().then((response: any) => {
+      console.log(response)
+      response.forEach((team: any) => {
+        this.teams.push({
+          image: 'data:image/png;base64,' + team.icon,
+          name: team.name
+        })
+      });
+    })
+  }
+
+  loadSubscriptions(){
+    return this.http.get('/team/subscriptions').toPromise()
   }
 
 
@@ -89,7 +109,7 @@ export class PersonalPageComponent implements OnInit {
       return
     }
 
-    this.checkOldPass(old_pass).subscribe((response: any) => {
+    this.checkOldPass(old_pass).subscribe(() => {
 
       if (new_pass.length < 8) {
         Swal.fire({
@@ -118,7 +138,7 @@ export class PersonalPageComponent implements OnInit {
       let new_response = this.http.patch<string>('/user/change-password', body, httpOptions)
       console.log(new_response)
 
-      new_response.subscribe(res => {
+      new_response.subscribe(() => {
 
 
         Swal.fire({

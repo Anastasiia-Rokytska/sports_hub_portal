@@ -5,7 +5,8 @@ import com.company.sportHubPortal.Models.Category;
 import com.company.sportHubPortal.POJO.ArticlePOJO;
 import com.company.sportHubPortal.Services.ArticleServices.ArticleService;
 import com.company.sportHubPortal.Services.CategoryServices.CategoryService;
-import org.apache.commons.logging.Log;
+import com.company.sportHubPortal.Services.NotificationService;
+import com.company.sportHubPortal.Services.TeamService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -23,12 +24,19 @@ import java.util.Set;
 @RequestMapping("/api/article")
 public class ArticleController {
     private final ArticleService articleService;
+    private final TeamService teamService;
+    private final NotificationService notificationService;
     private final CategoryService categoryService;
 
     Logger logger = LoggerFactory.getLogger(ArticleController.class);
 
-    public ArticleController(ArticleService articleService, CategoryService categoryService) {
+    public ArticleController(ArticleService articleService,
+                             TeamService teamService,
+                             NotificationService notificationService,
+                             CategoryService categoryService) {
         this.articleService = articleService;
+        this.teamService = teamService;
+        this.notificationService = notificationService;
         this.categoryService = categoryService;
     }
 
@@ -55,10 +63,11 @@ public class ArticleController {
             categories.add(categoryService.getCategoryById(Long.parseLong(selectedSubCategory)));
         }
         if(!selectedTeam.equals("-1")){
-            categories.add(categoryService.getCategoryById(Long.parseLong(selectedTeam)));
+            article.setTeam(teamService.teamById(Integer.parseInt(selectedTeam)));
         }
         article.setCategories(categories);
         articleService.saveArticle(article);
+        notificationService.notifySubscribers(article);
         logger.info("Article saved");
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
@@ -81,5 +90,10 @@ public class ArticleController {
     @GetMapping("/category/{id}")
     public List<Article> getArticlesByCategoryId(@PathVariable Long id) {
         return articleService.getArticlesByCategoryId(id);
+    }
+
+    @GetMapping("/team/{id}/{page}")
+    public ResponseEntity<Object> getArticlesByTeam(@PathVariable Integer id, @PathVariable Integer page) {
+        return ResponseEntity.ok(articleService.getAllArticlesByTeam(id, page));
     }
 }

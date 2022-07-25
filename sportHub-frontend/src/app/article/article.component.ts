@@ -7,7 +7,6 @@ import {User} from "../classes/User";
 import Swal from "sweetalert2";
 import {Article} from "../classes/Article";
 
-
 @Component({
   selector: 'article-component',
   templateUrl: './article.component.html',
@@ -60,8 +59,20 @@ export class ArticleComponent implements OnInit {
     }, (error) => {
       console.log("Error: ", error.error)
     });
-  }
+    this.reloadComments()
+    this.http.get("user/own_information", this.httpOptions).subscribe((response: any) => {
+      this.userId = response.id
 
+      if (response.photoLink != null) {
+        this.userPhoto = response.photoLink;
+      } else {
+        this.userPhoto = "../../assets/images/userPhoto.jpg";
+      }
+    }, (error) => {
+      console.log("Error: ", error.error)
+    });
+  }
+        
   getArticle() {
     return this.http.get<Article>("/api/article/" + this.id, this.httpOptions)
   }
@@ -221,7 +232,7 @@ export class ArticleComponent implements OnInit {
       this.manageRepliedBlock(this.comments.indexOf(comment));
     }
   }
-
+  
   validateComment(context: string) {
     return (context.replace(/\s/g, "").length > 0);
   }
@@ -258,8 +269,6 @@ export class ArticleComponent implements OnInit {
     }
     this.editCommentContent = comment;
   }
-
-
 
   submitEdit(text: string) {
     if (this.validateComment(text)) {

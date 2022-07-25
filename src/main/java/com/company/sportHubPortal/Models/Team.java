@@ -1,5 +1,6 @@
 package com.company.sportHubPortal.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.lang.NonNull;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -10,9 +11,11 @@ import java.sql.Blob;
 import java.util.Date;
 import java.sql.SQLException;
 import java.util.Calendar;
+import java.util.Set;
 
 @Entity
 @Table(name = "team", uniqueConstraints={@UniqueConstraint(columnNames = {"latitude", "longitude"})})
+@JsonIgnoreProperties({"subscribers", "articles"})
 public class Team {
 
     @Id
@@ -33,6 +36,10 @@ public class Team {
     private Category subCategory;
     @Lob
     private Blob icon;
+    @ManyToMany(mappedBy = "subscriptions")
+    private Set<User> subscribers;
+    @OneToMany(mappedBy = "team")
+    private Set<Article> articles;
 
     public Team(String name, String location, Double latitude, Double longitude, MultipartFile icon) throws IOException, SQLException {
         this.name = name;
@@ -59,8 +66,27 @@ public class Team {
         setAddedAt();
     }
 
+    public Team(String name, String location, Double latitude, Double longitude, Category category, Category subCategory, Blob icon) {
+        this.name = name;
+        this.location = location;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.icon = icon;
+        this.category = category;
+        this.subCategory = subCategory;
+        setAddedAt();
+    }
+
     public Team() {
 
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -127,6 +153,22 @@ public class Team {
     public void setAddedAt() {
         Calendar today = Calendar.getInstance();
         this.addedAt = today.getTime();
+    }
+
+    public Set<User> getSubscribers() {
+        return subscribers;
+    }
+
+    public void setSubscribers(Set<User> subscribers) {
+        this.subscribers = subscribers;
+    }
+
+    public Set<Article> getArticles() {
+        return articles;
+    }
+
+    public void setArticles(Set<Article> articles) {
+        this.articles = articles;
     }
 
     @Override

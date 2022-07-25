@@ -45,7 +45,9 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
         || request.getRequestURI().equals("/api/category/category")
         || request.getRequestURI().equals("/api/category/subcategory")
         || request.getRequestURI().matches("/api/category/subcategory/.*$")
-        || request.getRequestURI().matches("/team/.*$")
+        || request.getRequestURI().matches("/api/article/team/.*$")
+        || (request.getRequestURI().matches("/team/.*$") && !request.getRequestURI().equals("/team/subscriptions") && !request.getMethod().equals("DELETE")
+        && !request.getRequestURI().matches("/team/subscribe/.*$"))
         || request.getRequestURI().matches("/reset-password/.*$")
         || request.getRequestURI().matches("/user/reset-password/.*$")
         || request.getRequestURI().matches("/user/verify/.*$")
@@ -73,6 +75,7 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
           } catch (Exception e) {
             logger.error(e.getMessage());
+            response.sendRedirect("/login");
           }
         } else {
           logger.error("Access token is null");
