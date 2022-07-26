@@ -48,8 +48,7 @@ public class UserController {
   private final JavaMailSenderImpl javaMailSender;
   final ScheduledExecutorService executor;
   Logger logger = LoggerFactory.getLogger(UserController.class);
-  private OAuth2AuthorizedClientService authorizedClientService;
-  private Environment environment;
+
 
 
   @Autowired
@@ -65,8 +64,7 @@ public class UserController {
     this.javaMailSender = javaMailSender;
     this.executor = executor;
     this.emailSenderService = emailSenderService;
-    this.authorizedClientService = authorizedClientService;
-    this.environment = environment;
+
   }
 
   public static boolean validate(String emailStr) {
