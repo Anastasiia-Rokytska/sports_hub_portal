@@ -1,13 +1,15 @@
 package com.company.sportHubPortal.Models;
 
-import com.fasterxml.jackson.annotation.*;
-import org.springframework.lang.NonNull;
-
-import javax.persistence.*;
-import java.util.ArrayList;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+import org.slf4j.LoggerFactory;
+import org.springframework.lang.NonNull;
 
 @Entity
 @Table(name = "category")
@@ -74,6 +76,7 @@ public class Category {
             this.parents = parents;
         }
         this.hidden = hidden;
+        LoggerFactory.getLogger(Category.class).info(articles.toString());
         this.articles = articles;
         if(children != null) {
             this.children = children;

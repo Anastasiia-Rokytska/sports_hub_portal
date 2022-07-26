@@ -1,19 +1,18 @@
 package com.company.sportHubPortal.Services.ArticleServices;
 
 import com.company.sportHubPortal.Models.Article;
-
 import java.util.List;
 
 public interface ArticleService {
-    Article saveArticle(Article article);
+  Article saveArticle(Article article);
 
-    List<Article> getAllArticles();
+  List<Article> getAllArticles();
 
-    Article getArticleById(Long id);
+  Article getArticleById(Long id);
 
-    List<Article> getAllArticlesByTeam(Integer id, Integer page);
+  List<Article> getArticlesByCategoryId(Long id);
 
-    Article getFullArticle(Article article);
+  List<Article> getAllArticlesByTeam(Integer id, Integer page);
 
-    List<Article> getArticlesByCategoryId(Long id);
+  Article getFullArticle(Article article);
 }

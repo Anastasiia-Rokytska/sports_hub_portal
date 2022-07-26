@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -41,7 +42,7 @@ public class SignInTest {
         this.mockMvc.perform(post("/user/sign-up")
                 .content(new Gson().toJson(user))
                 .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
+                .accept(MediaType.APPLICATION_JSON).with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("firstName").value(user.getFirstName()))
                 .andExpect(jsonPath("lastName").value(user.getLastName()))
@@ -56,7 +57,7 @@ public class SignInTest {
         this.mockMvc.perform(post("/user/sign-up")
                         .content(new Gson().toJson(user))
                         .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON))
+                        .accept(MediaType.APPLICATION_JSON).with(csrf()))
                 .andExpect(status().is(400))
                 .andDo(document("{methodName}"));
     }
@@ -67,7 +68,7 @@ public class SignInTest {
         this.mockMvc.perform(post("/user/sign-up")
                         .content(new Gson().toJson(user))
                         .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON))
+                        .accept(MediaType.APPLICATION_JSON).with(csrf()))
                 .andExpect(status().is(400))
                 .andDo(document("{methodName}"));
     }
@@ -78,7 +79,7 @@ public class SignInTest {
         this.mockMvc.perform(post("/user/sign-up")
                         .content(new Gson().toJson(user))
                         .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON))
+                        .accept(MediaType.APPLICATION_JSON).with(csrf()))
                 .andExpect(status().is(400))
                 .andDo(document("{methodName}"));
     }
@@ -89,7 +90,7 @@ public class SignInTest {
         this.mockMvc.perform(post("/user/sign-up")
                         .content(new Gson().toJson(user))
                         .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON))
+                        .accept(MediaType.APPLICATION_JSON).with(csrf()))
                 .andExpect(status().is(409))
                 .andDo(document("{methodName}"));
     }
@@ -100,7 +101,7 @@ public class SignInTest {
         this.mockMvc.perform(post("/user/sign-up")
                         .content(new Gson().toJson(user))
                         .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON))
+                        .accept(MediaType.APPLICATION_JSON).with(csrf()))
                 .andExpect(status().is(400))
                 .andDo(document("{methodName}"));
     }

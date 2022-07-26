@@ -1,11 +1,20 @@
 package com.company.sportHubPortal.Models;
 
-import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.springframework.lang.NonNull;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+import org.springframework.lang.NonNull;
 
 @Entity
 @Table(name = "user")
@@ -35,11 +44,12 @@ public class User {
 
   @ManyToMany
   @JoinTable(name = "subscriptions",
-          joinColumns = @JoinColumn(name = "user"),
-          inverseJoinColumns = @JoinColumn(name = "team"))
+      joinColumns = @JoinColumn(name = "user"),
+      inverseJoinColumns = @JoinColumn(name = "team"))
   private Set<Team> subscriptions = new HashSet<>();
 
-  public User(String firstName, String lastName, String email, String password, UserRole role, boolean enabled, Set<Team> subscriptions) {
+  public User(String firstName, String lastName, String email, String password, UserRole role,
+              boolean enabled, Set<Team> subscriptions) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.email = email;
@@ -89,7 +99,7 @@ public class User {
     subscriptions.remove(team);
   }
 
-  public void addSubscriptions(List<Team> teams){
+  public void addSubscriptions(List<Team> teams) {
     subscriptions.addAll(teams);
   }
 

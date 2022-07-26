@@ -5,12 +5,11 @@ import com.company.sportHubPortal.Models.Team;
 import com.company.sportHubPortal.Repositories.ArticleRepository;
 import com.company.sportHubPortal.Services.CategoryServices.CategoryService;
 import com.company.sportHubPortal.Services.TeamService;
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-
-import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class ArticleServiceImpl implements ArticleService {

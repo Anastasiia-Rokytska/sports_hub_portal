@@ -5,8 +5,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class MainController {
-    @RequestMapping("/{path:[^\\\\.]*}")
-    public String index() {
-        return "index.html";
-    }
+  @RequestMapping("/{path:[^\\\\.]*}")
+  public String index() {
+    return "index.html";
+  }
 }

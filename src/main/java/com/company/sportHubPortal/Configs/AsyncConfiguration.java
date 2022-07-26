@@ -1,5 +1,9 @@
 package com.company.sportHubPortal.Configs;
 
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -8,11 +12,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableAsync;
-
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
 
 
 @Configuration
@@ -35,7 +34,7 @@ public class AsyncConfiguration {
     } catch (IOException | ParseException e) {
       logger.info(e.getMessage());
     }
-    ScheduledExecutorService executor =  Executors.newScheduledThreadPool(corePoolSize);
+    ScheduledExecutorService executor = Executors.newScheduledThreadPool(corePoolSize);
 
     return executor;
   }

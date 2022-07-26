@@ -1,14 +1,12 @@
 package com.company.sportHubPortal.Models;
 
 
+import com.company.sportHubPortal.Repositories.UserRepository;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Objects;
 import java.util.Queue;
-import java.util.concurrent.*;
-
-
-import com.company.sportHubPortal.Repositories.UserRepository;
+import java.util.concurrent.LinkedBlockingQueue;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -19,12 +17,13 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.scheduling.annotation.Async;
 
 
-public class EmailSender implements Runnable{
+public class EmailSender implements Runnable {
 
   private final JavaMailSenderImpl javaMailSender;
   private EmailMessage emailMessage;
   Logger logger = LoggerFactory.getLogger(EmailSender.class);
-  private final String MESSAGE_QUEUE_CONFIG_PATH = "src/main/resources/configs/messageQueueConfigs.json";
+  private final String MESSAGE_QUEUE_CONFIG_PATH =
+      "src/main/resources/configs/messageQueueConfigs.json";
   int capacity;
   private static Queue<EmailMessage> messageQueue;
 
@@ -55,29 +54,30 @@ public class EmailSender implements Runnable{
   }
 
 
-  public boolean addToMessageQueue(UserRepository userRepository){
-    if(userRepository.getUserByEmail(this.emailMessage.getEmail())!= null && !isInQueue(this.emailMessage)){
+  public boolean addToMessageQueue(UserRepository userRepository) {
+    if (userRepository.getUserByEmail(this.emailMessage.getEmail()) != null
+        && !isInQueue(this.emailMessage)) {
       EmailSender.messageQueue.add(this.emailMessage);
       logger.info("Email message is successfully added to Message Queue");
       return true;
-    }
-    else{
+    } else {
       logger.info("Email message is not added to Message Queue");
       return false;
     }
   }
 
-  public boolean isInQueue(EmailMessage emailMessage){
-    for(EmailMessage message : messageQueue){
-      if (emailMessage.getEmail() == message.getEmail() && emailMessage.getType() == message.getType()){
-          return true;
+  public boolean isInQueue(EmailMessage emailMessage) {
+    for (EmailMessage message : messageQueue) {
+      if (emailMessage.getEmail().equals(message.getEmail())
+          && emailMessage.getType() == message.getType()) {
+        return true;
       }
     }
     return false;
   }
 
   @Override
-  public void run(){
+  public void run() {
     sendTextMessage();
   }
 

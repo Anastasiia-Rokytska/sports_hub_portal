@@ -1,7 +1,11 @@
 package com.company.sportHubPortal.Models;
 
-import javax.persistence.*;
-//import javax.persistence.Bean;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
@@ -18,11 +22,12 @@ public class EmailMessage {
   @Enumerated(EnumType.STRING)
   MessageType type;
 
-  public EmailMessage(){}
+  public EmailMessage() {
+  }
 
   @Autowired
-  public EmailMessage(String email, String subject, String text, MessageType type){
-    this.email=email;
+  public EmailMessage(String email, String subject, String text, MessageType type) {
+    this.email = email;
     this.subject = subject;
     this.text = text;
     this.type = type;
@@ -52,7 +57,11 @@ public class EmailMessage {
     this.email = email;
   }
 
-  public MessageType getType() {return type;}
+  public MessageType getType() {
+    return type;
+  }
 
-  public void setType(MessageType type) {this.type = type;}
+  public void setType(MessageType type) {
+    this.type = type;
+  }
 }

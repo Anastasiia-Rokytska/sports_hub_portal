@@ -4,15 +4,12 @@ import com.company.sportHubPortal.Models.User;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 public class CustomUserDetails implements UserDetails {
-  Logger logger = LoggerFactory.getLogger(CustomUserDetails.class);
-  private User user;
+  private final User user;
 
   public CustomUserDetails(User user) {
     super();
