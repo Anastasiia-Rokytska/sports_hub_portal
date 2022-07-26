@@ -5,9 +5,12 @@ import com.company.sportHubPortal.Models.Team;
 import com.company.sportHubPortal.Repositories.ArticleRepository;
 import com.company.sportHubPortal.Services.CategoryServices.CategoryService;
 import com.company.sportHubPortal.Services.TeamService;
+
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
@@ -54,7 +57,8 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public List<Article> getArticlesByCategoryId(Long id) {
-        List<Article> category = new ArrayList<>(categoryService.getCategoryById(id).getArticles());
+        List<Article> category = new ArrayList<>(categoryService.getCategoryById(id).getArticles().stream()
+                .filter(Article::isPublished).toList());
         category.sort(Comparator.comparingLong(Article::getId).reversed());
         return category;
     }

@@ -97,7 +97,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<Category> forCategoryEditor() {
-        List<Category> result = new ArrayList<>(getCategoryById(ROOT_CATEGORY_ID).getChildren().stream().toList());
+        List<Category> result = new ArrayList<>(getCategoryById(ROOT_CATEGORY_ID).getChildren().stream().filter(category -> !category.isTeam()).toList());
         result.sort(Comparator.comparing(Category::getId));
         return result;
     }

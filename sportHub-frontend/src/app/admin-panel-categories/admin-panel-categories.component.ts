@@ -122,13 +122,12 @@ export class AdminPanelCategoriesComponent implements OnInit {
 
   //function to show teams
   async showTeamItems(id: number) {
+    this.teams = [];
     if (id == AllTeamsId) {
       id = this.lastChosenCategory;
     }
-    this.thirdMenuVisible = true;
     await this.http.get<MenuItem[]>('/api/category/teams/' + id).subscribe(data => {
       this.teams = [...data];
-
       for (let i = 0; i < this.teams.length; i++) {
         if (this.editedItems.has(this.teams[i].id)) {
           this.teams[i] = Object.assign({}, this.editedItems.get(this.teams[i].id));
@@ -136,6 +135,7 @@ export class AdminPanelCategoriesComponent implements OnInit {
       }
       this.lastChosenSubcategory = id;
     });
+    this.thirdMenuVisible = true;
   }
 
   //function to hide/show menu items
@@ -269,13 +269,7 @@ export class AdminPanelCategoriesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.http.get<MenuItem[]>('/api/category').subscribe(data => {
-      if (data.length > 0) {
-        this.tempIdNewItem = data[data.length - 1].id + 1;
-      } else {
-        this.tempIdNewItem = 0;
-      }
-    });
+   this.refreshNewID();
     this.showMainCategories();
     this.getUser().subscribe((response: any) => {
       console.log("Response: ", response)
@@ -296,12 +290,23 @@ export class AdminPanelCategoriesComponent implements OnInit {
     return this.http.get("user/own_information", httpOptions)
   }
 
+  async refreshNewID(){
+    await this.http.get<MenuItem[]>('/api/category').subscribe(data => {
+      if (data.length > 0) {
+        this.tempIdNewItem = data[data.length - 1].id + 1;
+      } else {
+        this.tempIdNewItem = 0;
+      }
+    });
+  }
+
   async saveChanges() {
+    await this.refreshNewID();
     await this.newItems.forEach((value: MenuItem[], key: number) => {
       let temp = value;
       for (let i = 0; i < temp.length; i++) {
         let formData = new FormData();
-        formData.append('id', temp[i].id.toString());
+        formData.append('id', (this.tempIdNewItem++).toString());
         formData.append('name', temp[i].name);
         formData.append('hidden', temp[i].hidden.toString());
         formData.append('team', false.toString());
@@ -357,5 +362,6 @@ export class AdminPanelCategoriesComponent implements OnInit {
       showConfirmButton: false,
       timer: 1500
     })
+    await this.refreshNewID();
   }
 }
