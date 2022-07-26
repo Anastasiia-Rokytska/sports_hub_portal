@@ -31,7 +31,8 @@ public class CategoryController {
     if (category.getParentId() == null) {
       category.setParentId((long) 0);
     }
-    System.out.println(category);
+    logger.info(category.toString());
+
     categoryService.saveCategory(category);
     logger.info(new Object() {
     }.getClass().getEnclosingMethod().getName() + "() " + " New category: " + category.getName());
@@ -79,17 +80,17 @@ public class CategoryController {
   }
 
   @GetMapping("/category")
-  public ResponseEntity<Object> getCategories(){
+  public ResponseEntity<Object> getCategories() {
     return ResponseEntity.ok().body(categoryService.getCategories());
   }
 
   @GetMapping("/subcategory")
-  public ResponseEntity<Object> getSubCategories(){
+  public ResponseEntity<Object> getSubCategories() {
     return ResponseEntity.ok().body(categoryService.getSubCategories());
   }
 
   @GetMapping("/subcategory/{category}")
-  public ResponseEntity<Object> getSubCategoriesByCategory(@PathVariable String category){
+  public ResponseEntity<Object> getSubCategoriesByCategory(@PathVariable String category) {
     return ResponseEntity.ok().body(categoryService.getSubCategoriesByCategoryName(category));
   }
 
