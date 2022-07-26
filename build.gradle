@@ -41,14 +41,14 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'com.h2database:h2:2.1.210'
+	implementation 'com.h2database:h2:2.1.212'
 	implementation 'checkstyle:checkstyle:5.0'
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	runtimeOnly 'mysql:mysql-connector-java:8.0.29'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
 	implementation 'org.springframework.boot:spring-boot-configuration-processor'
-	implementation 'com.auth0:java-jwt:3.19.1'
+	implementation 'com.auth0:java-jwt:3.19.2'
 	implementation 'com.google.code.gson:gson:2.9.0'
 	implementation 'org.springframework.boot:spring-boot-starter-mail:2.6.7'
 	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc:2.0.6.RELEASE'
@@ -56,6 +56,10 @@ dependencies {
 	implementation 'org.springframework.security:spring-security-oauth2-client'
 	implementation 'org.springframework.security:spring-security-oauth2-jose'
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+	implementation 'org.webjars:webjars-locator-core'
+	implementation 'org.springframework.boot:spring-boot-starter-websocket'
+	implementation 'org.webjars:sockjs-client:1.5.1'
+	implementation 'org.webjars:stomp-websocket:2.3.4'
 }
 
 sonarqube {

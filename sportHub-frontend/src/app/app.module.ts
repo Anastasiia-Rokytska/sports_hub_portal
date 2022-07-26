@@ -21,7 +21,7 @@ import { LeftsideMenuComponent } from "./leftside-menu/leftside-menu.component";
 import { PersonalPageComponent } from './personal-page/personal-page.component';
 import { SegmentComponent } from './components/segment/segment/segment.component';
 import { MainPageComponent } from './main-page/main-page.component';
-import { AdminPanelComponent} from "./admin-panel/admin-panel.component";
+import { AdminPanelCategoriesComponent} from "./admin-panel-categories/admin-panel-categories.component";
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { HeaderAdminComponent } from './admin/header-admin/header-admin.component';
@@ -42,6 +42,8 @@ import { AdminPanelArticlesComponent } from "./admin-panel-articles/admin-panel-
 import { ClickOutsideModule } from "ng-click-outside";
 import { ArticleComponent } from "./article/article.component";
 import { EventEmitterService } from "./event-emitter.service";
+import { NotificationComponent } from './notification/notification.component';
+import { TeamHubComponent } from './team-hub/team-hub.component';
 
 
 @NgModule({
@@ -64,7 +66,7 @@ import { EventEmitterService } from "./event-emitter.service";
     PersonalPageComponent,
     SegmentComponent,
     MainPageComponent,
-    AdminPanelComponent,
+    AdminPanelCategoriesComponent,
     ForgotPasswordComponent,
     ResetPasswordComponent,
     HeaderAdminComponent,
@@ -76,7 +78,9 @@ import { EventEmitterService } from "./event-emitter.service";
     AllTeamsComponent,
     DropDownComponent,
     AdminPanelArticlesComponent,
-    ArticleComponent
+    ArticleComponent,
+    NotificationComponent,
+    TeamHubComponent
   ],
   imports: [
     BrowserModule,

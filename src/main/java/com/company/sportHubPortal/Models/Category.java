@@ -33,11 +33,22 @@ public class Category {
         this.articles.add(article);
     }
 
+
+
     public Category(@NonNull Long id, @NonNull String name, @NonNull Long parentId, @NonNull boolean hidden) {
         this.id = id;
         this.name = name;
         this.parentId = parentId;
         this.hidden = hidden;
+    }
+
+    public Category(@NonNull Long id, @NonNull String name, @NonNull Long parentId, @NonNull boolean hidden, Set<Article> articles) {
+        this.id = id;
+        this.name = name;
+        this.parentId = parentId;
+        this.hidden = hidden;
+        System.out.println(articles);
+        this.articles = articles;
     }
 
     public Category() {
@@ -70,4 +81,6 @@ public class Category {
     public void setHidden(boolean hidden) {
         this.hidden = hidden;
     }
+
+
 }

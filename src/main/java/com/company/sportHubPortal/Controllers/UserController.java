@@ -56,9 +56,7 @@ public class UserController {
                         JwtTokenService jwtTokenService,
                         EmailSenderService emailSenderService,
                         JavaMailSenderImpl javaMailSender,
-                        ScheduledExecutorService executor,
-                        OAuth2AuthorizedClientService authorizedClientService,
-                        Environment environment) {
+                        ScheduledExecutorService executor) {
     this.userService = userService;
     this.jwtTokenService = jwtTokenService;
     this.javaMailSender = javaMailSender;
@@ -150,7 +148,7 @@ public class UserController {
     if (user == null) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }
-    return ResponseEntity.ok(new Gson().toJson(user));
+    return ResponseEntity.ok(user);
   }
 
   @PostMapping("/check-old-pass")

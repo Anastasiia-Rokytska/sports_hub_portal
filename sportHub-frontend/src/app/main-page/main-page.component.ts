@@ -2,25 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {ActivatedRoute, Router} from "@angular/router";
 import {EventEmitterService} from "../event-emitter.service";
-
-interface MenuItem {
-  id: number;
-  hidden: boolean;
-  name: string;
-  parentId: number;
-}
-
-interface Article {
-  id: number;
-  title: string;
-  caption: string;
-  author: string;
-  categories: MenuItem[];
-  content: string;
-  publishedDate: string;
-  commentable: boolean;
-  language: string;
-}
+import {Article} from "../classes/Article";
 
 @Component({
   selector: 'main-page',
@@ -29,21 +11,13 @@ interface Article {
 })
 export class MainPageComponent implements OnInit {
   carouselArticles: Article[] = [];
-  activeArticle: Article = {
-    id: 0,
-    title: 'Temp_title',
-    caption: 'caption',
-    author: 'AUTHOR',
-    categories: [],
-    content: 'Content',
-    publishedDate: '2012-12-12',
-    commentable: false,
-    language: 'English'
-  };
+  activeArticle =new Article(0, "", "", "", [], "", "", false, "", null);
   otherArticles: Article[] = [];
   page: number = 1;
   noArticles: boolean = true;
   relativePath: string = '';
+  categorySorted: boolean = false;
+  allArticles: Article[] = [];
 
   constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router,
               private eventEmitterService: EventEmitterService) {
@@ -65,20 +39,32 @@ export class MainPageComponent implements OnInit {
     this.noArticles = true;
     this.getArticle(id).subscribe((response: any) => {
       console.log("response: ", response);
+      this.allArticles = new Array<Article>();
       if (response.length > 0) {
+        response.forEach((item: Article) => {
+          let id = item.id;
+          let title = item.title;
+          let caption = item.caption;
+          let author = item.author;
+          let categories = item.categories;
+          let content = item.content;
+          let publishedDate = item.publishedDate;
+          let commentable = item.commentable;
+          let language = item.language;
+          let icon = item.icon;
+          this.allArticles.push(new Article(id, title, caption, author, categories, content, publishedDate, commentable, language, icon));
+        });
         this.noArticles = false;
-        this.activeArticle = response[0];
-        this.carouselArticles = response;
-        /*if(response.length > 4){
-          this.otherArticles = response.slice(4, response.length);
+        this.activeArticle = this.allArticles[0];
+        this.carouselArticles = this.allArticles.slice(0, 4);
+        if(this.allArticles.length > 4){
+          this.otherArticles = this.allArticles.slice(4, this.allArticles.length);
         }
-        console.log("carouselArticles: ", this.carouselArticles);
-        console.log("otherArticles: ", this.otherArticles);*/
       }
       else{
         this.noArticles = true;
         this.carouselArticles = [];
-        /*this.otherArticles = [];*/
+        this.otherArticles = [];
       }
     }, (error) => {
       console.log("Error: ", error.error)
@@ -100,7 +86,6 @@ export class MainPageComponent implements OnInit {
 
   showCarouselArticle(id: number) {
     this.activeArticle = this.carouselArticles[id];
-    console.log("article: ", this.activeArticle);
   }
 
   pageUp() {
@@ -130,6 +115,7 @@ export class MainPageComponent implements OnInit {
         id = key;
       });
     });
+    this.categorySorted = id != 0;
     this.refreshArticles(id);
   }
 

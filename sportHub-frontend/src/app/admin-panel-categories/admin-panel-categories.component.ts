@@ -1,7 +1,6 @@
 import {Component, OnInit, ViewChildren} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {InputComponent} from '../components/input/input/input.component';
-import {Observable} from "rxjs";
 import Swal from "sweetalert2";
 
 
@@ -13,12 +12,12 @@ interface MenuItem {
 }
 
 @Component({
-  selector: 'admin-panel',
-  templateUrl: './admin-panel.component.html',
-  styleUrls: ['./admin-panel.component.css']
+  selector: 'admin-panel-categories',
+  templateUrl: './admin-panel-categories.component.html',
+  styleUrls: ['./admin-panel-categories.component.css']
 })
 
-export class AdminPanelComponent implements OnInit {
+export class AdminPanelCategoriesComponent implements OnInit {
   // variables to show and hide the menu
   secondMenuVisible: boolean = false;
   thirdMenuVisible: boolean = false;
@@ -368,13 +367,9 @@ export class AdminPanelComponent implements OnInit {
       }
     });
 
-
-
     this.newItems.clear();
     this.editedItems.clear();
     this.deletedItems.clear();
-
-
 
     Swal.fire({
       icon: 'success',

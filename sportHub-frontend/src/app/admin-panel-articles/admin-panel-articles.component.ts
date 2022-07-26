@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import {Component, Input, OnInit, ViewChildren} from '@angular/core';
+import {Component, OnInit, ViewChildren} from '@angular/core';
 import {InputComponent} from "../components/input/input/input.component";
 import Swal from "sweetalert2";
 
@@ -10,8 +10,9 @@ interface MenuItem{
   parentId: number;
 }
 
-interface category{
+interface team{
   id: number;
+  name: string
 }
 
 @Component({
@@ -33,7 +34,7 @@ export class AdminPanelArticlesComponent implements OnInit {
   selectedSubcategoryId: number = -1;
   selectedTeamId: number = -1;
   subcategories: MenuItem[] = [];
-  teams: MenuItem[] = [];
+  teams: Array<team> = [];
   articleContent: string = '';
   preview: boolean = false;
   previewMode: string = '';
@@ -41,11 +42,12 @@ export class AdminPanelArticlesComponent implements OnInit {
   headline: string = '';
   language: string = 'English';
   publishedDate: string = '';
-  errorMessage: boolean = false;
   userName: string = '';
   userEmail: string = '';
   userId: string = '';
   commentable: boolean = true;
+  imageUrl: string | undefined;
+  image = '../../../assets/images/userPhoto.jpg';
 
   ngOnInit(): void {
     this.getUser().subscribe((response: any) => {
@@ -80,9 +82,9 @@ export class AdminPanelArticlesComponent implements OnInit {
   async refreshTeams(subcategoryId: number){
     this.selectedTeamId= -1;
     if(this.selectedSubcategoryId != -1) {
-      await this.http.get<MenuItem[]>('/api/category/parent/visible/' + subcategoryId).subscribe(data => {
-        this.teams = data;
-      });
+      await this.http.get<Array<team>>('/team/' + subcategoryId).subscribe(data => {
+        this.teams = data
+      })
     }
   }
 
@@ -122,11 +124,15 @@ export class AdminPanelArticlesComponent implements OnInit {
     this.headline = Array.from(this.inputs)[0].value;
     this.caption = Array.from(this.inputs)[1].value;
     if(this.articleContent.length > 0 && this.headline.length > 0 && this.caption.length > 0){
-      this.errorMessage = false;
       this.showPreview();
     }
     else{
-      this.errorMessage = true;
+      Swal.fire({
+        icon: 'warning',
+        title: 'Headline, caption and content are required!',
+        showConfirmButton: false,
+        timer: 1500
+      })
     }
   }
 
@@ -167,32 +173,30 @@ export class AdminPanelArticlesComponent implements OnInit {
     this.selectedSubcategoryId = -1;
     this.selectedTeamId = -1;
     this.title = 'Choose category';
-    this.errorMessage = false;
+    this.imageUrl = undefined;
+    this.image = '../../../assets/images/userPhoto.jpg';
   }
 
   async saveArticle(){
     this.headline = Array.from(this.inputs)[0].value;
     this.caption = Array.from(this.inputs)[1].value;
-    this.publishedDate = new Date().toLocaleDateString();
     if(this.articleContent.length > 0 && this.headline.length > 0 && this.caption.length > 0){
-      this.errorMessage = false;
       this.previewMode = this.articleContent.replace(/\n+?/g, '<br>');
-
-      let categoriesTemp: category[] = [];
-      categoriesTemp.push({id: this.selectedCategoryId});
-      if(this.selectedSubcategoryId > 0){
-        categoriesTemp.push({id: this.selectedSubcategoryId});
+      let formData = new FormData();
+      formData.append('title', Array.from(this.inputs)[0].value);
+      formData.append('content', this.previewMode);
+      formData.append('author', this.userName);
+      formData.append('commentable', this.commentable.toString());
+      formData.append('language', this.language);
+      formData.append('caption', Array.from(this.inputs)[1].value);
+      if(this.imageUrl != undefined){
+        formData.append('icon', this.imageUrl);
       }
-      if(this.selectedTeamId > 0){
-        categoriesTemp.push({id: this.selectedTeamId});
-      }
-
-      let body = JSON.stringify({commentable: this.commentable, content:this.previewMode, caption: this.caption, title: this.headline, language: this.language, categories:categoriesTemp, author: this.userId});
-      const httpOptions = {
-        headers: new HttpHeaders({'Content-Type': 'application/json', 'Accept': 'application/json'})
-      }
-      await this.http.post<String>("/api/article", body, httpOptions).subscribe(
-        (data) => {
+      formData.append('selectedCategory', this.selectedCategoryId.toString());
+      formData.append('selectedSubCategory', this.selectedSubcategoryId.toString());
+      formData.append('selectedTeam', this.selectedTeamId.toString());
+      await this.http.post("/api/article", formData).subscribe(
+        () => {
           Swal.fire({
             icon: 'success',
             title: 'Successfully saved',
@@ -213,8 +217,21 @@ export class AdminPanelArticlesComponent implements OnInit {
       );
     }
     else{
-      this.errorMessage = true;
+      Swal.fire({
+        icon: 'warning',
+        title: 'Headline, caption and content are required',
+        showConfirmButton: false,
+        timer: 1500
+      })
     }
 
+  }
+  loadPhoto(event: any){
+    let reader = new FileReader()
+    this.imageUrl = event.target.files[0]
+    reader.readAsDataURL(event.target.files[0])
+    reader.onload = (readerEvent: any) => {
+      this.image = readerEvent.target.result
+    }
   }
 }

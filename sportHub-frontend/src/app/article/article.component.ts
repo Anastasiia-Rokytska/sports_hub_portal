@@ -5,26 +5,7 @@ import {Comment} from "../classes/Comment";
 import {Like} from "../classes/Like";
 import {User} from "../classes/User";
 import Swal from "sweetalert2";
-
-
-interface MenuItem {
-  id: number;
-  hidden: boolean;
-  name: string;
-  parentId: number;
-}
-
-interface Article {
-  id: number;
-  title: string;
-  caption: string;
-  author: string;
-  categories: MenuItem[];
-  content: string;
-  publishedDate: string;
-  commentable: boolean;
-  language: string;
-}
+import {Article} from "../classes/Article";
 
 @Component({
   selector: 'article-component',
@@ -36,17 +17,7 @@ export class ArticleComponent implements OnInit {
     headers: new HttpHeaders({'Content-Type': 'application/json', 'Accept': 'application/json'})
   }
   id: string | null | undefined;
-  article: Article = {
-    id: 0,
-    title: '',
-    caption: '',
-    author: '',
-    categories: [],
-    content: '',
-    publishedDate: '',
-    commentable: false,
-    language: ''
-  };
+  article = new Article(0, "","","",[],"","",false,"",null)
   userId: number = 0;
   comments: Comment[] = [];
   noComments: boolean = false;
@@ -69,9 +40,21 @@ export class ArticleComponent implements OnInit {
 
   ngOnInit(): void {
     this.getArticle().subscribe((response: any) => {
-      this.article = response;
       if (response == null) {
         this.router.navigate(['/'], {relativeTo: this.route});
+      }
+      this.article = new Article(response.id, response.title, response.caption, response.author, response.categories, response.content, response.publishedDate, response.commentable, response.language, response.icon);
+    }, (error) => {
+      console.log("Error: ", error.error)
+    });
+    this.reloadComments()
+    this.http.get("user/own_information", this.httpOptions).subscribe((response: any) => {
+      this.userId = response.id
+
+      if (response.photoLink != null) {
+        this.userPhoto = response.photoLink;
+      } else {
+        this.userPhoto = "../../assets/images/userPhoto.jpg";
       }
     }, (error) => {
       console.log("Error: ", error.error)
@@ -89,7 +72,7 @@ export class ArticleComponent implements OnInit {
       console.log("Error: ", error.error)
     });
   }
-
+        
   getArticle() {
     return this.http.get<Article>("/api/article/" + this.id, this.httpOptions)
   }
@@ -249,7 +232,7 @@ export class ArticleComponent implements OnInit {
       this.manageRepliedBlock(this.comments.indexOf(comment));
     }
   }
-
+  
   validateComment(context: string) {
     return (context.replace(/\s/g, "").length > 0);
   }
@@ -286,8 +269,6 @@ export class ArticleComponent implements OnInit {
     }
     this.editCommentContent = comment;
   }
-
-
 
   submitEdit(text: string) {
     if (this.validateComment(text)) {
