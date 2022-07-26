@@ -1,4 +1,5 @@
 package com.company.sportHubPortal.Controllers;
+
 import com.company.sportHubPortal.Models.Category;
 import com.company.sportHubPortal.Models.Team;
 import com.company.sportHubPortal.Models.User;
@@ -39,7 +40,7 @@ public class TeamController {
         this.userService = userService;
     }
 
-    @PostMapping(consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+    @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<Object> addNewTeam(@ModelAttribute TeamPOJO teamPOJO,
                                              @RequestPart String selectedCategory,
                                              @RequestPart String selectedSubCategory) {
@@ -62,14 +63,32 @@ public class TeamController {
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY)
                     .body("Team with latitude " + team.getLatitude() + " and longitude " + team.getLongitude() + " already exists");
         }
+        Category newTeam = new Category((long) categoryService.getAllCategories().size(), team.getName(), false);
+        newTeam.setTeam(true);
+        Set<Category> parents = new HashSet<>();
         if (!selectedCategory.equals("All")) {
             Category category = categoryService.getCategoryByName(selectedCategory);
-            if (category != null) team.setCategory(categoryService.getCategoryByName(selectedCategory));
+            if (category != null) {
+                team.setCategory(categoryService.getCategoryByName(selectedCategory));
+                parents.add(category);
+            }
+        } else {
+            parents.addAll(categoryService.forCategoryEditor());
         }
+
         if (!selectedSubCategory.equals("All")) {
             Category subcategory = categoryService.getCategoryByName(selectedSubCategory);
-            if (subcategory != null) team.setSubCategory(categoryService.getCategoryByName(selectedSubCategory));
+            if (subcategory != null) {
+                team.setSubCategory(categoryService.getCategoryByName(selectedSubCategory));
+                parents.add(subcategory);
+            }
+        } else if (!selectedCategory.equals("All")) {
+            parents.addAll(categoryService.getSubCategoriesByCategoryName(selectedCategory));
+        } else {
+            parents.addAll(categoryService.allCategoriesWithoutTeams());
         }
+        newTeam.setParents(parents);
+        categoryService.saveCategory(newTeam);
         teamService.saveTeam(team);
         logger.info("Success: " + team);
         return ResponseEntity.status(HttpStatus.OK).body(null);
@@ -84,7 +103,7 @@ public class TeamController {
     }
 
     @GetMapping("/count")
-    public ResponseEntity<Object> getTeamCount(){
+    public ResponseEntity<Object> getTeamCount() {
         return ResponseEntity.ok().body(teamService.teamsCount());
     }
 
@@ -92,9 +111,7 @@ public class TeamController {
     public ResponseEntity<Object> getAllLocations() {
         Set<String> locations = new HashSet<>();
         List<Team> allTeams = teamService.allTeams();
-        allTeams.forEach(team -> {
-            locations.add(team.getLocation());
-        });
+        allTeams.forEach(team -> locations.add(team.getLocation()));
         return ResponseEntity.ok().body(locations);
     }
 

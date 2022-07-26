@@ -9,19 +9,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 public class ArticleServiceImpl implements ArticleService {
     private final ArticleRepository articleRepository;
     private final TeamService teamService;
+    private final CategoryService categoryService;
 
-    public ArticleServiceImpl(ArticleRepository articleRepository, TeamService teamService) {
+    public ArticleServiceImpl(ArticleRepository articleRepository, TeamService teamService, CategoryService categoryService) {
         this.articleRepository = articleRepository;
         this.teamService = teamService;
+        this.categoryService = categoryService;
     }
 
     @Override
@@ -42,15 +42,6 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public List<Article> getArticlesByCategoryId(Long id) {
-        List<Article> articles = new ArrayList<>(articleRepository.findAll().stream()
-                .filter(article -> article.getCategories().stream()
-                        .anyMatch(category -> category.getId().equals(id))).toList());
-        Collections.reverse(articles);
-        return articles;
-    }
-
-    @Override
     public List<Article> getAllArticlesByTeam(Integer id, Integer page) {
         Team team = teamService.teamById(id);
         if (team == null) return null;
@@ -60,6 +51,12 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public Article getFullArticle(Article article) {
         return articleRepository.findFullArticle(article);
+    }
 
+    @Override
+    public List<Article> getArticlesByCategoryId(Long id) {
+        List<Article> category = new ArrayList<>(categoryService.getCategoryById(id).getArticles());
+        category.sort(Comparator.comparingLong(Article::getId).reversed());
+        return category;
     }
 }

@@ -39,7 +39,7 @@ public class Article {
     @Lob
     private Blob icon;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "article_category",
             joinColumns = @JoinColumn(name = "article_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id"))
@@ -126,7 +126,6 @@ public class Article {
         this.publishedDate = publishedDate;
         this.caption = caption;
         this.categories = categories;
-        this.icon = icon;
     }
 
     public Article() {

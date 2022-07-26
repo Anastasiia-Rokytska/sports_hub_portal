@@ -61,7 +61,7 @@ export class AdminPanelArticlesComponent implements OnInit {
     }, (error) => {
       console.log("Error: ", error.error)
     })
-    this.http.get<MenuItem[]>('/api/category/parent/visible/0').subscribe(data => {
+    this.http.get<MenuItem[]>('/api/category/category').subscribe(data => {
       this.categories = data;
     });
   }

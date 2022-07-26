@@ -11,9 +11,9 @@ public interface ArticleService {
 
     Article getArticleById(Long id);
 
-    List<Article> getArticlesByCategoryId(Long id);
-
     List<Article> getAllArticlesByTeam(Integer id, Integer page);
 
     Article getFullArticle(Article article);
+
+    List<Article> getArticlesByCategoryId(Long id);
 }

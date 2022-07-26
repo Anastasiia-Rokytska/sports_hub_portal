@@ -15,10 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/article")
@@ -64,6 +61,7 @@ public class ArticleController {
         }
         if(!selectedTeam.equals("-1")){
             article.setTeam(teamService.teamById(Integer.parseInt(selectedTeam)));
+            categories.add(categoryService.getCategoryByName(teamService.teamById(Integer.parseInt(selectedTeam)).getName()));
         }
         article.setCategories(categories);
         articleService.saveArticle(article);

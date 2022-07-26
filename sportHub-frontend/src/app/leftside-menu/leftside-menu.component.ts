@@ -27,7 +27,7 @@ export class LeftsideMenuComponent implements OnInit {
   path_arr: Map<number,string>[] = [];
 
   ngOnInit(): void {
-    this.http.get<MenuItem[]>('/api/category/parent/visible/0').subscribe(data => {
+    this.http.get<MenuItem[]>('/api/category/category').subscribe(data => {
       this.menuItems = data;
     });
   }
@@ -35,6 +35,7 @@ export class LeftsideMenuComponent implements OnInit {
   async showSecondMenu(id: number, name: string){
     if(this.router.url != '/' && this.router.url != '/admin/article'){
       this.router.navigate(['/'], {relativeTo: this.route});
+      return;
     }
     else {
       this.thirdMenuVisible = false;
@@ -59,7 +60,12 @@ export class LeftsideMenuComponent implements OnInit {
   }
 
   async showThirdMenu(id: number, name: string){
-    await this.http.get<MenuItem[]>('/api/category/parent/visible/' + id).subscribe(data => {
+    if(id == 13){
+      this.path_arr[0].forEach((value,key) =>{
+        id = key;
+      })
+    }
+    await this.http.get<MenuItem[]>('/api/category/teams/visible/' + id).subscribe(data => {
       if(data.length > 0){
         this.thirdMenuVisible = true;
         this.thirdMenuItems = data;

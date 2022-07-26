@@ -99,7 +99,7 @@
   </div>
 
   <div class="ThirdCategoryEditor" *ngIf="thirdMenuVisible">
-    <button type="button" class="addButton" (click)="showModalWindowAddItems(2)">+Add team</button>
+    <button type="button" class="addButton" (click)="redirectToTeamPage()">+Add team</button>
     <ul class="menuItems firstMenu">
       <li *ngFor="let item of teams">
         <div class="btn-group">
@@ -123,8 +123,6 @@
                               (click)="hideShowItems(item)">Hide</span>
                     <span class="dropdown-item" *ngIf="item.hidden == true"
                           (click)="hideShowItems(item)">Show</span>
-                    <span class="dropdown-item" (click)="deleteItemModal(item)">Delete</span>
-                    <span class="dropdown-item" (click)="editItemModal(item)">Edit</span>
                   </div>
                 </div>
               </div>

@@ -217,9 +217,11 @@ export class TeamsComponent implements OnInit{
       let providers = new Array<any>()
       providers.push({provide: StringInjector, useValue: {name: "SELECT SUBCATEGORY"}, multi: true})
       providers.push({provide: StringInjector, useValue: {name: "All"}, multi: true})
-      response.forEach((subcategory: any) => {
-        providers.push({provide: StringInjector, useValue: {name: subcategory.name}, multi: true})
-      })
+      if(category != "Home") {
+        response.forEach((subcategory: any) => {
+          providers.push({provide: StringInjector, useValue: {name: subcategory.name}, multi: true})
+        })
+      }
       this.subcategoriesInjector = Injector.create(providers, this.injector)
       this.dropDownSubCategoryComponent = DropDownComponent
     }, () => {

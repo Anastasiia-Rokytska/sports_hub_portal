@@ -1,6 +1,8 @@
 package com.company.sportHubPortal.Services.CategoryServices;
 
 import com.company.sportHubPortal.Models.Category;
+import com.company.sportHubPortal.POJO.CategoryPOJO;
+
 import java.util.List;
 
 public interface CategoryService {
@@ -14,7 +16,7 @@ public interface CategoryService {
 
   List<Category> getVisibleCategoriesByParentId(Long id);
 
-  Category updateCategory(Category category, Long id);
+  Category updateCategory(CategoryPOJO category, Long id);
 
   void deleteCategory(Long id);
 
@@ -25,4 +27,13 @@ public interface CategoryService {
   Category getCategoryByName(String name);
 
   List<Category> getSubCategoriesByCategoryName(String name);
+
+  List<Category> forCategoryEditor();
+
+  List<Category> allCategoriesWithoutTeams();
+
+  List<Category> getTeamsByCategoryId(Long id);
+
+  List<Category> getVisibleTeamsByCategoryId(Long id);
+
 }

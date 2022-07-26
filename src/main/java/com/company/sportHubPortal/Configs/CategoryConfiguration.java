@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Set;
 
 @Configuration
 public class CategoryConfiguration {
@@ -25,20 +26,20 @@ public class CategoryConfiguration {
 
     @Bean
     public void categoryConfig() {
-        categoryService.saveCategory(new Category(0L, "Home", 0L, false));
-        categoryService.saveCategory(new Category(1L, "NBA", 0L, false));
-        categoryService.saveCategory(new Category(2L, "NHL", 0L, false));
-        categoryService.saveCategory(new Category(3L, "NFL", 0L, false));
-        categoryService.saveCategory(new Category(4L, "UFC", 0L, false));
-        categoryService.saveCategory(new Category(5L, "AFC1", 1L, false));
-        categoryService.saveCategory(new Category(6L, "AFC2", 1L, false));
-        categoryService.saveCategory(new Category(7L, "AFC3", 1L, false));
-        categoryService.saveCategory(new Category(8L, "AFC4", 1L, false));
-        categoryService.saveCategory(new Category(9L, "LA", 8L, false));
-        categoryService.saveCategory(new Category(10L, "Lifestyle", 0L, false));
-        categoryService.saveCategory(new Category(11L, "Dealbook", 0L, false));
-        categoryService.saveCategory(new Category(12L, "Video", 0L, false));
-        categoryService.saveCategory(new Category(13L, "Team hub", 0L, false));
+        categoryService.saveCategory(new Category(0L, "Home", null, false, null, false));
+        categoryService.saveCategory(new Category(1L, "NBA", Set.of(categoryService.getCategoryById(0L)), false, null, false));
+        categoryService.saveCategory(new Category(2L, "NHL", Set.of(categoryService.getCategoryById(0L)), false, null, false));
+        categoryService.saveCategory(new Category(3L, "NFL", Set.of(categoryService.getCategoryById(0L)), false, null, false));
+        categoryService.saveCategory(new Category(4L, "UFC", Set.of(categoryService.getCategoryById(0L)), false, null, false));
+        categoryService.saveCategory(new Category(5L, "AFC1", Set.of(categoryService.getCategoryById(1L)), false, null, false));
+        categoryService.saveCategory(new Category(6L, "AFC2", Set.of(categoryService.getCategoryById(1L)), false, null, false));
+        categoryService.saveCategory(new Category(7L, "AFC3", Set.of(categoryService.getCategoryById(1L)), false, null, false));
+        categoryService.saveCategory(new Category(8L, "AFC4", Set.of(categoryService.getCategoryById(1L)), false, null, false));
+        categoryService.saveCategory(new Category(9L, "Lifestyle", Set.of(categoryService.getCategoryById(0L)), false, null, false));
+        categoryService.saveCategory(new Category(10L, "Dealbook", Set.of(categoryService.getCategoryById(0L)), false, null, false));
+        categoryService.saveCategory(new Category(11L, "Video", Set.of(categoryService.getCategoryById(0L)), false, null, false));
+        categoryService.saveCategory(new Category(12L, "Team hub", Set.of(categoryService.getCategoryById(0L)), false, null, false));
+        categoryService.saveCategory(new Category(13L, "All Teams", new HashSet<>(categoryService.forCategoryEditor()), false, null, false));
     }
 
     @Bean
