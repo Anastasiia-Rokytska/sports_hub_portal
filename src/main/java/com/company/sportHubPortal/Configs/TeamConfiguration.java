@@ -18,15 +18,14 @@ import java.sql.SQLException;
 public class TeamConfiguration {
 
     private final TeamService teamService;
+    private final ResourceLoader resourceLoader;
     private final CategoryService categoryService;
     private final ArticleService articleService;
 
     @Autowired
-    private ResourceLoader resourceLoader;
-
-    @Autowired
-    public TeamConfiguration(TeamService teamService, CategoryService categoryService, ArticleService articleService) {
+    public TeamConfiguration(TeamService teamService, ResourceLoader resourceLoader, CategoryService categoryService, ArticleService articleService) {
         this.teamService = teamService;
+        this.resourceLoader = resourceLoader;
         this.categoryService = categoryService;
         this.articleService = articleService;
     }

@@ -9,10 +9,7 @@ import com.google.gson.Gson;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.Calendar;
 import java.util.Date;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -34,7 +31,6 @@ public class JwtTokenService {
   private final Algorithm algorithm;
   private final CustomUserDetailsService userDetailsService;
   private Tokens tokens;
-  Logger logger = LoggerFactory.getLogger(JwtTokenService.class);
 
   @Autowired
   public JwtTokenService(Algorithm algorithm, CustomUserDetailsService userDetailsService) {
@@ -43,7 +39,6 @@ public class JwtTokenService {
   }
 
   public String createRefreshToken(String email) {
-    Calendar date = Calendar.getInstance();
     LocalDate expirationTimeRefreshToken = LocalDate.now().plusMonths(1);
     return JWT.create()
         .withExpiresAt(
@@ -53,8 +48,7 @@ public class JwtTokenService {
   }
 
   public String createAccessToken(String email) {
-    Calendar date = Calendar.getInstance();
-    LocalDateTime expirationTimeAccessToken = LocalDateTime.now().plusMinutes(15);
+    LocalDateTime expirationTimeAccessToken = LocalDateTime.now().plusSeconds(15);
     return JWT.create()
         .withExpiresAt(
             Date.from(expirationTimeAccessToken.atZone(ZoneId.systemDefault()).toInstant()))
@@ -73,14 +67,10 @@ public class JwtTokenService {
   }
 
   public String refreshAccessToken(String refreshToken) throws Exception {
-    try {
-      JWTVerifier verifier = JWT.require(algorithm).build();
-      DecodedJWT decodedJWT = verifier.verify(refreshToken);
-      String email = decodedJWT.getSubject();
-      return createAccessToken(email);
-    } catch (Exception exception) {
-      throw exception;
-    }
+    JWTVerifier verifier = JWT.require(algorithm).build();
+    DecodedJWT decodedJWT = verifier.verify(refreshToken);
+    String email = decodedJWT.getSubject();
+    return createAccessToken(email);
   }
 
   public Authentication getAuthentication(String token) throws Exception {
