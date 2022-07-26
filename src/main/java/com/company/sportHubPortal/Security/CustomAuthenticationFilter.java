@@ -57,7 +57,6 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
     String password = jsonRequest.get("password");
     CustomUserDetails userDetails = userDetailsService.loadUserByUsername(email);
     logger.info("Email is " + email);
-    logger.info("Password is " + password);
     logger.info("Role is " + userDetails.getAuthorities());
     UsernamePasswordAuthenticationToken authenticationToken =
         new UsernamePasswordAuthenticationToken(email, password, userDetails.getAuthorities());
@@ -75,8 +74,10 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
     Cookie refreshTokenCookie = new Cookie("refresh_token", refreshToken);
     accessTokenCookie.setHttpOnly(true);
     accessTokenCookie.setPath("/");
+    accessTokenCookie.setSecure(true);
     refreshTokenCookie.setHttpOnly(true);
     refreshTokenCookie.setPath("/");
+    refreshTokenCookie.setSecure(true);
     response.addCookie(accessTokenCookie);
     response.addCookie(refreshTokenCookie);
     logger.info("Successful authentication");

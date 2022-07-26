@@ -5,8 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
@@ -28,7 +28,7 @@ public class LoginTests {
         this.mockMvc.perform(post("/user/login")
                         .content(new Gson().toJson(user))
                         .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON))
+                        .accept(MediaType.APPLICATION_JSON).with(csrf()))
                 .andExpect(status().isOk())
                 .andDo(document("{methodName}"));
     }
@@ -38,7 +38,7 @@ public class LoginTests {
         this.mockMvc.perform(post("/user/login")
                         .content(new Gson().toJson(user))
                         .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON))
+                        .accept(MediaType.APPLICATION_JSON).with(csrf()))
                 .andExpect(status().isBadRequest())
                 .andDo(document("{methodName}"));
     }
@@ -49,7 +49,7 @@ public class LoginTests {
         this.mockMvc.perform(post("/user/login")
                         .content(new Gson().toJson(user))
                         .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON))
+                        .accept(MediaType.APPLICATION_JSON).with(csrf()))
                 .andExpect(status().isUnauthorized())
                 .andDo(document("{methodName}"));
     }
@@ -60,7 +60,7 @@ public class LoginTests {
         this.mockMvc.perform(post("/user/login")
                         .content(new Gson().toJson(user))
                         .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON))
+                        .accept(MediaType.APPLICATION_JSON).with(csrf()))
                 .andExpect(status().isBadRequest())
                 .andDo(document("{methodName}"));
     }

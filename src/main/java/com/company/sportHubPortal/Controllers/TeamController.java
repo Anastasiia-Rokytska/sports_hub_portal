@@ -92,9 +92,7 @@ public class TeamController {
     public ResponseEntity<Object> getAllLocations() {
         Set<String> locations = new HashSet<>();
         List<Team> allTeams = teamService.allTeams();
-        allTeams.forEach(team -> {
-            locations.add(team.getLocation());
-        });
+        allTeams.forEach(team -> locations.add(team.getLocation()));
         return ResponseEntity.ok().body(locations);
     }
 

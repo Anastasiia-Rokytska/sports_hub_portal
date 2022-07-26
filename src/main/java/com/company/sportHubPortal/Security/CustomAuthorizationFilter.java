@@ -1,5 +1,6 @@
 package com.company.sportHubPortal.Security;
 
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.company.sportHubPortal.Services.JwtTokenService;
 import java.io.IOException;
 import javax.servlet.FilterChain;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -68,18 +70,36 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
           try {
             Authentication authentication = jwtTokenService.getAuthentication(accessToken);
             SecurityContextHolder.getContext().setAuthentication(authentication);
-            logger.info("Principal: "
-                + SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
-            logger.info("Is authenticated: "
-                + SecurityContextHolder.getContext().getAuthentication().isAuthenticated());
+            UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            logger.info("User: " + userDetails.getUsername());
             filterChain.doFilter(request, response);
           } catch (Exception e) {
-            logger.error(e.getMessage());
-            response.sendRedirect("/login");
+            if (e instanceof TokenExpiredException) {
+              Cookie refreshTokenCookie = WebUtils.getCookie(request, "refresh_token");
+              if (refreshTokenCookie == null) {
+                logger.error("Refresh token is null");
+                throw new NullPointerException("Refresh token is null");
+              }
+              else {
+                try {
+                  String updatedAccessToken = jwtTokenService.refreshAccessToken(refreshTokenCookie.getValue());
+                  accessTokenCookie.setMaxAge(0);
+                  response.addCookie(new Cookie("access_token", updatedAccessToken));
+                  logger.info("Access token was updated");
+                  Authentication authentication = jwtTokenService.getAuthentication(updatedAccessToken);
+                  SecurityContextHolder.getContext().setAuthentication(authentication);
+                  filterChain.doFilter(request, response);
+                } catch (Exception exception) {
+                  logger.error(exception);
+                }
+              }
+            } else {
+              logger.error(e.getMessage());
+            }
           }
         } else {
           logger.error("Access token is null");
-          throw new NullPointerException();
+          throw new NullPointerException("Access token is null");
         }
       } else {
         logger.warn("access_token cookie is null");
