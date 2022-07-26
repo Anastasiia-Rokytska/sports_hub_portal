@@ -53,6 +53,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
       }
       e.printStackTrace();
     }
+    assert jsonRequest != null;
     String email = jsonRequest.get("email");
     String password = jsonRequest.get("password");
     CustomUserDetails userDetails = userDetailsService.loadUserByUsername(email);
@@ -70,14 +71,17 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
     jwtTokenService.createRefreshAndAccessToken(user.getUsername());
     String accessToken = jwtTokenService.getAccessToken();
     String refreshToken = jwtTokenService.getRefreshToken();
+
     Cookie accessTokenCookie = new Cookie("access_token", accessToken);
-    Cookie refreshTokenCookie = new Cookie("refresh_token", refreshToken);
     accessTokenCookie.setHttpOnly(true);
     accessTokenCookie.setPath("/");
     accessTokenCookie.setSecure(true);
+
+    Cookie refreshTokenCookie = new Cookie("refresh_token", refreshToken);
     refreshTokenCookie.setHttpOnly(true);
     refreshTokenCookie.setPath("/");
     refreshTokenCookie.setSecure(true);
+
     response.addCookie(accessTokenCookie);
     response.addCookie(refreshTokenCookie);
     logger.info("Successful authentication");

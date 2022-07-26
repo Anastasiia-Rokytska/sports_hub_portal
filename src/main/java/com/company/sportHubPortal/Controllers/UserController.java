@@ -1,13 +1,13 @@
 package com.company.sportHubPortal.Controllers;
 
+import com.company.sportHubPortal.Models.EmailMessage;
+import com.company.sportHubPortal.Models.EmailSender;
+import com.company.sportHubPortal.Models.GenerationLinkStrategy;
+import com.company.sportHubPortal.Models.MessageType;
+import com.company.sportHubPortal.Models.ResetPasswordLink;
 import com.company.sportHubPortal.Models.User;
 import com.company.sportHubPortal.Models.UserRole;
-import com.company.sportHubPortal.Models.EmailSender;
-import com.company.sportHubPortal.Models.EmailMessage;
-import com.company.sportHubPortal.Models.MessageType;
-import com.company.sportHubPortal.Models.GenerationLinkStrategy;
 import com.company.sportHubPortal.Models.VerifyLink;
-import com.company.sportHubPortal.Models.ResetPasswordLink;
 import com.company.sportHubPortal.Security.CustomUserDetails;
 import com.company.sportHubPortal.Services.EmailSenderService;
 import com.company.sportHubPortal.Services.JwtTokenService;
@@ -22,6 +22,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,7 +32,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 @RestController
 @RequestMapping("/user")
@@ -59,6 +59,7 @@ public class UserController {
     this.javaMailSender = javaMailSender;
     this.executor = executor;
     this.emailSenderService = emailSenderService;
+
   }
 
   public static boolean validate(String emailStr) {
@@ -108,10 +109,11 @@ public class UserController {
         user.getVerificationCode()
     );
 
-    EmailMessage emailMessage = new EmailMessage(user.getEmail(), "Verification code", message, MessageType.VERIFY);
+    EmailMessage emailMessage =
+        new EmailMessage(user.getEmail(), "Verification code", message, MessageType.VERIFY);
     EmailSender emailSender = new EmailSender(javaMailSender, emailMessage);
     emailSenderService.setEmailSender(emailSender);
-    if(!emailSenderService.sendEmailInSeparateThread()){
+    if (!emailSenderService.sendEmailInSeparateThread()) {
       return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(null);
     }
 
@@ -227,10 +229,11 @@ public class UserController {
     logger.info("new PassHash was saved");
 
     String emailText = "http://localhost:8000/reset-password/" + user.getRecoverPassHash();
-    EmailMessage emailMessage = new EmailMessage(user.getEmail(), "Reset password", emailText, MessageType.RESET_PASSWORD);
+    EmailMessage emailMessage =
+        new EmailMessage(user.getEmail(), "Reset password", emailText, MessageType.RESET_PASSWORD);
     EmailSender emailSender = new EmailSender(javaMailSender, emailMessage);
     emailSenderService.setEmailSender(emailSender);
-    if(!emailSenderService.sendEmailInSeparateThread()){
+    if (!emailSenderService.sendEmailInSeparateThread()) {
       return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(null);
     }
     logger.info("Email is sent");

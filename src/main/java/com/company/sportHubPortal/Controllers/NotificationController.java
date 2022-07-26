@@ -9,9 +9,9 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class NotificationController {
 
-    @MessageMapping("/message")
-    @SendToUser("/team/new-article")
-    public ResponseEntity<Article> getMessageUser(Article article){
-        return ResponseEntity.ok(article);
-    }
+  @MessageMapping("/message")
+  @SendToUser("/team/new-article")
+  public ResponseEntity<Article> getMessageUser(Article article) {
+    return ResponseEntity.ok(article);
+  }
 }

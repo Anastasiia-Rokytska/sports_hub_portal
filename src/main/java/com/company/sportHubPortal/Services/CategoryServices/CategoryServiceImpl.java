@@ -63,17 +63,17 @@ public class CategoryServiceImpl implements CategoryService {
   }
 
   @Override
-  public List<Category> getCategories(){
+  public List<Category> getCategories() {
     return categoryRepository.findAllByParentId(0L);
   }
 
   @Override
-  public List<Category> getSubCategories(){
+  public List<Category> getSubCategories() {
     return categoryRepository.findAllByParentIdNot(0L);
   }
 
   @Override
-  public Category getCategoryByName(String name){
+  public Category getCategoryByName(String name) {
     return categoryRepository.findByName(name);
   }
 

@@ -12,28 +12,30 @@ group = 'com.company'
 version = '0.0.1-SNAPSHOT'
 
 checkstyle {
-	toolVersion = '10.1'
-	config = rootProject.resources.text.fromFile('config/checkstyle/checkstyle.xml')
+    toolVersion = '10.1'
+    config = rootProject.resources.text.fromFile('config/checkstyle/checkstyle.xml')
 }
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 asciidoctor {
-	sourceDir file('documentation/asciidoc')
-	outputDir = file('documentation')
-	attributes \
-      'snippets': file('target/generated-snippets')
+    sourceDir file('documentation/asciidoc')
+    outputDir = file('documentation')
+    attributes  \
+       'snippets': file('target/generated-snippets')
 }
 
 
 task deleteStaticFolder(type: Delete) {
-	def dirName = "src/main/resources/static"
-	file( dirName ).list().each{
-		f ->
-			delete "${dirName}/${f}"
-	}
+    def dirName = "src/main/resources/static"
+    file(dirName).list().each {
+        f ->
+            delete "${dirName}/${f}"
+    }
 }
+
 processResources.dependsOn('sportHub-frontend:build')
+
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-security'
@@ -69,6 +71,6 @@ sonarqube {
 }
 
 tasks.named('test') {
-	useJUnitPlatform()
+    useJUnitPlatform()
 }
 
