@@ -1,20 +1,18 @@
 package com.company.sportHubPortal.Controllers;
 
 import com.company.sportHubPortal.Models.Category;
+import com.company.sportHubPortal.POJO.CategoryPOJO;
 import com.company.sportHubPortal.Services.CategoryServices.CategoryService;
+
 import java.util.List;
+import java.util.Set;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/category")
@@ -26,14 +24,21 @@ public class CategoryController {
     this.categoryService = categoryService;
   }
 
-  @PostMapping()
-  public ResponseEntity<Category> saveCategory(@RequestBody Category category) {
-    if (category.getParentId() == null) {
-      category.setParentId((long) 0);
+  @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+  public ResponseEntity<Category> saveCategory(@ModelAttribute CategoryPOJO categoryPOJO,
+                                               @RequestPart String parentCategoryId) {
+    Category category;
+    category = new Category(categoryPOJO.getId(), categoryPOJO.getName(), categoryPOJO.isHidden());
+    if (categoryService.getCategoryById(Long.parseLong(parentCategoryId)) != null) {
+      category.setParents(Set.of(categoryService.getCategoryById(Long.parseLong(parentCategoryId))));
     }
-    logger.info(category.toString());
-
+    System.out.println(category);
     categoryService.saveCategory(category);
+    if (Long.parseLong(parentCategoryId) == 0L) {
+      Category allTeams = categoryService.getCategoryByName("All Teams");
+      allTeams.addParent(category);
+      categoryService.saveCategory(allTeams);
+    }
     logger.info(new Object() {
     }.getClass().getEnclosingMethod().getName() + "() " + " New category: " + category.getName());
     return ResponseEntity.ok(category);
@@ -59,15 +64,21 @@ public class CategoryController {
     return categoryService.getVisibleCategoriesByParentId(id);
   }
 
-  @PutMapping("/{id}")
+  @GetMapping("/teams/visible/{id}")
+  public List<Category> getVisibleTeamsByCategoryId(@PathVariable("id") Long id) {
+    return categoryService.getVisibleTeamsByCategoryId(id);
+  }
+
+  @PutMapping(value = "/{id}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
   public ResponseEntity<Category> updateCategory(@PathVariable("id") Long id,
-                                                 @RequestBody Category category) {
-    if (categoryService.updateCategory(category, id) == null) {
+                                                 @ModelAttribute CategoryPOJO categoryPOJO) {
+    Category category = categoryService.updateCategory(categoryPOJO, id);
+    if (category == null) {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
     logger.info(new Object() {
     }.getClass().getEnclosingMethod().getName() + "() " + " Updated category: "
-        + category.getName());
+            + category.getName());
     return ResponseEntity.ok(category);
   }
 
@@ -94,5 +105,14 @@ public class CategoryController {
     return ResponseEntity.ok().body(categoryService.getSubCategoriesByCategoryName(category));
   }
 
+  @GetMapping("/editor")
+  public ResponseEntity<Object> forCategoryEditor() {
+    return ResponseEntity.ok().body(categoryService.forCategoryEditor());
+  }
+
+  @GetMapping("/teams/{id}")
+  public ResponseEntity<Object> getTeamsByCategoryId(@PathVariable Long id) {
+    return ResponseEntity.ok().body(categoryService.getTeamsByCategoryId(id));
+  }
 
 }

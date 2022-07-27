@@ -11,6 +11,8 @@ interface MenuItem {
   parentId: number;
 }
 
+const AllTeamsId: number = 13;
+
 @Component({
   selector: 'admin-panel-categories',
   templateUrl: './admin-panel-categories.component.html',
@@ -37,124 +39,110 @@ export class AdminPanelCategoriesComponent implements OnInit {
   lastChosenSubcategory: number = 0;
 
   //variables to show/hide modal
-  tempIdNewItem: number =20000;
+  tempIdNewItem: number = 20000;
   newParentId = new Map<number, number>();
 
   userName: string = "";
   userEmail: string = "";
 
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
   @ViewChildren(InputComponent) inputs: InputComponent[] = [];
 
   //function to show main categories
-  async showMainCategories(){
-    await this.http.get<MenuItem[]>('/api/category/parent/all/' + 0).subscribe(data => {
+  async showMainCategories() {
+    await this.http.get<MenuItem[]>('/api/category/editor').subscribe(data => {
       this.menuItems = [...data];
 
-      if(this.newItems.has(0)){
+      if (this.newItems.has(0)) {
         let temp = this.newItems.get(0);
-        for(let i = 0; i < temp!.length;i++){
+        for (let i = 0; i < temp!.length; i++) {
           this.menuItems.push(temp![i]);
         }
       }
 
-      for(let i = 0 ; i < this.menuItems.length ; i++){
-        if(this.editedItems.has(this.menuItems[i].id)){
-          this.menuItems[i] = Object.assign({},this.editedItems.get(this.menuItems[i].id));
+      for (let i = 0; i < this.menuItems.length; i++) {
+        if (this.editedItems.has(this.menuItems[i].id)) {
+          this.menuItems[i] = Object.assign({}, this.editedItems.get(this.menuItems[i].id));
         }
       }
 
-      if(this.deletedItems.has(0)){
+      if (this.deletedItems.has(0)) {
         let temp = this.deletedItems.get(0);
-        for(let i = 0 ; i < this.menuItems.length ; i++){
-          if(temp!.indexOf(this.menuItems[i].id) !== -1){
-            this.menuItems.splice(i,1);
+        for (let i = 0; i < this.menuItems.length; i++) {
+          if (temp!.indexOf(this.menuItems[i].id) !== -1) {
+            this.menuItems.splice(i, 1);
             i--;
           }
         }
       }
-
-      this.menuItems = this.menuItems.reverse();
-
+      this.menuItems.forEach(item => {
+        item.parentId = 0;
+      });
     });
   }
 
   //function to show sub categories
-  async showSubcategoryItems(id : number){
+  async showSubcategoryItems(id: number) {
     this.thirdMenuVisible = false;
     this.secondMenuVisible = true;
     await this.http.get<MenuItem[]>('/api/category/parent/all/' + id).subscribe(data => {
       this.subcategory = [...data];
 
-      if(this.newItems.has(id)){
+      if (this.newItems.has(id)) {
         let temp = this.newItems.get(id);
-        for(let i = 0; i < temp!.length;i++){
+        for (let i = 0; i < temp!.length; i++) {
           this.subcategory.push(temp![i]);
         }
       }
 
-      for(let i = 0 ; i < this.subcategory.length ; i++){
-        if(this.editedItems.has(this.subcategory[i].id)){
-          this.subcategory[i] = Object.assign({},this.editedItems.get(this.subcategory[i].id));
+      for (let i = 0; i < this.subcategory.length; i++) {
+        if (this.editedItems.has(this.subcategory[i].id)) {
+          this.subcategory[i] = Object.assign({}, this.editedItems.get(this.subcategory[i].id));
         }
       }
 
-      if(this.deletedItems.has(id)){
+      if (this.deletedItems.has(id)) {
         let temp = this.deletedItems.get(id);
-        for(let i = 0 ; i < this.subcategory.length ; i++){
-          if(temp!.indexOf(this.subcategory[i].id) !== -1){
-            this.subcategory.splice(i,1);
+        for (let i = 0; i < this.subcategory.length; i++) {
+          if (temp!.indexOf(this.subcategory[i].id) !== -1) {
+            this.subcategory.splice(i, 1);
             i--;
           }
         }
       }
-
-      this.subcategory = this.subcategory.reverse();
+      this.subcategory.forEach(item => {
+        item.parentId = id;
+      })
     });
     this.lastChosenCategory = id;
   }
 
   //function to show teams
-  async showTeamItems(id : number){
-    await this.http.get<MenuItem[]>('/api/category/parent/all/' + id).subscribe(data => {
+  async showTeamItems(id: number) {
+    this.teams = [];
+    if (id == AllTeamsId) {
+      id = this.lastChosenCategory;
+    }
+    await this.http.get<MenuItem[]>('/api/category/teams/' + id).subscribe(data => {
       this.teams = [...data];
-
-      if(this.newItems.has(id)){
-        let temp = this.newItems.get(id);
-        for(let i = 0; i < temp!.length;i++){
-          this.teams.push(temp![i]);
+      for (let i = 0; i < this.teams.length; i++) {
+        if (this.editedItems.has(this.teams[i].id)) {
+          this.teams[i] = Object.assign({}, this.editedItems.get(this.teams[i].id));
         }
       }
-
-      for(let i = 0 ; i < this.teams.length ; i++){
-        if(this.editedItems.has(this.teams[i].id)){
-          this.teams[i] = Object.assign({},this.editedItems.get(this.teams[i].id));
-        }
-      }
-
-      if(this.deletedItems.has(id)){
-        let temp = this.deletedItems.get(id);
-        for(let i = 0 ; i < this.teams.length ; i++){
-          if(temp!.indexOf(this.teams[i].id) !== -1){
-            this.teams.splice(i,1);
-            i--;
-          }
-        }
-      }
-
-      this.teams = this.teams.reverse();
+      this.lastChosenSubcategory = id;
     });
     this.thirdMenuVisible = true;
-    this.lastChosenSubcategory = id;
   }
 
   //function to hide/show menu items
-  hideShowItems(item : MenuItem) {
+  hideShowItems(item: MenuItem) {
     let keyItem = item.id;
     let tempItem: MenuItem = item;
-    if(this.editedItems.has(keyItem)){
+    if (this.editedItems.has(keyItem)) {
       tempItem = this.editedItems.get(keyItem)!;
     }
     tempItem.hidden = !tempItem.hidden;
@@ -163,24 +151,19 @@ export class AdminPanelCategoriesComponent implements OnInit {
   }
 
   //function to show modal
-  showModalWindowAddItems(id : number){
+  showModalWindowAddItems(id: number) {
     let title = 'title'
     let tempId = 0
-    if(id === 0){
+    if (id === 0) {
       title = 'Add Category';
-    }
-    else if(id === 1){
+    } else if (id === 1) {
       title = 'Add Subcategory';
       tempId = this.lastChosenCategory;
     }
-    else if(id === 2){
-      title = 'Add Team';
-      tempId = this.lastChosenSubcategory;
-    }
     Swal.fire({
       title: title,
-      input:"text",
-      inputPlaceholder:'Name your menu item',
+      input: "text",
+      inputPlaceholder: 'Name your menu item',
       showCancelButton: true,
       confirmButtonColor: '#E02232',
       cancelButtonColor: '#E02232',
@@ -193,10 +176,14 @@ export class AdminPanelCategoriesComponent implements OnInit {
     })
   }
 
+  redirectToTeamPage() {
+    window.open('/admin/teams', '_blank');
+  }
+
   //function to add new item
-  submitButtonAddItems(id: number, name : string){
+  submitButtonAddItems(id: number, name: string) {
     let tempNewItems: MenuItem[] = [];
-    if(this.newItems.has(id)){
+    if (this.newItems.has(id)) {
       tempNewItems = this.newItems.get(id)!;
     }
     let newItem: MenuItem = {
@@ -211,17 +198,17 @@ export class AdminPanelCategoriesComponent implements OnInit {
     console.log(this.newItems)
   }
 
-  submitButtonEditItems(item: MenuItem, name : string){
+  submitButtonEditItems(item: MenuItem, name: string) {
     item.name = name;
     this.editedItems.set(item.id, item);
     this.reloadItems(item.parentId);
   }
 
-  deleteItemModal(item : MenuItem){
+  deleteItemModal(item: MenuItem) {
     Swal.fire({
-      title : 'Are you sure?',
-      text : 'You are going to delete ' + item.name,
-      icon : 'warning',
+      title: 'Are you sure?',
+      text: 'You are going to delete ' + item.name,
+      icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#E02232',
       cancelButtonColor: '#E02232',
@@ -236,8 +223,8 @@ export class AdminPanelCategoriesComponent implements OnInit {
   async editItemModal(item: MenuItem) {
     Swal.fire({
       title: 'Edit item',
-      input:"text",
-      inputPlaceholder:'Name your menu item',
+      input: "text",
+      inputPlaceholder: 'Name your menu item',
       showCancelButton: true,
       confirmButtonColor: '#E02232',
       cancelButtonColor: '#E02232',
@@ -251,21 +238,22 @@ export class AdminPanelCategoriesComponent implements OnInit {
   }
 
   //function to delete item
-  submitButtonDeleteItems(item : MenuItem){
+  submitButtonDeleteItems(item: MenuItem) {
     let tempDeletedItems: number[] = [];
-    if(this.deletedItems.has(item.parentId)){
+    console.log(item.parentId)
+    if (this.deletedItems.has(item.parentId)) {
       tempDeletedItems = this.deletedItems.get(item.parentId)!;
     }
     tempDeletedItems.push(item.id);
     this.deletedItems.set(item.parentId, tempDeletedItems);
     let tempItems: MenuItem[] = [];
     tempDeletedItems = [];
-    this.http.get<MenuItem[]>('/api/category/parent/' + item.id).subscribe(data => {
+    this.http.get<MenuItem[]>('/api/category/parent/all/' + item.id).subscribe(data => {
       tempItems = [...data];
-      if(this.deletedItems.has(item.id)){
+      if (this.deletedItems.has(item.id)) {
         tempDeletedItems = this.deletedItems.get(item.id)!;
       }
-      for(let i = 0 ; i < tempItems.length ; i++){
+      for (let i = 0; i < tempItems.length; i++) {
         tempDeletedItems.push(tempItems[i].id);
       }
       this.deletedItems.set(item.id, tempDeletedItems);
@@ -274,30 +262,19 @@ export class AdminPanelCategoriesComponent implements OnInit {
   }
 
   //function to reload items
-  reloadItems(id : number){
-    if(id === 0){
-      this.showMainCategories();
-    }
-    else if(id === this.lastChosenCategory){
-      this.showSubcategoryItems(this.lastChosenCategory);
-    }
-    else{
-      this.showTeamItems(this.lastChosenSubcategory);
-    }
+  reloadItems(id: number) {
+    this.showMainCategories();
+    this.secondMenuVisible = false;
+    this.thirdMenuVisible = false;
   }
 
   ngOnInit(): void {
+   this.refreshNewID();
     this.showMainCategories();
-    let temp : MenuItem[] = []
-    this.http.get<MenuItem[]>('/api/category').subscribe(data => {
-      temp = [...data];
-      this.tempIdNewItem = temp.reverse()[0].id + 1;
-      console.log(this.tempIdNewItem)
-    });
     this.getUser().subscribe((response: any) => {
       console.log("Response: ", response)
       this.userName = response.firstName + ' ' + response.lastName
-      if (this.userName.length > 19){
+      if (this.userName.length > 19) {
         this.userName = this.userName.slice(0, 16) + '...'
       }
       this.userEmail = response.email
@@ -305,29 +282,38 @@ export class AdminPanelCategoriesComponent implements OnInit {
       console.log("Error: ", error.error)
     })
   }
-  getUser(){
+
+  getUser() {
     const httpOptions = {
       headers: new HttpHeaders({'Content-Type': 'application/json', 'Accept': 'application/json'})
     }
     return this.http.get("user/own_information", httpOptions)
   }
 
-  async saveChanges(){
+  async refreshNewID(){
+    await this.http.get<MenuItem[]>('/api/category').subscribe(data => {
+      if (data.length > 0) {
+        this.tempIdNewItem = data[data.length - 1].id + 1;
+      } else {
+        this.tempIdNewItem = 0;
+      }
+    });
+  }
+
+  async saveChanges() {
+    await this.refreshNewID();
     await this.newItems.forEach((value: MenuItem[], key: number) => {
       let temp = value;
-      for(let i = 0 ; i < temp.length ; i++){
-        let name = temp[i].name;
-        let parentId = key;
-        let id = temp[i].id;
-        let hidden = temp[i].hidden;
-        let body = JSON.stringify({id:id, name : name,parentId : parentId, hidden : hidden});
-        const httpOptions = {
-          headers: new HttpHeaders({'Content-Type': 'application/json', 'Accept': 'application/json'})
-        }
-        this.http.post<MenuItem>("/api/category", body, httpOptions).subscribe(
+      for (let i = 0; i < temp.length; i++) {
+        let formData = new FormData();
+        formData.append('id', (this.tempIdNewItem++).toString());
+        formData.append('name', temp[i].name);
+        formData.append('hidden', temp[i].hidden.toString());
+        formData.append('team', false.toString());
+        formData.append('parentCategoryId', key.toString());
+        this.http.post<MenuItem>("/api/category", formData).subscribe(
           (data) => {
-
-              console.log(data.id)
+            console.log(data)
           },
           (error) => {
             console.log(error);
@@ -337,13 +323,12 @@ export class AdminPanelCategoriesComponent implements OnInit {
     });
 
     await this.editedItems.forEach((value: MenuItem, key: number) => {
-      let name = value.name;
-      let hidden = value.hidden;
-      let body = JSON.stringify({name : name, hidden : hidden});
-      const httpOptions = {
-        headers: new HttpHeaders({'Content-Type': 'application/json', 'Accept': 'application/json'})
-      }
-      this.http.put<MenuItem>("/api/category/" + key, body, httpOptions).subscribe(
+      let formData = new FormData();
+      formData.append('id', value.id.toString());
+      formData.append('name', value.name);
+      formData.append('hidden', value.hidden.toString());
+      formData.append('team', false.toString());
+      this.http.put<MenuItem>("/api/category/" + key, formData).subscribe(
         (data) => {
           console.log(data);
         },
@@ -355,7 +340,7 @@ export class AdminPanelCategoriesComponent implements OnInit {
 
     await this.deletedItems.forEach((value: number[], key: number) => {
       let temp = value;
-      for(let i = 0 ; i < temp.length ; i++){
+      for (let i = 0; i < temp.length; i++) {
         this.http.delete<String>("/api/category/" + temp[i]).subscribe(
           (data) => {
             console.log(data);
@@ -377,5 +362,6 @@ export class AdminPanelCategoriesComponent implements OnInit {
       showConfirmButton: false,
       timer: 1500
     })
+    await this.refreshNewID();
   }
 }
