@@ -1,0 +1,136 @@
+<div class="container-fluid" style="border-bottom: 0.5px solid lightgray">
+  <div class="row">
+    <div class="col-md-3" style="margin-left:0;padding-left: 0;">
+      <app-home-button></app-home-button>
+    </div>
+    <div class="col-md-2 offset-md-7" style="margin-right:0;padding-right: 0;float:right;">
+      <app-user-header-menu [userEmail]="userEmail" [userName]="userName"></app-user-header-menu>
+    </div>
+  </div>
+</div>
+
+<div class="category-selector">
+  <ul style="overflow: hidden;">
+    <li *ngFor="let category of categories" style="float:left;">
+      <button class="category-buttons" (click)="handleCategoryChanges(category)">{{category.name}} </button>
+    </li>
+  </ul>
+</div>
+
+<div class="row">
+  <div class="col-2">
+    <app-left-side-menu-admin></app-left-side-menu-admin>
+  </div>
+  <div class="col">
+    <div class="row d-flex flex-column flex-sm-row justify-content-between" style="padding-top: 2rem;" >
+      <div class="col" style="float:left;margin-left: 0; margin-right: auto;">
+        <a href="#" class="article-preview" data-show-count="false" target="_blank" style="color: #C80515">
+          <img src="assets/icons/preview.svg" alt="preview">
+          Preview
+        </a>
+      </div>
+      <div class="col" style="float:right; margin-left: auto; margin-right: 0;">
+        <a href="#" class="loop" data-show-count="false" target="_blank">
+          <img src="assets/icons/loop.svg" alt="loop">
+        </a>
+      </div>
+    </div>
+    <div class="row" style="padding-top: 2rem;">
+      <div class="col-sm-4 subcategories">
+        <h6>Subcategory</h6>
+        <select [(ngModel)]="selectedSubcategoryId" (ngModelChange)="handleSubcategoryChanges($event)"
+                name="Subcategory" id="subcategory">
+          <option value=-1 selected>Not selected</option>
+          <option *ngFor="let subcategory of subcategories" [ngValue]=subcategory.id>{{subcategory.name}}</option>
+        </select>
+      </div>
+      <div class="col-sm-4 teams">
+        <h6>Team</h6>
+        <select [(ngModel)]="selectedTeamId" (ngModelChange)="handleTeamChanges($event)" name="Team">
+          <option value=-1 selected>Not selected</option>
+          <option *ngFor="let team of teams" [ngValue]=team.id>{{team.name}}</option>
+        </select>
+      </div>
+      <div class="col-sm-4">
+        <h6>Language</h6>
+        <select [(ngModel)]="language" (ngModelChange)="handleLanguageChanges($event)" name="language">
+          <option value="English" selected>English</option>
+        </select>
+      </div>
+    </div>
+
+
+    <div class="row third-section">
+      <ul style="margin-top: 2%;">
+        <li *ngFor="let item of allArticles | slice:0:allArticles.length" style="padding-right: 50px; margin-bottom: 50px">
+          <div class='article'>
+            <div class='article__image'>
+              <img [src]="item.icon" width=100% height="130px" alt="">
+            </div>
+            <div class='article__content'>
+              <h3 class="col-4" (click)="goToArticle(item.id)" style="font-weight: 700">{{item.title}}</h3>
+              <p class="article__text">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos iure unde atque dolor consequuntur ex
+                dolorem voluptatem aut illo nostrum deserunt, est eveniet.
+              </p>
+              <div class="floor">
+                <p class="article__text">{{item.content.split('.')[0]}}</p>
+                <div class='indic row' *ngIf="item.isPublished">
+                  <div id="circle"></div>
+<!--                  <div class='floor-indicator'></div>-->
+                  <p class='floor__text'>Published</p>
+                </div>
+              </div>
+            </div>
+            <div class="drop-down">
+              <div class="dots">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+              </div>
+              <ul class="drop-list">
+                <li class="drop__item"*ngIf="item.isPublished">Unpublish</li>
+                <li class="drop__item"*ngIf="!item.isPublished">Publish</li>
+                <li class="drop__item">Delete</li>
+              </ul>
+            </div>
+          </div>
+
+<!--            <div class="row" style="width: 100%; ">-->
+<!--              <div class="col-2">-->
+<!--                <img [src]="item.icon" width=100% height="130px">-->
+<!--              </div>-->
+<!--              <div class="col-7">-->
+<!--                <div class="row most-commented " style="flex-wrap: unset !important;">-->
+
+<!--&lt;!&ndash;                  <button class="most-commented article-button col" (click)="goToArticle(item.id)">&ndash;&gt;-->
+<!--                  <h3 class="col-4" (click)="goToArticle(item.id)" style="font-weight: 700">{{item.title}}</h3>-->
+<!--&lt;!&ndash;                  </button>&ndash;&gt;-->
+<!--                  <div class="drop-down col-2">-->
+<!--                    <mat-form-field floatLabel="never" value="..." class="red-color" label="...">-->
+<!--                      <mat-select >-->
+<!--                        <mat-option>Delete</mat-option>-->
+<!--                        <mat-option *ngIf="item.isPublished">Unpublished</mat-option>-->
+<!--                        <mat-option *ngIf="!item.isPublished">Published</mat-option>-->
+<!--                      </mat-select>-->
+<!--                    </mat-form-field>-->
+<!--                  </div>-->
+<!--&lt;!&ndash;                  <div class="dropdown col-2">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <button class="btn red-color" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-weight: 700">...</button>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <ul class="dropdown-menu">&ndash;&gt;-->
+<!--&lt;!&ndash;                      <li><a class="dropdown-item" href="#">Unbuplish</a></li>&ndash;&gt;-->
+<!--&lt;!&ndash;                      <li><a class="dropdown-item" href="#">Delete</a></li>&ndash;&gt;-->
+<!--&lt;!&ndash;                      <li><a class="dropdown-item" href="#">Something else here</a></li>&ndash;&gt;-->
+<!--&lt;!&ndash;                    </ul>&ndash;&gt;-->
+<!--&lt;!&ndash;                  </div>&ndash;&gt;-->
+<!--                </div>-->
+<!--                <p>{{item.content.split('.')[0]}}</p>-->
+
+<!--              </div>-->
+<!--            </div>-->
+
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

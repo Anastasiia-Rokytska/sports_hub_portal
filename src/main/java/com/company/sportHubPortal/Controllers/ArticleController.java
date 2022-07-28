@@ -96,4 +96,12 @@ public class ArticleController {
     public ResponseEntity<Object> getArticlesByTeam(@PathVariable Integer id, @PathVariable Integer page) {
         return ResponseEntity.ok(articleService.getAllArticlesByTeam(id, page));
     }
+
+//    @DeleteMapping("/{id}")
+//    public ResponseEntity<String> deleteArticle(@PathVariable("id") Long id) {
+//        articleService.deleteArticle(id);
+//        logger.info(new Object() {
+//        }.getClass().getEnclosingMethod().getName() + "() " + " Deleted article: " + id);
+//        return ResponseEntity.ok("Category deleted successfully");
+//    }
 }
